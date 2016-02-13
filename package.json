@@ -1,0 +1,71 @@
+{
+  "name": "num4js",
+  "version": "0.0.0",
+  "description": "Like NumPy, in JavaScript",
+  "main": "src/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "cwise": "^1.0.8",
+    "ndarray": "^1.0.18",
+    "ndarray-fft": "^1.0.0",
+    "ndarray-ops": "^1.2.2",
+    "ndarray-gemm": "^1.0.0",
+    "sharp": "git+https://github.com/lovell/sharp.git",
+    "typedarray-pool": "^1.1.0"
+  },
+  "devDependencies": {
+    "browserify-shim": "^3.8.12",
+    "expect.js": "^0.3.1",
+    "grunt": "^0.4.5",
+    "grunt-browserify": "^4.0.1",
+    "grunt-contrib-jshint": "^0.11.3",
+    "grunt-contrib-uglify": "latest",
+    "grunt-karma": "^0.9.0",
+    "grunt-simple-mocha": "^0.4.0",
+    "jasmine": "^2.2.1",
+    "jasmine-core": "^2.2.0",
+    "jit-grunt": "^0.9.1",
+    "karma": "^0.12.31",
+    "karma-browserify": "^5.0.1",
+    "karma-jasmine": "^0.3.5",
+    "karma-mocha-reporter": "latest",
+    "karma-phantomjs-launcher": "^0.1.4",
+    "mocha": "^2.3.4",
+    "phantomjs": "^1.9.7-15",
+    "lodash": "^3.10.1",
+    "sharp": "^0.12.2"
+  },
+  "scripts": {
+    "test": "grunt test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/nicolaspanel/num4js.git"
+  },
+  "keywords": [
+    "ndarray",
+    "array",
+    "multi",
+    "multidimensional",
+    "dimension",
+    "higher",
+    "image",
+    "volume",
+    "webgl",
+    "tensor",
+    "matrix",
+    "linear",
+    "algebra",
+    "science",
+    "numerical",
+    "computing",
+    "stride",
+    "shape",
+    "numpy"
+  ],
+  "author": "Nicolas Panel",
+  "license": "MIT",
+  "readmeFilename": "README.md"
+}

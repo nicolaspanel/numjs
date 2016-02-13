@@ -1,0 +1,40 @@
+{
+  "name": "num4js",
+  "version": "0.0.0",
+  "description": "Like NumPy, in JavaScript",
+  "main": "num4js.min.js",
+  "author": "Nicolas Panel",
+  "license": "MIT",
+  "keywords": [
+    "ndarray",
+    "array",
+    "multi",
+    "multidimensional",
+    "dimension",
+    "higher",
+    "image",
+    "volume",
+    "webgl",
+    "tensor",
+    "matrix",
+    "linear",
+    "algebra",
+    "science",
+    "numerical",
+    "computing",
+    "stride",
+    "shape",
+    "numpy"
+  ],
+  "homepage": "https://github.com/nicolaspanel/num4js",
+  "moduleType": [
+    "globals",
+    "node"
+  ],
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test"
+  ]
+}
