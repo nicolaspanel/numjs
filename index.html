@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>DocStrap Index</title>
+
+	<!--[if lt IE 9]>
+	<script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+	<![endif]-->
+	<link type="text/css" rel="stylesheet" href="styles/sunlight.default.css">
+
+	<link type="text/css" rel="stylesheet" href="styles/site.cosmo.css">
+
+</head>
+
+<body>
+
+<div class="navbar navbar-default navbar-fixed-top navbar-inverse">
+<div class="container">
+	<div class="navbar-header">
+		<a class="navbar-brand" href="index.html">DocStrap</a>
+		<button class="navbar-toggle" type="button" data-toggle="collapse" data-target="#topNavigation">
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+			<span class="icon-bar"></span>
+        </button>
+	</div>
+	<div class="navbar-collapse collapse" id="topNavigation">
+		<ul class="nav navbar-nav">
+			
+			<li class="dropdown">
+				<a href="classes.list.html" class="dropdown-toggle" data-toggle="dropdown">Classes<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="NdArray.html">NdArray</a></li>
+				</ul>
+			</li>
+			
+			<li class="dropdown">
+				<a href="global.html" class="dropdown-toggle" data-toggle="dropdown">Global<b class="caret"></b></a>
+				<ul class="dropdown-menu ">
+					<li><a href="global.html#arange">arange</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#zeros">zeros</a></li>
+				</ul>
+			</li>
+			
+		</ul>
+		<div class="col-sm-3 col-md-3">
+            <form class="navbar-form" role="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" name="q" id="search-input">
+                    <div class="input-group-btn">
+                        <button class="btn btn-default" id="search-submit"><i class="glyphicon glyphicon-search"></i></button>
+                    </div>
+                </div>
+            </form>
+        </div>
+	</div>
+
+</div>
+</div>
+
+
+<div class="container" id="toc-content">
+<div class="row">
+
+	
+	<div class="col-md-8">
+	
+		<div id="main">
+			
+
+	
+	
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+
+
+
+
+
+    <section class="readme-section">
+        <article><p><strong>Num4JS</strong> is a npm/bower package for scientific computing with JavaScript. It contains among other things:</p>
+<ul>
+<li>a powerful N-dimensional array object</li>
+<li>sophisticated (broadcasting) functions</li>
+<li>linear algebra, Fourier transform, and image manipulation capabilities</li>
+</ul>
+<p>It works both in node.js and in the browser (with or without <a href="http://browserify.org/">browserify</a>)</p>
+<h2>Getting started</h2><h3>on node.js</h3><pre class="prettyprint source lang-sh"><code>npm install num4js</code></pre><h3>on the browser</h3><pre class="prettyprint source lang-sh"><code>bower install num4js</code></pre><pre class="prettyprint source lang-html"><code>&lt;script src=&quot;bower_packages/num4js/num4js.min.js&quot;>&lt;/script></code></pre><h2>Basics</h2><pre class="prettyprint source lang-js"><code>> var nj = require('num4js');
+> var a = nj.arange(15).reshape(3, 5)
+> a
+array([[  0,  1,  2,  3,  4],
+       [  5,  6,  7,  8,  9],
+       [ 10, 11, 12, 13, 14]])
+
+> a.shape
+[ 3, 5]
+> a.ndim
+2
+> a.dtype
+'array'
+> a instanceof nj.NdArray
+true
+> a.tolist() instanceof Array
+true
+
+> var b = nj.array([0,1,2], nj.dtypes.uint8)
+> b
+array([ 0, 1, 2], dtype=uint8)
+
+> var zeros = nj.zeros([3,4])
+> zeros
+array([[ 0, 0, 0, 0],
+       [ 0, 0, 0, 0],
+       [ 0, 0, 0, 0]])
+> var ones = nj.ones([3,4])
+> ones
+array([[ 1, 1, 1, 1],
+       [ 1, 1, 1, 1],
+       [ 1, 1, 1, 1]])
+> nj.equal(zeros.add(1), ones)
+true
+> nj.equal(ones.mul(-1), ones.neg())
+true</code></pre><h2>API</h2><h3>num4js.arange</h3><p>Return evenly spaced values within a given interval.<br><code>num4js.arange([start,] stop, [step,] [dtype])</code></p>
+<p>Examples</p>
+<pre class="prettyprint source lang-js"><code>nj.arange(3) // array([0, 1, 2])
+nj.arange(3.0) // array([ 0.,  1.,  2.])
+nj.arange(3,7) // array([3, 4, 5, 6])
+nj.arange(3,7,2) // array([3, 5])
+nj.arange(3, nj.dtype.uint8) // array([0, 1, 2], dtype='uint8')</code></pre><h3>num4js.equal</h3><p><code>num4js.equal(array1, array2)</code></p>
+<p><code>num4js.ndarray.equal(array1)</code></p>
+<p>Examples</p>
+<pre class="prettyprint source lang-js"><code>> nj.equal(nj.arange(3), [0,1,2])
+true
+> nj.arange(3).equal([0,1,2])
+true</code></pre><h3>num4js.equal</h3><p><code>num4js.equal(array1, array2)</code></p>
+<p><code>num4js.ndarray.equal(array1)</code></p>
+<p>Examples</p>
+<pre class="prettyprint source lang-js"><code>> nj.equal(nj.arange(3), [0,1,2])
+true
+> nj.arange(3).equal([0,1,2])
+true</code></pre><h2>Credits</h2><p><strong>Num4JS</strong> is built on top of <a href="http://scijs.net/packages/#scijs/ndarray">ndarray</a> and uses many <a href="http://scijs.net/packages/">scijs packages</a></p></article>
+    </section>
+
+
+
+
+
+
+
+		</div>
+	</div>
+
+	<div class="clearfix"></div>
+
+	
+		<div class="col-md-3">
+			<div id="toc" class="col-md-3 hidden-xs hidden-sm hidden-md"></div>
+		</div>
+	
+
+</div>
+</div>
+
+<div class="modal fade" id="searchResults">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Search results</h4>
+      </div>
+      <div class="modal-body"></div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div>
+
+<footer>
+
+
+	<span class="copyright">
+	DocStrap Copyright © 2012-2015 The contributors to the JSDoc3 and DocStrap projects.
+	</span>
+
+<span class="jsdoc-message">
+	Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a>
+	
+		on Sun Feb 14th 2016
+	
+	using the <a href="https://github.com/docstrap/docstrap">DocStrap template</a>.
+</span>
+</footer>
+
+<script src="scripts/docstrap.lib.js"></script>
+<script src="scripts/toc.js"></script>
+<script type="text/javascript" src="scripts/fulltext-search-ui.js"></script>
+
+<script>
+$( function () {
+	$( "[id*='$']" ).each( function () {
+		var $this = $( this );
+
+		$this.attr( "id", $this.attr( "id" ).replace( "$", "__" ) );
+	} );
+
+	$( ".tutorial-section pre, .readme-section pre" ).each( function () {
+		var $this = $( this );
+
+		var example = $this.find( "code" );
+		exampleText = example.html();
+		var lang = /{@lang (.*?)}/.exec( exampleText );
+		if ( lang && lang[1] ) {
+			exampleText = exampleText.replace( lang[0], "" );
+			example.html( exampleText );
+			lang = lang[1];
+		} else {
+			var langClassMatch = example.parent()[0].className.match(/lang\-(\S+)/);
+			lang = langClassMatch ? langClassMatch[1] : "javascript";
+		}
+
+		if ( lang ) {
+
+			$this
+			.addClass( "sunlight-highlight-" + lang )
+			.addClass( "linenums" )
+			.html( example.html() );
+
+		}
+	} );
+
+	Sunlight.highlightAll( {
+		lineNumbers : true,
+		showMenu : true,
+		enableDoclinks : true
+	} );
+
+	$.catchAnchorLinks( {
+        navbarOffset: 10
+	} );
+	$( "#toc" ).toc( {
+		anchorName  : function ( i, heading, prefix ) {
+			var id = $( heading ).attr( "id" );
+			return id && id.replace(/\~/g, '-inner-').replace(/\./g, '-static-') || ( prefix + i );
+		},
+		selectors   : "#toc-content h1,#toc-content h2,#toc-content h3,#toc-content h4",
+		showAndHide : false,
+		smoothScrolling: true
+	} );
+
+	$( "#main span[id^='toc']" ).addClass( "toc-shim" );
+	$( '.dropdown-toggle' ).dropdown();
+
+    $( "table" ).each( function () {
+      var $this = $( this );
+      $this.addClass('table');
+    } );
+
+} );
+</script>
+
+
+
+<!--Navigation and Symbol Display-->
+
+
+<!--Google Analytics-->
+
+
+<script type="text/javascript">
+	$(document).ready(function() {
+		SearcherDisplay.init();
+	});
+</script>
+
+</body>
+</html>
