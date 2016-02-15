@@ -739,6 +739,16 @@ NdArray.prototype.exp = function(){
 function exp(x){
     return createArray(x).exp();
 }
+/**
+ * Calculate the positive square-root of all elements in the input array, element-wise.
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function sqrt(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.sqrteq(s.selection);
+    return s;
+}
 
 /**
  * Sum of array elements.
@@ -1125,6 +1135,18 @@ function abs(x){
 }
 
 /**
+ * Return trigonometric cosine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function cos(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.coseq(s.selection);
+    return s;
+}
+
+/**
  * Return trigonometric inverse cosine of the input array, element-wise.
  *
  * @param {(Array|NdArray|number)} x
@@ -1137,6 +1159,18 @@ function arccos(x){
 }
 
 /**
+ * Return trigonometric sine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function sin(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.sineq(s.selection);
+    return s;
+}
+
+/**
  * Return trigonometric inverse sine of the input array, element-wise.
  *
  * @param {(Array|NdArray|number)} x
@@ -1145,6 +1179,18 @@ function arccos(x){
 function arcsin(x){
     var s = (x instanceof NdArray)? x.clone(): createArray(x);
     ops.asineq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric tangent of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function tan(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.taneq(s.selection);
     return s;
 }
 
@@ -1271,9 +1317,13 @@ module.exports = {
     arccos: arccos,
     arcsin: arcsin,
     arctan: arctan,
+    cos: cos,
+    sin: sin,
+    tan: tan,
     tanh: tanh,
     clip: clip,
     exp: exp,
+    sqrt: sqrt,
     sum: sum,
     mean: mean,
     std: std,

@@ -5,7 +5,7 @@ var expect = require('expect.js');
 var _ = require('lodash');
 var nj = require('../../src');
 
-describe('addition', function () {
+describe('add', function () {
     var v, m, n;
     beforeEach(function () {
         v=nj.arange(3);
