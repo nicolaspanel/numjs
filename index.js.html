@@ -778,6 +778,40 @@ function sqrt(x){
     return s;
 }
 
+
+/**
+ * Raise array elements to powers from given array, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
+ * @returns {NdArray}
+ */
+NdArray.prototype.pow = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+    if (isNumber(x)){
+        ops.powseq(arr.selection, x);
+        return arr;
+    }
+
+    x = createArray(x, this.dtype);
+    ops.poweq(arr.selection, x.selection);
+    return arr;
+};
+
+/**
+ * Raise first array elements to powers from second array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x1
+ * @param {(Array|NdArray|number)} x2
+ * @returns {NdArray}
+ */
+function power(x1, x2){
+    return createArray(x1).pow(x2);
+}
+
 /**
  * Sum of array elements.
  *
@@ -1277,11 +1311,13 @@ function dot(a,b){
 /**
  * Join given arrays along the last axis.
  *
- * @param {Array[]|NdArray[]} arrays
- * @param dtype
+ * @param {...(Array|NdArray)} arrays
  * @returns {NdArray}
  */
-function concatenate(arrays, dtype){
+function concatenate(arrays){
+    if (arguments.length > 1){
+        arrays = arguments;
+    }
     var i, a;
     for (i = 0; i &lt; arrays.length; i++){
         a = arrays[i];
@@ -1323,7 +1359,7 @@ function concatenate(arrays, dtype){
             throw new errors.ValueError('cannot concatenate  "' + mShape + '" with "' + aShape + '"');
         }
     }
-    return createArray(m, dtype);
+    return createArray(m, arrays[0].dtype);
 }
 
 module.exports = {
@@ -1352,6 +1388,7 @@ module.exports = {
     clip: clip,
     exp: exp,
     sqrt: sqrt,
+    power: power,
     sum: sum,
     mean: mean,
     std: std,
@@ -1394,13 +1431,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#power">power</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 17:04:48 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 18:23:31 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>
