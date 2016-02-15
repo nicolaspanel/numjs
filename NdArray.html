@@ -602,7 +602,7 @@ data-type object (dtype), one of which is associated with each NdArray.
 
 
 <div class="description">
-    Add argument element-wise.
+    Add argument, element-wise.
 </div>
 
 
@@ -756,7 +756,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line315">line 315</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line301">line 301</a>
     </li></ul></dd>
     
 
@@ -908,7 +908,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line372">line 372</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line358">line 358</a>
     </li></ul></dd>
     
 
@@ -1008,7 +1008,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line615">line 615</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line601">line 601</a>
     </li></ul></dd>
     
 
@@ -1108,7 +1108,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line434">line 434</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line420">line 420</a>
     </li></ul></dd>
     
 
@@ -1208,7 +1208,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line304">line 304</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line290">line 290</a>
     </li></ul></dd>
     
 
@@ -1251,11 +1251,9 @@ data-type object (dtype), one of which is associated with each NdArray.
     
 
 
-    <h5>Examples</h5>
+    <h5>Example</h5>
     
-    <pre class="prettyprint"><code>`NdArray#hi` alone:
- ```js
- arr = nj.arange(4*4).reshape(4,4)
+    <pre class="prettyprint"><code>arr = nj.arange(4*4).reshape(4,4)
  // array([[  0,  1,  2,  3],
  //        [  4,  5,  6,  7],
  //        [  8,  9, 10, 11],
@@ -1265,20 +1263,11 @@ data-type object (dtype), one of which is associated with each NdArray.
  // array([[  0,  1,  2],
  //        [  4,  5,  6],
  //        [  8,  9, 10]])
- ```</code></pre>
 
-    <pre class="prettyprint"><code>`NdArray#hi` with `NdArray#lo`:
-```js
- arr = nj.arange(4*4).reshape(4,4)
- // array([[  0,  1,  2,  3],
- //        [  4,  5,  6,  7],
- //        [  8,  9, 10, 11],
- //        [ 12, 13, 14, 15]])
 
  arr.lo(1,1).hi(2,2)
  // array([[ 5,  6],
- //        [ 9, 10]])
- ```</code></pre>
+ //        [ 9, 10]])</code></pre>
 
 
 
@@ -1338,7 +1327,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line266">line 266</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line261">line 261</a>
     </li></ul></dd>
     
 
@@ -1383,8 +1372,7 @@ data-type object (dtype), one of which is associated with each NdArray.
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>```js
- arr = nj.arange(4*4).reshape(4,4)
+    <pre class="prettyprint"><code>arr = nj.arange(4*4).reshape(4,4)
  // array([[  0,  1,  2,  3],
  //        [  4,  5,  6,  7],
  //        [  8,  9, 10, 11],
@@ -1392,8 +1380,7 @@ data-type object (dtype), one of which is associated with each NdArray.
  arr.lo(1,1)
  // array([[  5,  6,  7],
  //        [  9, 10, 11],
- //        [ 13, 14, 15]])
- ```</code></pre>
+ //        [ 13, 14, 15]])</code></pre>
 
 
 
@@ -1453,7 +1440,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line340">line 340</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line326">line 326</a>
     </li></ul></dd>
     
 
@@ -1608,7 +1595,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line654">line 654</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line640">line 640</a>
     </li></ul></dd>
     
 
@@ -1708,7 +1695,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line356">line 356</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line342">line 342</a>
     </li></ul></dd>
     
 
@@ -1914,7 +1901,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line403">line 403</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line389">line 389</a>
     </li></ul></dd>
     
 
@@ -2014,7 +2001,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line748">line 748</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line727">line 727</a>
     </li></ul></dd>
     
 
@@ -2178,7 +2165,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line244">line 244</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line241">line 241</a>
     </li></ul></dd>
     
 
@@ -2223,8 +2210,7 @@ data-type object (dtype), one of which is associated with each NdArray.
 
     <h5>Example</h5>
     
-    <pre class="prettyprint"><code>```js
- arr = nj.arange(4*4).reshape(4,4)
+    <pre class="prettyprint"><code>arr = nj.arange(4*4).reshape(4,4)
  // array([[  0,  1,  2,  3],
  //        [  4,  5,  6,  7],
  //        [  8,  9, 10, 11],
@@ -2234,9 +2220,7 @@ data-type object (dtype), one of which is associated with each NdArray.
  // array([ 4, 5, 6, 7])
 
  arr.pick(null, 1)
- // array([  1,  5,  9, 13])
-
- ```</code></pre>
+ // array([  1,  5,  9, 13])</code></pre>
 
 
 
@@ -2345,7 +2329,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line462">line 462</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line448">line 448</a>
     </li></ul></dd>
     
 
@@ -2445,7 +2429,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line673">line 673</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line659">line 659</a>
     </li></ul></dd>
     
 
@@ -2545,7 +2529,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line634">line 634</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line620">line 620</a>
     </li></ul></dd>
     
 
@@ -2594,7 +2578,7 @@ data-type object (dtype), one of which is associated with each NdArray.
 
     
 
-    <h4 class="name" id="transpose"><span class="type-signature"></span>transpose<span class="signature">(axes<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="NdArray.html">NdArray</a>}</span></h4>
+    <h4 class="name" id="transpose"><span class="type-signature"></span>transpose<span class="signature">(&hellip;axes<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="NdArray.html">NdArray</a>}</span></h4>
 
     
 
@@ -2646,9 +2630,6 @@ data-type object (dtype), one of which is associated with each NdArray.
             
                 
 <span class="param-type">number</span>
-|
-
-<span class="param-type">number</span>
 
 
             
@@ -2662,6 +2643,8 @@ data-type object (dtype), one of which is associated with each NdArray.
 
                 
 
+                
+                    &lt;repeatable><br>
                 
                 </td>
             
@@ -2709,7 +2692,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line697">line 697</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line683">line 683</a>
     </li></ul></dd>
     
 
@@ -2775,7 +2758,7 @@ data-type object (dtype), one of which is associated with each NdArray.
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 02:45:32 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 02:56:31 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>
