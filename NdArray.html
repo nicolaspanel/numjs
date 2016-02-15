@@ -95,7 +95,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line189">line 189</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line190">line 190</a>
     </li></ul></dd>
     
 
@@ -231,7 +231,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line231">line 231</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line232">line 232</a>
     </li></ul></dd>
     
 
@@ -244,6 +244,68 @@ data-type object (dtype), one of which is associated with each NdArray.
             <li>{dtypes} for more information</li>
         </ul>
     </dd>
+    
+
+    
+</dl>
+
+
+
+
+
+
+        
+            
+<h4 class="name" id="inspect"><span class="type-signature"></span>inspect<span class="type-signature"></span></h4>
+
+
+
+
+<div class="description">
+    Stringify the array to make it readable in the console, by a human.
+</div>
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line707">line 707</a>
+    </li></ul></dd>
+    
+
+    
+
     
 
     
@@ -348,7 +410,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line219">line 219</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line220">line 220</a>
     </li></ul></dd>
     
 
@@ -458,7 +520,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line207">line 207</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line208">line 208</a>
     </li></ul></dd>
     
 
@@ -568,7 +630,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line247">line 247</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line248">line 248</a>
     </li></ul></dd>
     
 
@@ -602,7 +664,7 @@ data-type object (dtype), one of which is associated with each NdArray.
 
 
 <div class="description">
-    Add argument, element-wise.
+    Add `x` to the array, element-wise.
 </div>
 
 
@@ -756,7 +818,317 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line341">line 341</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line342">line 342</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="NdArray.html">NdArray</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="clone"><span class="type-signature"></span>clone<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="NdArray.html">NdArray</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Create a full copy of the array
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line719">line 719</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type"><a href="NdArray.html">NdArray</a></span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="divide"><span class="type-signature"></span>divide<span class="signature">(x, copy<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="NdArray.html">NdArray</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Divide array by `x`, element-wise.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="NdArray.html">NdArray</a></span>
+|
+
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>copy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line430">line 430</a>
     </li></ul></dd>
     
 
@@ -908,7 +1280,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line398">line 398</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line505">line 505</a>
     </li></ul></dd>
     
 
@@ -964,7 +1336,7 @@ data-type object (dtype), one of which is associated with each NdArray.
 
 
 <div class="description">
-    Calculate the exponential of all elements in the array.
+    Calculate the exponential of all elements in the array, element-wise.
 </div>
 
 
@@ -1008,7 +1380,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line641">line 641</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line729">line 729</a>
     </li></ul></dd>
     
 
@@ -1108,7 +1480,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line460">line 460</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line537">line 537</a>
     </li></ul></dd>
     
 
@@ -1208,7 +1580,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line330">line 330</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line331">line 331</a>
     </li></ul></dd>
     
 
@@ -1327,7 +1699,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line301">line 301</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line302">line 302</a>
     </li></ul></dd>
     
 
@@ -1440,7 +1812,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line366">line 366</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line473">line 473</a>
     </li></ul></dd>
     
 
@@ -1540,7 +1912,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line679">line 679</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line777">line 777</a>
     </li></ul></dd>
     
 
@@ -1640,7 +2012,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line382">line 382</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line489">line 489</a>
     </li></ul></dd>
     
 
@@ -1694,6 +2066,10 @@ data-type object (dtype), one of which is associated with each NdArray.
     
 
 
+
+<div class="description">
+    Multiply array by `x`, element-wise.
+</div>
 
 
 
@@ -1846,7 +2222,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line429">line 429</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line397">line 397</a>
     </li></ul></dd>
     
 
@@ -1946,7 +2322,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line766">line 766</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line864">line 864</a>
     </li></ul></dd>
     
 
@@ -2110,7 +2486,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line281">line 281</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line282">line 282</a>
     </li></ul></dd>
     
 
@@ -2274,7 +2650,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line488">line 488</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line565">line 565</a>
     </li></ul></dd>
     
 
@@ -2323,7 +2699,7 @@ data-type object (dtype), one of which is associated with each NdArray.
 
     
 
-    <h4 class="name" id="std"><span class="type-signature"></span>std<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="NdArray.html">NdArray</a>}</span></h4>
+    <h4 class="name" id="std"><span class="type-signature"></span>std<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
 
     
 
@@ -2374,7 +2750,217 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line698">line 698</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line796">line 796</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="subtract"><span class="type-signature"></span>subtract<span class="signature">(x, copy<span class="signature-attributes">opt</span>)</span><span class="type-signature"> &rarr; {<a href="NdArray.html">NdArray</a>}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Subtract `x` to the array, element-wise.
+</div>
+
+
+
+
+
+
+
+
+
+    <h5>Parameters:</h5>
+    
+
+<table class="params">
+    <thead>
+    <tr>
+        
+        <th>Name</th>
+        
+
+        <th>Type</th>
+
+        
+        <th>Attributes</th>
+        
+
+        
+        <th>Default</th>
+        
+
+        <th class="last">Description</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    
+
+        <tr>
+            
+                <td class="name"><code>x</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type"><a href="NdArray.html">NdArray</a></span>
+|
+
+<span class="param-type">Array</span>
+|
+
+<span class="param-type">number</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>copy</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">boolean</span>
+
+
+            
+            </td>
+
+            
+                <td class="attributes">
+                
+                    &lt;optional><br>
+                
+
+                
+
+                
+                </td>
+            
+
+            
+                <td class="default">
+                
+                    true
+                
+                </td>
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
+    </tbody>
+</table>
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line375">line 375</a>
     </li></ul></dd>
     
 
@@ -2423,7 +3009,7 @@ data-type object (dtype), one of which is associated with each NdArray.
 
     
 
-    <h4 class="name" id="sum"><span class="type-signature"></span>sum<span class="signature">()</span><span class="type-signature"> &rarr; {<a href="NdArray.html">NdArray</a>}</span></h4>
+    <h4 class="name" id="sum"><span class="type-signature"></span>sum<span class="signature">()</span><span class="type-signature"> &rarr; {number}</span></h4>
 
     
 
@@ -2474,7 +3060,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line660">line 660</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line758">line 758</a>
     </li></ul></dd>
     
 
@@ -2508,7 +3094,207 @@ data-type object (dtype), one of which is associated with each NdArray.
     </dt>
     <dd>
         
-<span class="param-type"><a href="NdArray.html">NdArray</a></span>
+<span class="param-type">number</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="tolist"><span class="type-signature"></span>tolist<span class="signature">()</span><span class="type-signature"> &rarr; {Array}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Converts {NdArray} to a native JavaScript {Array}
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line649">line 649</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">Array</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+        
+            
+
+    
+
+    <h4 class="name" id="toString"><span class="type-signature"></span>toString<span class="signature">()</span><span class="type-signature"> &rarr; {string}</span></h4>
+
+    
+
+
+
+<div class="description">
+    Stringify the array to make it readable by a human.
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line658">line 658</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">string</span>
 
 
     </dd>
@@ -2637,7 +3423,7 @@ data-type object (dtype), one of which is associated with each NdArray.
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="index.js.html">index.js</a>, <a href="index.js.html#line722">line 722</a>
+        <a href="index.js.html">index.js</a>, <a href="index.js.html#line820">line 820</a>
     </li></ul></dd>
     
 
@@ -2697,13 +3483,13 @@ data-type object (dtype), one of which is associated with each NdArray.
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#arange">arange</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 11:07:58 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 17:04:48 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>

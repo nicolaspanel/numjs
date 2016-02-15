@@ -37,8 +37,9 @@ var gemm = require('ndarray-gemm');
 var ndFFT = require('ndarray-fft');
 var ndPool = require('typedarray-pool');
 
-
-var DTYPES = {
+var CONF = {
+    printThreshold: 5
+},  DTYPES = {
     int8: Int8Array,
     int16: Int16Array,
     int32: Int32Array,
@@ -360,7 +361,7 @@ NdArray.prototype.hi = function () {
 };
 
 /**
- * Add argument, element-wise.
+ * Add `x` to the array, element-wise.
  *
  * @param {(NdArray|Array|number)} x
  * @param {boolean} [copy=true]
@@ -381,8 +382,114 @@ NdArray.prototype.add = function(x, copy){
     return arr;
 };
 
+/**
+ * Add arguments, element-wise.
+ *
+ * @param {(NdArray|Array|number)} a
+ * @param {(NdArray|Array|number)} b
+ * @returns {NdArray}
+ */
 function add(a,b){
     return createArray(a).add(b);
+}
+
+/**
+ * Subtract `x` to the array, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.subtract = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+
+    if (isNumber(x)){
+        ops.subseq(arr.selection, x);
+        return arr;
+    }
+    x = createArray(x, this.dtype);
+    ops.subeq(arr.selection, x.selection);
+    return arr;
+};
+
+/**
+ * Multiply array by `x`, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.multiply = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+    if (isNumber(x)){
+        ops.mulseq(arr.selection, x);
+        return arr;
+    }
+
+    x = createArray(x, this.dtype);
+    ops.muleq(arr.selection, x.selection);
+
+    return arr;
+};
+/**
+ * Multiply arguments, element-wise.
+ *
+ * @param {(Array|NdArray)} a
+ * @param {(Array|NdArray|number)} b
+ * @returns {NdArray}
+ */
+function multiply(a,b){
+    return createArray(a).multiply(b);
+}
+
+/**
+ * Divide array by `x`, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.divide = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+    if (isNumber(x)){
+        ops.divseq(arr.selection, x);
+        return arr;
+    }
+
+    x = createArray(x, this.dtype);
+    ops.diveq(arr.selection, x.selection);
+
+    return arr;
+};
+/**
+ * Divide `a` by `b`, element-wise.
+ *
+ * @param {(Array|NdArray)} a
+ * @param {(Array|NdArray|number)} b
+ * @returns {NdArray}
+ */
+function divide(a,b){
+    return createArray(a).divide(b);
+}
+
+/**
+ * Subtract second argument from the first, element-wise.
+ *
+ * @param {(NdArray|Array|number)} a
+ * @param {(NdArray|Array|number)} b
+ * @returns {NdArray}
+ */
+function subtract(a,b){
+    return createArray(a).subtract(b);
 }
 
 
@@ -448,37 +555,7 @@ function equal(array1, array2){
     return createArray(array1).equal(array2);
 }
 
-/**
- *
- * @param {(NdArray|Array|number)} x
- * @param {boolean} [copy=true]
- * @returns {NdArray}
- */
-NdArray.prototype.multiply = function(x, copy){
-    if (arguments.length === 1){
-        copy = true;
-    }
-    var arr = copy ? this.clone() : this;
-    if (isNumber(x)){
-        ops.mulseq(arr.selection, x);
-        return arr;
-    }
 
-    x = createArray(x, this.dtype);
-    ops.muleq(arr.selection, x.selection);
-
-    return arr;
-};
-/**
- * Multiply arguments, element-wise.
- *
- * @param {(Array|NdArray)} a
- * @param {(Array|NdArray|number)} b
- * @returns {NdArray}
- */
-function multiply(a,b){
-    return createArray(a).multiply(b);
-}
 
 /**
  * Return a copy of the array collapsed into one dimension using row-major order (C-style)
@@ -590,23 +667,22 @@ NdArray.prototype.reshape = function(shape){
 function reshape(array, shape){
     return createArray(array).reshape(shape);
 }
-//NdArray.prototype.dtype = function(dtype){
-//    if (!arguments.length){
-//        return this.selection.dtype;
-//    }
-//    var type = getType(dtype);
-//    if (type === getType(this.selection.dtype)){
-//        return;
-//    }
-//    this.selection = ndarray(new type(this.selection.data), this.shape);
-//    return this;
-//};
 
+
+/**
+ * Converts {NdArray} to a native JavaScript {Array}
+ *
+ * @returns {Array}
+ */
 NdArray.prototype.tolist = function(){
     return unpackArray(this.selection);
 };
 
-
+/**
+ * Stringify the array to make it readable by a human.
+ *
+ * @returns {string}
+ */
 NdArray.prototype.toString = function(){
     var max = this.max();
     var nChars = String(max).length;
@@ -625,9 +701,9 @@ NdArray.prototype.toString = function(){
             return new Array(Math.max(0, nChars - s.length +2)).join(' ') + s;
         }
         k = k || 0;
-        var arr;
-        if (v.length>7){
-            arr = [].concat(v.slice(0,2), [' ...'], v.slice(v.length - 2));
+        var arr, th = CONF.printThreshold, hth = th / 2 | 0;
+        if (v.length>th){
+            arr = [].concat(v.slice(0, hth ), [' ...'], v.slice(v.length - hth));
         }
         else {
             arr = v;
@@ -650,19 +726,31 @@ NdArray.prototype.toString = function(){
             return 'array([' + base + ', dtype=' + this.dtype + ')';
     }
 };
+
+/**
+ * Stringify the array to make it readable in the console, by a human.
+ *
+ * @returns {string}
+ */
 NdArray.prototype.inspect = NdArray.prototype.toString;
 
 NdArray.prototype.toJSON = function () {
     return JSON.stringify(this.tolist());
 };
 
+
+/**
+ * Create a full copy of the array
+ *
+ * @returns {NdArray}
+ */
 NdArray.prototype.clone = function () {
     var s = this.selection;
     return new NdArray(ndarray(s.data.slice(), s.shape, s.stride, s.offset));
 };
 
 /**
- * Calculate the exponential of all elements in the array.
+ * Calculate the exponential of all elements in the array, element-wise.
  *
  * @returns {NdArray}
  */
@@ -672,18 +760,28 @@ NdArray.prototype.exp = function(){
     return arr;
 };
 /**
- * Calculate the exponential of all elements in the input array.
+ * Calculate the exponential of all elements in the input array, element-wise.
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
 function exp(x){
     return createArray(x).exp();
 }
+/**
+ * Calculate the positive square-root of all elements in the input array, element-wise.
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function sqrt(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.sqrteq(s.selection);
+    return s;
+}
 
 /**
  * Sum of array elements.
  *
- * @returns {NdArray}
+ * @returns {number}
  */
 NdArray.prototype.sum = function(){
     return ops.sum(this.selection);
@@ -721,7 +819,7 @@ function mean(x){
 /**
  * Returns the standard deviation, a measure of the spread of a distribution, of the array elements.
  *
- * @returns {NdArray}
+ * @returns {number}
  */
 NdArray.prototype.std = function(){
     var squares = this.clone();
@@ -1047,8 +1145,92 @@ var doTanh = cwise({
  * @returns {NdArray}
  */
 function tanh(x){
-    var s = createArray(x).clone();
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
     doTanh(s.selection);
+    return s;
+}
+
+/**
+ * Return absolute value of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function abs(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.abseq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric cosine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function cos(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.coseq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric inverse cosine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function arccos(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.acoseq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric sine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function sin(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.sineq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric inverse sine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function arcsin(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.asineq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric tangent of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function tan(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.taneq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric inverse tangent of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function arctan(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.ataneq(s.selection);
     return s;
 }
 
@@ -1145,6 +1327,7 @@ function concatenate(arrays, dtype){
 }
 
 module.exports = {
+    config: CONF,
     dtypes: DTYPES,
     NdArray: NdArray,
     ndarray: ndarray,
@@ -1158,16 +1341,26 @@ module.exports = {
     softmax: softmax,
     sigmoid: sigmoid,
     leakyRelu: leakyRelu,
+    abs: abs,
+    arccos: arccos,
+    arcsin: arcsin,
+    arctan: arctan,
+    cos: cos,
+    sin: sin,
+    tan: tan,
     tanh: tanh,
     clip: clip,
     exp: exp,
+    sqrt: sqrt,
     sum: sum,
     mean: mean,
     std: std,
     dot: dot,
     add: add,
-    negative: negative,
+    subtract: subtract,
     multiply: multiply,
+    divide: divide,
+    negative: negative,
     size: size,
     equal: equal,
     max: max,
@@ -1201,13 +1394,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#arange">arange</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 11:07:58 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 17:04:48 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>

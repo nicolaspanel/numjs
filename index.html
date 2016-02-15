@@ -50,12 +50,54 @@
 <li>fast Fourier transform</li>
 <li>image manipulation capabilities</li>
 </ul>
+<p>Besides its obvious scientific uses, <strong>Num4JS</strong> can also be used as an efficient multi-dimensional container of generic data such as images.</p>
 <p>It works both in node.js and in the browser (with or without <a href="http://browserify.org/">browserify</a>)</p>
-<h2>Getting started</h2><h3>on node.js</h3><pre class="prettyprint source lang-sh"><code>npm install num4js</code></pre><h3>on the browser</h3><pre class="prettyprint source lang-sh"><code>bower install num4js</code></pre><pre class="prettyprint source lang-html"><code>&lt;script src=&quot;bower_packages/num4js/num4js.min.js&quot;>&lt;/script></code></pre><h2>Basics</h2><pre class="prettyprint source lang-js"><code>> var nj = require('num4js') // for nodejs only
-
-// array manipulations
-> var a = nj.arange(15).reshape(3, 5)
+<p><strong>Num4JS</strong> is licensed under the <a href="https://github.com/nicolaspanel/num4js/blob/master/LICENSE">MIT license</a>, enabling reuse with almost no restrictions.</p>
+<h2>Installation</h2><h3>on node.js</h3><pre class="prettyprint source lang-sh"><code>npm install num4js</code></pre><pre class="prettyprint source lang-js"><code>var nj = require('num4js');
+...</code></pre><h3>on the browser</h3><pre class="prettyprint source lang-sh"><code>bower install num4js</code></pre><pre class="prettyprint source lang-html"><code>&lt;script src=&quot;bower_packages/num4js/num4js.min.js&quot;>&lt;/script></code></pre><h2>Basics</h2><h3>Array Creation</h3><pre class="prettyprint source lang-js"><code>> var a = nj.array([2,3,4]);
 > a
+array([ 2, 3, 4])
+> var b = nj.array([[1,2,3], [4,5,6]]);
+> b
+array([[ 1, 2, 3],
+       [ 4, 5, 6]])</code></pre><p><strong>Note</strong>: Default data container is Javascript <code>Array</code> object. If needed, you can also use typed array such as <code>Int8Array</code>:</p>
+<pre class="prettyprint source lang-js"><code>> var a = nj.uint8([1,2,3]);
+> a
+array([ 1, 2, 3], dtype=uint8)</code></pre><p><strong>Note</strong>: possible types are int8, uint8, int16, uint16, int32, uint32, float32, float64 and array (the default)</p>
+<p>To create arrays with a given shape, you can use <code>zeros</code>, ones or <code>random</code> functions:</p>
+<pre class="prettyprint source lang-js"><code>> nj.zeros([2,3]);
+array([[ 0, 0, 0],
+       [ 0, 0, 0]])
+> nj.ones([2,3,4], nj.dtypes.int32)     // dtype can also be specified
+array([[[ 1, 1, 1, 1],
+        [ 1, 1, 1, 1],
+        [ 1, 1, 1, 1]],
+       [[ 1, 1, 1, 1],
+        [ 1, 1, 1, 1],
+        [ 1, 1, 1, 1]]], dtype=int32)
+
+> nj.random([4,3])
+array([[ 0.7131339153274894, 0.5784974242560565,0.39271794515661895],
+       [ 0.8187951485160738,  0.830815645866096, 0.7394127324223518],
+       [ 0.7980840434320271, 0.5938412109389901, 0.9076390236150473],
+       [ 0.8864211943000555,0.28645253647118807, 0.7208044717554003]])</code></pre><p>To create sequences of numbers, <strong>Num4JS</strong> provides a function called <code>arange</code>:</p>
+<pre class="prettyprint source lang-js"><code>> nj.arange(4);
+array([ 0, 1, 2, 3])
+
+> nj.arange( 10, 30, 5 )
+array([ 10, 15, 20, 25])
+
+> nj.arange(1, 5, nj.dtypes.uint8);
+array([ 1, 2, 3, 4], dtype=uint8)</code></pre><h3>More info about the array</h3><p><strong>Num4JS</strong>’s array class is called <code>NdArray</code>. It is also known by the alias <code>array</code>. The more important properties of an <code>NdArray</code> object are:</p>
+<ul>
+<li><code>NdArray#ndim</code>: the number of axes (dimensions) of the array.</li>
+<li><code>NdArray#shape</code>: the dimensions of the array. This is a list of integers indicating the size of the array in each dimension. For a matrix with n rows and m columns, shape will be [n,m]. The length of the shape is therefore the number of dimensions, ndim.</li>
+<li><code>NdArray#size</code>: the total number of elements of the array. This is equal to the product of the elements of shape.</li>
+<li><code>NdArray#dtype</code>: a string describing the type of the elements in the array. <code>int32</code>, <code>int16</code>, and <code>float64</code> are some examples. Default dtype is <code>array</code>.</li>
+</ul>
+<p>An <code>NdArray</code> can always be converted to a native JavaScript <code>Array</code> using <code>NdArray#tolist()</code> method.</p>
+<p>Example:</p>
+<pre class="prettyprint source lang-js"><code>> a = nj.arange(15).reshape(3, 5);
 array([[  0,  1,  2,  3,  4],
        [  5,  6,  7,  8,  9],
        [ 10, 11, 12, 13, 14]])
@@ -76,63 +118,135 @@ true
 > a
 array([[  1,  1,  2,  3,  4],
        [  5,  6,  7,  8,  9],
-       [ 10, 11, 12, 13, 14]])
-
-
-// array types
-> var b = nj.array([0,1,2], nj.dtypes.uint8)
-> b
-array([ 0, 1, 2], dtype=uint8)
-// NOTES: possible types are int8, uint8, int16, uint16, int32, uint32, float32, float64 and array (default)
-
-
-// Operations
-> var zeros = nj.zeros([3,4])
-> zeros
+       [ 10, 11, 12, 13, 14]])</code></pre><h3>Printing arrays</h3><p>When you print an array, <strong>Num4JS</strong> displays it in a similar way to nested lists, but with the following layout:</p>
+<ul>
+<li>the last axis is printed from left to right,</li>
+<li>the second-to-last is printed from top to bottom,</li>
+<li>the rest are also printed from top to bottom, with each slice separated from the next by an empty line.</li>
+</ul>
+<p>One-dimensional arrays are then printed as rows, bidimensionals as matrices and tridimensionals as lists of matrices.</p>
+<pre class="prettyprint source lang-js"><code>> var a = nj.arange(6);                 // 1d array
+> console.log(a);
+array([ 0, 1, 2, 3, 4, 5])
+>
+> var b = nj.arange(12).reshape(4,3);   // 2d array
+> console.log(b);
+array([[  0,  1,  2],
+       [  3,  4,  5],
+       [  6,  7,  8],
+       [  9, 10, 11]])
+>
+> var c = nj.arange(24).reshape(2,3,4); // 3d array
+> console.log(c);
+array([[[  0,  1,  2,  3],
+        [  4,  5,  6,  7],
+        [  8,  9, 10, 11]],
+       [[ 12, 13, 14, 15],
+        [ 16, 17, 18, 19],
+        [ 20, 21, 22, 23]]])</code></pre><p>If an array is too large to be printed, <strong>Num4JS</strong> automatically skips the central part of the array and only prints the corners:</p>
+<pre class="prettyprint source lang-js"><code>> console.log(nj.arange(10000).reshape(100,100))
+array([[    0,    1, ...,   98,   99],
+       [  100,  101, ...,  198,  199],
+        ...
+       [ 9800, 9801, ..., 9898, 9899],
+       [ 9900, 9901, ..., 9998, 9999]])</code></pre><p>To customize this behaviour, you can change the printing options using <code>nj.config.printThreshold</code> (default is <code>5</code>):</p>
+<pre class="prettyprint source lang-js"><code>> nj.config.printThreshold = 7;
+> console.log(nj.arange(10000).reshape(100,100))
+array([[    0,    1, ...,   98,   99],
+       [  100,  101, ...,  198,  199],
+        ...
+       [ 9800, 9801, ..., 9898, 9899],
+       [ 9900, 9901, ..., 9998, 9999]])</code></pre><h3>Basic operations</h3><p>Arithmetic operators such as <code>*</code> (<code>multiply</code>), <code>+</code> (<code>add</code>), <code>-</code> (<code>subtract</code>) or <code>/</code> (<code>divide</code>) apply elemen-twise. A new array is created and filled with the result:</p>
+<pre class="prettyprint source lang-js"><code>> zeros = nj.zeros([3,4]);
 array([[ 0, 0, 0, 0],
        [ 0, 0, 0, 0],
        [ 0, 0, 0, 0]])
-> var ones = nj.ones([3,4])
-> ones
+> ones = nj.ones([3,4]);
 array([[ 1, 1, 1, 1],
        [ 1, 1, 1, 1],
        [ 1, 1, 1, 1]])
-> nj.equal(zeros.add(1), ones)
-true
-> nj.equal(zeros.add(ones), ones)
-true
-> nj.equal(ones.multiply(-1), ones.negative())
-true
-> nj.dot(ones.T, ones)
-array([[ 3, 3, 3, 3],
-       [ 3, 3, 3, 3],
-       [ 3, 3, 3, 3],
-       [ 3, 3, 3, 3]])
-
-> var c = nj.arange(16).reshape(4,4)
-> c
+> ones.add(ones)
+array([[ 2, 2, 2, 2],
+       [ 2, 2, 2, 2],
+       [ 2, 2, 2, 2]])
+> ones.subtract(ones)
+array([[ 0, 0, 0, 0],
+       [ 0, 0, 0, 0],
+       [ 0, 0, 0, 0]])</code></pre><p>To modify an existing array rather than create a new one you can set the <code>copy</code> parameter to <code>false</code>:</p>
+<pre class="prettyprint source lang-js"><code>> ones = nj.ones([3,4]);
+array([[ 1, 1, 1, 1],
+       [ 1, 1, 1, 1],
+       [ 1, 1, 1, 1]])
+> ones.add(ones, false)
+array([[ 2, 2, 2, 2],
+       [ 2, 2, 2, 2],
+       [ 2, 2, 2, 2]])
+> ones
+array([[ 2, 2, 2, 2],
+       [ 2, 2, 2, 2],
+       [ 2, 2, 2, 2]])</code></pre><p><strong>Note</strong>: available for <code>add</code>, <code>subtract</code>, <code>multiply</code> and <code>divide</code> methods.</p>
+<p>The matrix product can be performed using the <code>dot</code> function:</p>
+<pre class="prettyprint source lang-js"><code>> a = nj.arange(12).reshape(3,4);
 array([[  0,  1,  2,  3],
        [  4,  5,  6,  7],
-       [  8,  9, 10, 11],
-       [ 12, 13, 14, 15]])
-> c.T
-array([[  0,  4,  8, 12],
-       [  1,  5,  9, 13],
-       [  2,  6, 10, 14],
-       [  3,  7, 11, 15]])
-
-
-// Slicing and selections
-> var selection = c.lo(1,1).hi(2,2)
-> selection
-array([[  5,  6],
-       [  9, 10]])
-
-> selection.pick(1)
-array([  9, 10])
-
-> selection.pick(null, 1)
-array([ 6, 10])</code></pre><p>See <a href="http://nicolaspanel.github.io/num4js/global.html">documentation</a> for more information.</p>
+       [  8,  9, 10, 11]])
+> nj.dot(a.T, a)
+array([[  80,  92, 104, 116],
+       [  92, 107, 122, 137],
+       [ 104, 122, 140, 158],
+       [ 116, 137, 158, 179]])
+> nj.dot(a, a.T)
+array([[  14,  38,  62],
+       [  38, 126, 214],
+       [  62, 214, 366]])</code></pre><p>Many unary operations, such as computing the sum of all the elements in the array, are implemented as methods of the <code>NdArray</code> class:</p>
+<pre class="prettyprint source lang-js"><code>> a = nj.random([2,3])
+array([[0.3658842062577605, 0.740412384737283, 0.5527098260354251],
+       [0.4542409502901137,0.07926959334872663,0.3524212788324803]])
+> a.sum()
+2.544938239501789
+> a.min()
+0.07926959334872663
+> a.max()
+0.740412384737283
+> a.mean()
+0.4241563732502982
+> a.std()
+0.20204677551180758</code></pre><h3>Universal Functions</h3><p><strong>Num4JS</strong> provides familiar mathematical functions such as <code>sin</code>, <code>cos</code>, and <code>exp</code>. These functions operate element-wise on an array, producing an <code>NdArray</code> as output:</p>
+<pre class="prettyprint source lang-js"><code>> a = nj.array([-1, 0, 1])
+array([-1, 0, 1])
+>
+> nj.negative(a)
+array([ 1, 0,-1])
+>
+> nj.abs(a)
+array([ 1, 0, 1])
+>
+> nj.exp(a)
+array([0.3678794411714424, 1, 2.718281828459045])
+>
+> nj.tanh(a)
+array([-0.7615941559557649, 0, 0.761594155955765])
+>
+> nj.softmax(a)
+array([0.09003057317038048,0.24472847105479767, 0.6652409557748219])
+>
+> nj.sigmoid(a)
+array([ 0.2689414213699951, 0.5, 0.7310585786300049])
+>
+> nj.exp(a)
+array([0.3678794411714424, 1, 2.718281828459045])
+>
+> nj.sqrt(nj.abs(a))
+array([ 1, 0, 1])
+>
+> nj.sin(nj.arcsin(a))
+array([-1, 0, 1])
+>
+> nj.cos(nj.arccos(a))
+array([-1, 0, 1])
+>
+> nj.tan(nj.arctan(a))
+array([-1, 0, 1])</code></pre><h3>More?</h3><p>See <a href="http://nicolaspanel.github.io/num4js/global.html">documentation</a>.</p>
 <h2>TODO</h2><ul>
 <li>Add image processing features (such as read/save/resize/sobel/etc...)</li>
 </ul>
@@ -147,13 +261,13 @@ array([ 6, 10])</code></pre><p>See <a href="http://nicolaspanel.github.io/num4js
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#arange">arange</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 11:07:58 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 17:04:48 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>
