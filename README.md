@@ -24,8 +24,6 @@ bower install num4js
 ```
 
 ```html
-
-<script src="bower_packages/lodash/lodash.min.js"></script>
 <script src="bower_packages/num4js/num4js.min.js"></script>
 ```
 
@@ -120,8 +118,7 @@ See [documentation](http://nicolaspanel.github.io/num4js/global.html) for more i
 
 
 ## TODO
- - Support broadcasting for additions and multiplications
- - Remove lodash dependency
+
  - Add image processing features (such as read/save/resize/sobel/etc...)
 
 ## Credits
