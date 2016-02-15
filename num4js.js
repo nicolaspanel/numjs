@@ -8379,8 +8379,9 @@ var gemm = require('ndarray-gemm');
 var ndFFT = require('ndarray-fft');
 var ndPool = require('typedarray-pool');
 
-
-var DTYPES = {
+var CONF = {
+    printThreshold: 5
+},  DTYPES = {
     int8: Int8Array,
     int16: Int16Array,
     int32: Int32Array,
@@ -8702,7 +8703,7 @@ NdArray.prototype.hi = function () {
 };
 
 /**
- * Add argument, element-wise.
+ * Add `x` to the array, element-wise.
  *
  * @param {(NdArray|Array|number)} x
  * @param {boolean} [copy=true]
@@ -8723,8 +8724,114 @@ NdArray.prototype.add = function(x, copy){
     return arr;
 };
 
+/**
+ * Add arguments, element-wise.
+ *
+ * @param {(NdArray|Array|number)} a
+ * @param {(NdArray|Array|number)} b
+ * @returns {NdArray}
+ */
 function add(a,b){
     return createArray(a).add(b);
+}
+
+/**
+ * Subtract `x` to the array, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.subtract = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+
+    if (isNumber(x)){
+        ops.subseq(arr.selection, x);
+        return arr;
+    }
+    x = createArray(x, this.dtype);
+    ops.subeq(arr.selection, x.selection);
+    return arr;
+};
+
+/**
+ * Multiply array by `x`, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.multiply = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+    if (isNumber(x)){
+        ops.mulseq(arr.selection, x);
+        return arr;
+    }
+
+    x = createArray(x, this.dtype);
+    ops.muleq(arr.selection, x.selection);
+
+    return arr;
+};
+/**
+ * Multiply arguments, element-wise.
+ *
+ * @param {(Array|NdArray)} a
+ * @param {(Array|NdArray|number)} b
+ * @returns {NdArray}
+ */
+function multiply(a,b){
+    return createArray(a).multiply(b);
+}
+
+/**
+ * Divide array by `x`, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.divide = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+    if (isNumber(x)){
+        ops.divseq(arr.selection, x);
+        return arr;
+    }
+
+    x = createArray(x, this.dtype);
+    ops.diveq(arr.selection, x.selection);
+
+    return arr;
+};
+/**
+ * Divide `a` by `b`, element-wise.
+ *
+ * @param {(Array|NdArray)} a
+ * @param {(Array|NdArray|number)} b
+ * @returns {NdArray}
+ */
+function divide(a,b){
+    return createArray(a).divide(b);
+}
+
+/**
+ * Subtract second argument from the first, element-wise.
+ *
+ * @param {(NdArray|Array|number)} a
+ * @param {(NdArray|Array|number)} b
+ * @returns {NdArray}
+ */
+function subtract(a,b){
+    return createArray(a).subtract(b);
 }
 
 
@@ -8790,37 +8897,7 @@ function equal(array1, array2){
     return createArray(array1).equal(array2);
 }
 
-/**
- *
- * @param {(NdArray|Array|number)} x
- * @param {boolean} [copy=true]
- * @returns {NdArray}
- */
-NdArray.prototype.multiply = function(x, copy){
-    if (arguments.length === 1){
-        copy = true;
-    }
-    var arr = copy ? this.clone() : this;
-    if (isNumber(x)){
-        ops.mulseq(arr.selection, x);
-        return arr;
-    }
 
-    x = createArray(x, this.dtype);
-    ops.muleq(arr.selection, x.selection);
-
-    return arr;
-};
-/**
- * Multiply arguments, element-wise.
- *
- * @param {(Array|NdArray)} a
- * @param {(Array|NdArray|number)} b
- * @returns {NdArray}
- */
-function multiply(a,b){
-    return createArray(a).multiply(b);
-}
 
 /**
  * Return a copy of the array collapsed into one dimension using row-major order (C-style)
@@ -8932,23 +9009,22 @@ NdArray.prototype.reshape = function(shape){
 function reshape(array, shape){
     return createArray(array).reshape(shape);
 }
-//NdArray.prototype.dtype = function(dtype){
-//    if (!arguments.length){
-//        return this.selection.dtype;
-//    }
-//    var type = getType(dtype);
-//    if (type === getType(this.selection.dtype)){
-//        return;
-//    }
-//    this.selection = ndarray(new type(this.selection.data), this.shape);
-//    return this;
-//};
 
+
+/**
+ * Converts {NdArray} to a native JavaScript {Array}
+ *
+ * @returns {Array}
+ */
 NdArray.prototype.tolist = function(){
     return unpackArray(this.selection);
 };
 
-
+/**
+ * Stringify the array to make it readable by a human.
+ *
+ * @returns {string}
+ */
 NdArray.prototype.toString = function(){
     var max = this.max();
     var nChars = String(max).length;
@@ -8967,9 +9043,9 @@ NdArray.prototype.toString = function(){
             return new Array(Math.max(0, nChars - s.length +2)).join(' ') + s;
         }
         k = k || 0;
-        var arr;
-        if (v.length>7){
-            arr = [].concat(v.slice(0,2), [' ...'], v.slice(v.length - 2));
+        var arr, th = CONF.printThreshold, hth = th / 2 | 0;
+        if (v.length>th){
+            arr = [].concat(v.slice(0, hth ), [' ...'], v.slice(v.length - hth));
         }
         else {
             arr = v;
@@ -8992,19 +9068,31 @@ NdArray.prototype.toString = function(){
             return 'array([' + base + ', dtype=' + this.dtype + ')';
     }
 };
+
+/**
+ * Stringify the array to make it readable in the console, by a human.
+ *
+ * @returns {string}
+ */
 NdArray.prototype.inspect = NdArray.prototype.toString;
 
 NdArray.prototype.toJSON = function () {
     return JSON.stringify(this.tolist());
 };
 
+
+/**
+ * Create a full copy of the array
+ *
+ * @returns {NdArray}
+ */
 NdArray.prototype.clone = function () {
     var s = this.selection;
     return new NdArray(ndarray(s.data.slice(), s.shape, s.stride, s.offset));
 };
 
 /**
- * Calculate the exponential of all elements in the array.
+ * Calculate the exponential of all elements in the array, element-wise.
  *
  * @returns {NdArray}
  */
@@ -9014,18 +9102,28 @@ NdArray.prototype.exp = function(){
     return arr;
 };
 /**
- * Calculate the exponential of all elements in the input array.
+ * Calculate the exponential of all elements in the input array, element-wise.
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
 function exp(x){
     return createArray(x).exp();
 }
+/**
+ * Calculate the positive square-root of all elements in the input array, element-wise.
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function sqrt(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.sqrteq(s.selection);
+    return s;
+}
 
 /**
  * Sum of array elements.
  *
- * @returns {NdArray}
+ * @returns {number}
  */
 NdArray.prototype.sum = function(){
     return ops.sum(this.selection);
@@ -9035,7 +9133,7 @@ NdArray.prototype.sum = function(){
  * Return the sum of input array elements.
  *
  * @param {(Array|NdArray|number)} x
- * @returns {NdArray}
+ * @returns {number}
  */
 function sum(x){
     return createArray(x).sum();
@@ -9044,8 +9142,7 @@ function sum(x){
 /**
  * Return the arithmetic mean of array elements.
  *
- * @param {(Array|NdArray|number)} x
- * @returns {NdArray}
+ * @returns {number}
  */
 NdArray.prototype.mean = function(){
     return ops.sum(this.selection) / size(this.shape);
@@ -9055,7 +9152,7 @@ NdArray.prototype.mean = function(){
  * Return the arithmetic mean of input array elements.
  *
  * @param {(Array|NdArray|number)} x
- * @returns {NdArray}
+ * @returns {number}
  */
 function mean(x){
     return createArray(x).mean();
@@ -9064,7 +9161,7 @@ function mean(x){
 /**
  * Returns the standard deviation, a measure of the spread of a distribution, of the array elements.
  *
- * @returns {NdArray}
+ * @returns {number}
  */
 NdArray.prototype.std = function(){
     var squares = this.clone();
@@ -9078,7 +9175,7 @@ NdArray.prototype.std = function(){
  * Returns the standard deviation, a measure of the spread of a distribution, of the input array elements.
  *
  * @param {(Array|NdArray|number)} x
- * @returns {NdArray}
+ * @returns {number}
  */
 function std(x){
     return createArray(x).std();
@@ -9107,7 +9204,7 @@ NdArray.prototype.transpose = function (axes){
  * @param {(number|...number)} [axes]
  * @returns {NdArray}
  * @example
-
+ *
  arr = nj.arange(6).reshape(1,2,3)
  // array([[[ 0, 1, 2],
  //         [ 3, 4, 5]]])
@@ -9121,7 +9218,7 @@ NdArray.prototype.transpose = function (axes){
 
  arr.transpose(1,0,2)
  // array([[[ 0, 1, 2]],
- [[ 3, 4, 5]]])
+ //        [[ 3, 4, 5]]])
 
  */
 
@@ -9390,8 +9487,92 @@ var doTanh = cwise({
  * @returns {NdArray}
  */
 function tanh(x){
-    var s = createArray(x).clone();
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
     doTanh(s.selection);
+    return s;
+}
+
+/**
+ * Return absolute value of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function abs(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.abseq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric cosine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function cos(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.coseq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric inverse cosine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function arccos(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.acoseq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric sine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function sin(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.sineq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric inverse sine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function arcsin(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.asineq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric tangent of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function tan(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.taneq(s.selection);
+    return s;
+}
+
+/**
+ * Return trigonometric inverse tangent of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function arctan(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.ataneq(s.selection);
     return s;
 }
 
@@ -9488,6 +9669,7 @@ function concatenate(arrays, dtype){
 }
 
 module.exports = {
+    config: CONF,
     dtypes: DTYPES,
     NdArray: NdArray,
     ndarray: ndarray,
@@ -9501,16 +9683,26 @@ module.exports = {
     softmax: softmax,
     sigmoid: sigmoid,
     leakyRelu: leakyRelu,
+    abs: abs,
+    arccos: arccos,
+    arcsin: arcsin,
+    arctan: arctan,
+    cos: cos,
+    sin: sin,
+    tan: tan,
     tanh: tanh,
     clip: clip,
     exp: exp,
+    sqrt: sqrt,
     sum: sum,
     mean: mean,
     std: std,
     dot: dot,
     add: add,
-    negative: negative,
+    subtract: subtract,
     multiply: multiply,
+    divide: divide,
+    negative: negative,
     size: size,
     equal: equal,
     max: max,
