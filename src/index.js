@@ -1472,7 +1472,7 @@ function fft(x){
     rPicker[d-1] = 0;
     iPicker[d-1] = 1;
     ndFFT(1, x.selection.pick.apply(x.selection, rPicker), x.selection.pick.apply(x.selection, iPicker));
-    return x
+    return x;
 }
 
 function ifft(x){
@@ -1487,7 +1487,7 @@ function ifft(x){
     rPicker[d-1] = 0;
     iPicker[d-1] = 1;
     ndFFT(-1, x.selection.pick.apply(x.selection, rPicker), x.selection.pick.apply(x.selection, iPicker));
-    return x
+    return x;
 }
 
 module.exports = {
