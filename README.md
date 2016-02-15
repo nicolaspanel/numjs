@@ -424,10 +424,44 @@ array([[  0,  1,  2,  3],
        [  8,  9, 10, 11]])
 ```
 
+### Fast Fourier Transform (FFT)
+`fft` and `ifft` functions can be used to compute the N-dimensional discrete Fourier Transform and its inverse.
+
+Example:
+```js
+> RI = nj.concatenate(nj.ones([10,1]), nj.zeros([10,1]))
+array([[ 1, 0],
+       [ 1, 0],
+       [ 1, 0],
+        ...
+       [ 1, 0],
+       [ 1, 0],
+       [ 1, 0]])
+>
+> fft = nj.fft(RI)
+array([[ 10,  0],
+       [  0,  0],
+       [  0,  0],
+        ...
+       [  0,  0],
+       [  0,  0],
+       [  0,  0]])
+>
+> nj.ifft(fft)
+array([[ 1, 0],
+       [ 1, 0],
+       [ 1, 0],
+        ...
+       [ 1, 0],
+       [ 1, 0],
+       [ 1, 0]])
+```
+__Note__: both `fft` and `ifft` expect last dimension of the array to contain 2 values: the real and the imaginary value
+
 
 ### Convolution
 
-`convolve` function can be used to compute the discrete, linear convolution of two multi-dimensional array:
+`convolve` function can be used to compute the discrete, linear convolution of two multi-dimensional arrays:
 ```js
 > x = nj.array([0,0,1,2,1,0,0])
 array([ 0, 0, 1, 2, 1, 0, 0])

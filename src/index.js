@@ -1460,6 +1460,36 @@ function convolve(a, b){
     return out;
 }
 
+function fft(x){
+    x = (x instanceof NdArray)? x.clone(): createArray(x);
+    var xShape = x.shape,
+        d = xShape.length;
+    if (xShape[d - 1] !== 2){
+        throw new errors.ValueError('expect last dimension of the array to have 2 values (for both real and imaginary part)');
+    }
+    var rPicker = new Array(d),
+        iPicker = new Array(d);
+    rPicker[d-1] = 0;
+    iPicker[d-1] = 1;
+    ndFFT(1, x.selection.pick.apply(x.selection, rPicker), x.selection.pick.apply(x.selection, iPicker));
+    return x
+}
+
+function ifft(x){
+    x = (x instanceof NdArray)? x.clone(): createArray(x);
+    var xShape = x.shape,
+        d = xShape.length;
+    if (xShape[d - 1] !== 2){
+        throw new errors.ValueError('expect last dimension of the array to have 2 values (for both real and imaginary part)');
+    }
+    var rPicker = new Array(d),
+        iPicker = new Array(d);
+    rPicker[d-1] = 0;
+    iPicker[d-1] = 1;
+    ndFFT(-1, x.selection.pick.apply(x.selection, rPicker), x.selection.pick.apply(x.selection, iPicker));
+    return x
+}
+
 module.exports = {
     config: CONF,
     dtypes: DTYPES,
@@ -1506,6 +1536,8 @@ module.exports = {
     broadcast: broadcast,
     round: round,
     convolve: convolve,
+    fft: fft,
+    ifft: ifft,
     int8: function (array) { return createArray(array, DTYPES.int8); },
     uint8: function (array) { return createArray(array, DTYPES.uint8); },
     int16: function (array) { return createArray(array, DTYPES.int16); },
