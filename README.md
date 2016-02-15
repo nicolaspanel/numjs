@@ -24,8 +24,6 @@ var nj = require('num4js');
 ...
 ```
 
-
-
 ### on the browser
 ```sh
 bower install num4js
@@ -180,34 +178,44 @@ To customize this behaviour, you can change the printing options using `nj.confi
 ```js
 > nj.config.printThreshold = 7;
 > console.log(nj.arange(10000).reshape(100,100))
-array([[    0,    1, ...,   98,   99],
-       [  100,  101, ...,  198,  199],
+array([[    0,    1,    2, ...,   97,   98,   99],
+       [  100,  101,  102, ...,  197,  198,  199],
+       [  200,  201,  202, ...,  297,  298,  299],
         ...
-       [ 9800, 9801, ..., 9898, 9899],
-       [ 9900, 9901, ..., 9998, 9999]])
+       [ 9700, 9701, 9702, ..., 9797, 9798, 9799],
+       [ 9800, 9801, 9802, ..., 9897, 9898, 9899],
+       [ 9900, 9901, 9902, ..., 9997, 9998, 9999]])
 ```
 
 ### Basic operations
 
-Arithmetic operators such as `*` (`multiply`), `+` (`add`), `-` (`subtract`) or `/` (`divide`) apply elemen-twise. A new array is created and filled with the result:
+Arithmetic operators such as `*` (`multiply`), `+` (`add`), `-` (`subtract`), `/` (`divide`), `**` (`pow`) apply elemen-twise. A new array is created and filled with the result:
 
 ```js
 > zeros = nj.zeros([3,4]);
 array([[ 0, 0, 0, 0],
        [ 0, 0, 0, 0],
        [ 0, 0, 0, 0]])
+>
 > ones = nj.ones([3,4]);
 array([[ 1, 1, 1, 1],
        [ 1, 1, 1, 1],
        [ 1, 1, 1, 1]])
+>
 > ones.add(ones)
 array([[ 2, 2, 2, 2],
        [ 2, 2, 2, 2],
        [ 2, 2, 2, 2]])
+>
 > ones.subtract(ones)
 array([[ 0, 0, 0, 0],
        [ 0, 0, 0, 0],
        [ 0, 0, 0, 0]])
+>
+> zeros.pow(zeros)
+array([[ 1, 1, 1, 1],
+       [ 1, 1, 1, 1],
+       [ 1, 1, 1, 1]])
 ```
 
 To modify an existing array rather than create a new one you can set the `copy` parameter to `false`:
@@ -226,7 +234,7 @@ array([[ 2, 2, 2, 2],
        [ 2, 2, 2, 2],
        [ 2, 2, 2, 2]])
 ```
-__Note__: available for `add`, `subtract`, `multiply` and `divide` methods.
+__Note__: available for `add`, `subtract`, `multiply`, `divide` and `pow` methods.
 
 
 The matrix product can be performed using the `dot` function:
@@ -253,14 +261,19 @@ Many unary operations, such as computing the sum of all the elements in the arra
 > a = nj.random([2,3])
 array([[0.3658842062577605, 0.740412384737283, 0.5527098260354251],
        [0.4542409502901137,0.07926959334872663,0.3524212788324803]])
+>
 > a.sum()
 2.544938239501789
+>
 > a.min()
 0.07926959334872663
+>
 > a.max()
 0.740412384737283
+>
 > a.mean()
 0.4241563732502982
+>
 > a.std()
 0.20204677551180758
 ```
