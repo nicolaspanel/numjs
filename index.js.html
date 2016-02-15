@@ -54,7 +54,7 @@ function isNumber(value) {
     return typeof value === 'number';
 }
 function isString(value) {
-    return typeof value == 'string';
+    return typeof value === 'string';
 }
 
 function initNativeArray(shape, i){
@@ -218,7 +218,7 @@ var NdArray = function NdArray(data, shape, stride, offset){
     });
     /**
      * Data-type of the array’s elements.
-     * 
+     *
      * @property {String}
      * @name NdArray#dtype
      * @see {dtypes} for more information
@@ -232,38 +232,138 @@ var NdArray = function NdArray(data, shape, stride, offset){
             this.selection = ndarray(new T(this.selection.data), this.selection.shape, this.selection.stride, this.selection.offset);
         }.bind(this)
     });
-};
-
-NdArray.prototype.pick = function(){
-    return new NdArray(this.selection.pick.apply(this.selection, arguments));
-};
-
-NdArray.prototype.lo = function () {
-    return new NdArray(this.selection.lo.apply(this.selection, arguments));
-};
-
-NdArray.prototype.hi = function () {
-    return new NdArray(this.selection.hi.apply(this.selection, arguments));
-};
-
-NdArray.prototype.add = function(value){
-    var shape = this.shape;
-    var type = getType(this.dtype);
-    var result = this.clone();
-    if (isNumber(value)){
-        ops.addseq(result.selection, value);
-        return result;
-    }
-    if (value instanceof NdArray){
-        ops.addeq(result.selection, value.selection);
-        return result;
-    }
-    throw new errors.ValueError('value must be a number or an array');
+    /**
+     * Permute the dimensions of the array.
+     *
+     * @property {String}
+     * @name NdArray#T
+     * @readonly
+     */
+    Object.defineProperty(this, 'T',{
+        get: function() {
+            return this.transpose();
+        }.bind(this)
+    });
 };
 
 
 /**
+ * Return a subarray by fixing a particular axis
+ *
+ * @param {...(number|null)} axis
+ * @returns {NdArray}
+ *
+ * @example
+ * ```js
+ arr = nj.arange(4*4).reshape(4,4)
+ // array([[  0,  1,  2,  3],
+ //        [  4,  5,  6,  7],
+ //        [  8,  9, 10, 11],
+ //        [ 12, 13, 14, 15]])
+
+ arr.pick(1)
+ // array([ 4, 5, 6, 7])
+
+ arr.pick(null, 1)
+ // array([  1,  5,  9, 13])
+
+ ```
+ */
+NdArray.prototype.pick = function(axis){
+    return new NdArray(this.selection.pick.apply(this.selection, arguments));
+};
+
+/**
+ * Return a shifted view of the array. Think of it as taking the upper left corner of the image and dragging it inward
+ *
+ * @returns {NdArray}
+ *
+ * @example
+ ```js
+ arr = nj.arange(4*4).reshape(4,4)
+ // array([[  0,  1,  2,  3],
+ //        [  4,  5,  6,  7],
+ //        [  8,  9, 10, 11],
+ //        [ 12, 13, 14, 15]])
+ arr.lo(1,1)
+ // array([[  5,  6,  7],
+ //        [  9, 10, 11],
+ //        [ 13, 14, 15]])
+ ```
+ */
+NdArray.prototype.lo = function () {
+    return new NdArray(this.selection.lo.apply(this.selection, arguments));
+};
+
+
+/**
+ * Return a sliced view of the array.
+ *
+ * @returns {NdArray}
+ *
+ * @example
+ * `NdArray#hi` alone:
+ ```js
+ arr = nj.arange(4*4).reshape(4,4)
+ // array([[  0,  1,  2,  3],
+ //        [  4,  5,  6,  7],
+ //        [  8,  9, 10, 11],
+ //        [ 12, 13, 14, 15]])
+
+ arr.hi(3,3)
+ // array([[  0,  1,  2],
+ //        [  4,  5,  6],
+ //        [  8,  9, 10]])
+ ```
+ * @example
+ * `NdArray#hi` with `NdArray#lo`:
+ * ```js
+ arr = nj.arange(4*4).reshape(4,4)
+ // array([[  0,  1,  2,  3],
+ //        [  4,  5,  6,  7],
+ //        [  8,  9, 10, 11],
+ //        [ 12, 13, 14, 15]])
+
+ arr.lo(1,1).hi(2,2)
+ // array([[ 5,  6],
+ //        [ 9, 10]])
+ ```
+ */
+NdArray.prototype.hi = function () {
+    return new NdArray(this.selection.hi.apply(this.selection, arguments));
+};
+
+/**
+ * Add argument element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.add = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+
+    if (isNumber(x)){
+        ops.addseq(arr.selection, x);
+        return arr;
+    }
+    x = createArray(x, this.dtype);
+    ops.addeq(arr.selection, x.selection);
+    return arr;
+};
+
+function add(a,b){
+    return createArray(a).add(b);
+}
+
+
+/**
  * Return the maximum value of the array
+ *
+ * @returns {Number}
  */
 NdArray.prototype.max = function () {
     if (this.selection.size === 0){
@@ -278,6 +378,8 @@ function max(array){
 
 /**
  * Return the minimum value of the array
+ *
+ * @returns {Number}
  */
 NdArray.prototype.min = function () {
     if (this.selection.size === 0){
@@ -320,34 +422,46 @@ function equal(array1, array2){
     return createArray(array1).equal(array2);
 }
 
-NdArray.prototype.mul = function(value){
-    var type = getType(this.dtype);
-    var result, shape;
-    if (isNumber(value)){
-        shape = this.shape;
-        result = new NdArray(new type(size(shape)), shape);
-        ops.muls(result.selection, this.selection, value);
-        return result;
+/**
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.multiply = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
     }
-    if (!(value instanceof NdArray)){
-        throw new Error('value must be a scalar or an array');
+    var arr = copy ? this.clone() : this;
+    if (isNumber(x)){
+        ops.mulseq(arr.selection, x);
+        return arr;
     }
-    shape = broadcast(this.shape, value.shape);
-    if (!shape){
-        throw new errors.ValueError('dimensions are not broadcastable');
-    }
-    result = new NdArray(new type(size(shape)), shape);
-    ops.mul(result.selection, this.selection, value.selection);
-    return result;
+
+    x = createArray(x, this.dtype);
+    ops.muleq(arr.selection, x.selection);
+
+    return arr;
 };
-function mul(a,b){
-    return createArray(a).mul(b);
+/**
+ * Multiply arguments element-wise.
+ *
+ * @param {(Array|NdArray)} a
+ * @param {(Array|NdArray|number)} b
+ * @returns {NdArray}
+ */
+function multiply(a,b){
+    return createArray(a).multiply(b);
 }
 
+/**
+ * Return a copy of the array collapsed into one dimension using row-major order (C-style)
+ *
+ * @returns {NdArray}
+ */
 NdArray.prototype.flatten = function () {
-    if (this.shape.length === 1){
-        // already flattened
-        return new NdArray(this.selection)
+    if (this.shape.length === 1){ // already flattened
+        return new NdArray(this.selection);
     }
     var T = getType(this.dtype);
     var arr = _.flattenDeep(this.tolist());
@@ -357,10 +471,22 @@ NdArray.prototype.flatten = function () {
     return new NdArray(arr, [this.size]);
 };
 
+/**
+ * Return a copy of the array collapsed into one dimension using row-major order (C-style)
+
+ * @param {(Array|NdArray)} array
+ * @returns {NdArray}
+ */
 function flatten(array){
     return createArray(array).flatten();
 }
 
+
+/**
+ * Gives a new shape to the array without changing its data.
+ * @param {Array} shape
+ * @returns {NdArray}
+ */
 NdArray.prototype.reshape = function(shape){
     if (arguments.length === 0) {
         throw new errors.ValueError('function takes at least one argument (0 given)');
@@ -381,10 +507,10 @@ NdArray.prototype.reshape = function(shape){
         selfStride = this.selection.stride,
         selfDim = selfShape.length;
 
-    var d = shape.length, stride, offset;
+    var d = shape.length, stride, offset, i, sz;
     if (selfDim === d){
         var sameShapes = true;
-        for (var i=0; i&lt;d; ++i) {
+        for (i=0; i&lt;d; ++i) {
             if (selfShape[i] !== shape[i]){
                 sameShapes = false;
                 break;
@@ -397,12 +523,12 @@ NdArray.prototype.reshape = function(shape){
     else if (selfDim === 1){
         // 1d view
         stride = new Array(d);
-        for(var i=d-1, sz=1; i>=0; --i) {
+        for(i=d-1, sz=1; i>=0; --i) {
             stride[i] = sz;
             sz *= shape[i];
         }
         offset = selfOffset;
-        for(var i=0; i&lt;d; ++i) {
+        for(i=0; i&lt;d; ++i) {
             if(stride[i] &lt; 0) {
                 offset -= (shape[i]-1)*stride[i];
             }
@@ -412,7 +538,7 @@ NdArray.prototype.reshape = function(shape){
 
     var minDim = Math.min(selfDim, d);
     var areCompatible = true;
-    for(var i=0; i&lt;minDim; i++) {
+    for(i=0; i&lt;minDim; i++) {
         if (selfShape[i] !== shape[i]){
             areCompatible = false;
             break;
@@ -420,7 +546,7 @@ NdArray.prototype.reshape = function(shape){
     }
     if (areCompatible){
         stride = new Array(d);
-        for (var i=0;i&lt;d;i++){
+        for (i=0;i&lt;d;i++){
             stride[i] = selfStride[i] || 1;
         }
         offset = selfOffset;
@@ -429,6 +555,15 @@ NdArray.prototype.reshape = function(shape){
     return this.flatten().reshape(shape);
 };
 
+/**
+ * Gives a new shape to an array without changing its data.
+ * @param {(Array|NdArray)} array
+ * @param {Array} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length
+ * @returns {NdArray}
+ */
+function reshape(array, shape){
+    return createArray(array).reshape(shape);
+}
 //NdArray.prototype.dtype = function(dtype){
 //    if (!arguments.length){
 //        return this.selection.dtype;
@@ -496,33 +631,97 @@ NdArray.prototype.toJSON = function () {
 };
 
 NdArray.prototype.clone = function () {
-    var s = this.selection,
-        clone = ndarray(s.data.slice(), s.shape, s.stride, s.offset);
-    return new NdArray(clone);
+    var s = this.selection;
+    return new NdArray(ndarray(s.data.slice(), s.shape, s.stride, s.offset));
 };
 
+/**
+ * Calculate the exponential of all elements in the array.
+ *
+ * @returns {NdArray}
+ */
 NdArray.prototype.exp = function(){
     var arr = this.clone() ;
     ops.expeq(arr.selection);
     return arr;
 };
+/**
+ * Calculate the exponential of all elements in the input array.
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function exp(x){
+    return createArray(x).exp();
+}
 
+/**
+ * Sum of array elements.
+ *
+ * @returns {NdArray}
+ */
 NdArray.prototype.sum = function(){
     return ops.sum(this.selection);
 };
 
+/**
+ * Return the sum of input array elements.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function sum(x){
+    return createArray(x).sum();
+}
+
+/**
+ * Return the arithmetic mean of array elements.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 NdArray.prototype.mean = function(){
     return ops.sum(this.selection) / size(this.shape);
 };
 
+/**
+ * Return the arithmetic mean of input array elements.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function mean(x){
+    return createArray(x).mean();
+}
+
+/**
+ * Returns the standard deviation, a measure of the spread of a distribution, of the array elements.
+ *
+ * @returns {NdArray}
+ */
 NdArray.prototype.std = function(){
     var squares = this.clone();
     ops.powseq(squares.selection, 2);
     var mean =  this.mean(),
         variance = Math.abs(ops.sum(squares.selection) / size(this.shape) - mean * mean);
-    return variance > 0? Math.sqrt(variance): 1;
+    return variance > 0 ? Math.sqrt(variance): 0;
 };
 
+/**
+ * Returns the standard deviation, a measure of the spread of a distribution, of the input array elements.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function std(x){
+    return createArray(x).std();
+}
+
+/**
+ * Permute the dimensions of the array.
+ *
+ * @param {(number|...number)} [axes]
+ * @returns {NdArray}
+ */
 NdArray.prototype.transpose = function (axes){
     if (arguments.length === 0) {
         axes = iota(this.shape.length).reverse();
@@ -533,11 +732,62 @@ NdArray.prototype.transpose = function (axes){
     return new NdArray(this.selection.transpose.apply(this.selection, axes));
 };
 
-NdArray.prototype.neg = function(){
+/**
+ * Permute the dimensions of the input array according to the given axes.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @param {(number|...number)} [axes]
+ * @returns {NdArray}
+ * @example
+ * This example shows how to permute all dimensions of the array
+ ```js
+ arr = nj.arange(6).reshape(1,2,3)
+ // array([[[ 0, 1, 2],
+ //         [ 3, 4, 5]]])
+ arr.T
+ // array([[[ 0],
+ //         [ 3]],
+ //        [[ 1],
+ //         [ 4]],
+ //        [[ 2],
+ //         [ 5]]])
+ ```
+ * @example
+ * This example shows how to permute some dimensions of the array
+ ```js
+ arr = nj.arange(6).reshape(1,2,3)
+ // array([[[ 0, 1, 2],
+ //         [ 3, 4, 5]]])
+ arr.transpose(1,0,2)
+ // array([[[ 0, 1, 2]],
+           [[ 3, 4, 5]]])
+ ```
+ */
+
+function transpose(x, axes){
+    return createArray(x).transpose(axes);
+}
+
+/**
+ * Return the inverse of the array, element-wise.
+ *
+ * @returns {NdArray}
+ */
+NdArray.prototype.negative = function(){
     var c = this.clone();
     ops.neg(c.selection, this.selection);
     return c;
 };
+
+/**
+ * Return the inverse of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function negative(x){
+    return createArray(x).negative();
+}
 
 NdArray.prototype.get = function(){
     return this.selection.get.apply(this.selection, arguments);
@@ -601,10 +851,10 @@ function arange(start, stop, step, dtype) {
     if (arguments.length === 1){
         stop  = start;
         start = 0;
-        step = 1
+        step = 1;
     }
     else if (arguments.length === 2 &amp;&amp; isNumber(stop)){
-        step = 1
+        step = 1;
     }
     else if (arguments.length === 2){
         dtype = stop;
@@ -669,46 +919,37 @@ function ones(shape, dtype){
 }
 
 
-
-function random(shape, dtype){
-    if (isNumber(shape) &amp;&amp; shape >=0){
-        shape = [shape];
+/**
+ * Create an array of the given shape and propagate it with random samples from a uniform distribution over [0, 1].
+ * @param {number|Array|...number} shape - The dimensions of the returned array, should all be positive integers
+ * @returns {NdArray}
+ */
+function random(shape){
+    if (arguments.length === 0){
+        return createArray(Math.random());
     }
-    else if (!_.isArray(shape)){
-        throw new Error('shape must be a positive integer or an array');
+    else if (arguments.length === 1){
+        shape = isNumber(shape)? [shape | 0] : shape;
+    }
+    else {
+        shape = arguments;
     }
     var s = size(shape);
-    var type = getType(dtype);
-    var arr =  new NdArray(new type(s), shape);
+    var arr =  new NdArray(new Array(s), shape);
     ops.random(arr.selection);
     return arr;
 }
 
+/**
+ * Return the softmax, or normalized exponential, of the input array element wise
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function softmax(x){
-    var e = (x instanceof NdArray)? x.exp(): createArray(x).exp();
+    var e = createArray(x).exp();
     var se = e.sum(); // scalar
     ops.divseq(e.selection, se);
     return e;
-}
-
-function exp(x){
-    if (isNumber(x)){ return Math.exp(x); }
-    return (x instanceof NdArray)? x.exp() : createArray(x).exp();
-}
-
-function sum(x){
-    if (isNumber(x)){ return x; }
-    return (x instanceof NdArray)? x.sum() : createArray(x).sum();
-}
-
-function mean(x){
-    if (isNumber(x)){ return x; }
-    return (x instanceof NdArray)? x.mean() : createArray(x).mean();
-}
-
-function std(x){
-    if (isNumber(x)){ return 0; }
-    return (x instanceof NdArray)? x.std() : createArray(x).std();
 }
 
 
@@ -718,11 +959,18 @@ var doSigmoid = cwise({
         a = a &lt; -30? 0: a > 30? 1: 1 / (1 + Math.exp(-1 * t * a));
     }
 });
+
+/**
+ * Return the sigmoid of the input array element wise.
+ * @param {(Array|NdArray|number)} x
+ * @param {number} [t=1] - stifness parameter
+ * @returns {NdArray}
+ */
 function sigmoid(x, t){
-    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    x = createArray(x).clone();
     t = t || 1;
-    doSigmoid(s.selection, t);
-    return s;
+    doSigmoid(x.selection, t);
+    return x;
 }
 
 var doClip = cwise({
@@ -732,7 +980,23 @@ var doClip = cwise({
     }
 });
 
+
+/**
+ * Clip (limit) the values in an array between min and max element wise
+ *
+ * @param {(Array|NdArray|number)} x
+ * @param {number} [min=0]
+ * @param {number} [max=1]
+ * @returns {NdArray}
+ */
 function clip(x, min, max){
+    if (arguments.length === 1){
+        min = 0;
+        max = 1;
+    }
+    else if (arguments.length === 2){
+        max = 1;
+    }
     var s = (x instanceof NdArray)? x.clone(): createArray(x);
     doClip(s.selection, min, max);
     return s;
@@ -760,51 +1024,66 @@ var doTanh = cwise({
     }
 });
 
+
+/**
+ * Return hyperbolic tangent of the input array element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function tanh(x){
     var s = createArray(x).clone();
     doTanh(s.selection);
     return s;
 }
 
+/**
+ * Dot product of two arrays.
+ *
+ * WARNING: supported products are:
+ *  - matrix dot matrix
+ *  - vector dot vector
+ *  - matrix dot vector
+ *  - vector dot matrix
+ * @param {(Array|NdArray)} a
+ * @param {(Array|NdArray)} b
+ * @returns {NdArray}
+ */
 function dot(a,b){
-    var xa = (a instanceof NdArray)? a: createArray(a);
-    var xb = (b instanceof NdArray)? b: createArray(b);
-    var xaShape = xa.shape,
-        xbShape = xb.shape;
-    var shape, c, rxa, rxb, type = getType(xa.dtype);
+    a = createArray(a);
+    b = createArray(b);
+    var aShape = a.shape,
+        bShape = b.shape;
+    var shape, c, rxa, rxb, type = getType(a.dtype);
 
-    if (xaShape.length === 2 &amp;&amp; xbShape.length === 2){
-        shape = [xaShape[0], xbShape[1]];
+    if (aShape.length === 2 &amp;&amp; bShape.length === 2 &amp;&amp; aShape[1] === bShape[0]){ // matrix/matrix
+        shape = [aShape[0], bShape[1]];
         c = new NdArray(new type(size(shape)), shape);
-        gemm(c.selection, xa.selection, xb.selection);
+        gemm(c.selection, a.selection, b.selection);
         return c;
     }
-    else if (xaShape.length === 1 &amp;&amp; xbShape.length === 2){
-        shape = [1, xbShape[1]];
-        rxa = xa.reshape([xaShape[0], 1]).transpose();
-        c = new NdArray(new type(size(shape)), shape);
-        gemm(c.selection, rxa.selection, xb.selection);
-        return c.flatten();
+    else if (aShape.length === 1 &amp;&amp; bShape.length === 2 &amp;&amp; aShape[0] === bShape[0]){ // vector/matrix
+        return dot(a.reshape([aShape[0], 1]).transpose(), b).reshape(bShape[1]);
     }
-    else if (xaShape.length === 1 &amp;&amp; xbShape.length === 1 &amp;&amp; xaShape[0] === xbShape[0]){
-        shape = [1, 1];
-        rxa = xa.reshape([xaShape[0], 1]).transpose();
-        rxb = xb.reshape([xbShape[0], 1]);
-        c = new NdArray(new type(size(shape)), shape);
-        gemm(c.selection, rxa.selection, rxb.selection);
-        return c.reshape([1]);
+    else if (aShape.length === 2 &amp;&amp; bShape.length === 1 &amp;&amp; aShape[1] === bShape[0]){ // matrix/vector
+        return dot(a, b.reshape([bShape[0], 1])).reshape(aShape[0]);
+    }
+    else if (aShape.length === 1 &amp;&amp; bShape.length === 1 &amp;&amp; aShape[0] === bShape[0]){ // vector/vector
+        return dot(a.reshape([aShape[0], 1]).transpose(),  b.reshape([bShape[0], 1])).reshape([1]);
     }
     else {
-        throw new errors.NotImplementedError();
+        throw new errors.ValueError('cannot compute the matrix product of given arrays');
         //throw new errors.ValueError('shapes ('+xaShape[0]+',) and ('+xbShape[0]+',) not aligned: '+xaShape[0]+ '(dim 0) != '+xbShape[0]+' (dim 0)');
     }
 }
 
-
+/**
+ * Join given arrays along the last axis
+ * @param {Array[]|NdArray[]} arrays
+ * @param dtype
+ * @returns {*}
+ */
 function concatenate(arrays, dtype){
-//    if (_.some(arrays, function(a){return  isNumber(a); })){
-//        throw new errors.ValueError('zero-dimensional arrays cannot be concatenated');
-//    }
 
     var c = _
         .chain(arrays)
@@ -841,27 +1120,13 @@ function concatenate(arrays, dtype){
     return createArray(c, dtype);
 }
 
-function transpose(x, axes){
-    return createArray(x).transpose(axes);
-}
-
-function add(a,b){
-    return createArray(a).add(b);
-}
-
-function neg(x){
-    return createArray(x).neg();
-}
-
-
-
-
 module.exports = {
     dtypes: DTYPES,
     NdArray: NdArray,
     ndarray: ndarray,
     array: createArray,
     arange: arange,
+    reshape: reshape,
     zeros: zeros,
     ones: ones,
     flatten: flatten,
@@ -877,8 +1142,8 @@ module.exports = {
     std: std,
     dot: dot,
     add: add,
-    neg: neg,
-    mul: mul,
+    negative: negative,
+    multiply: multiply,
     size: size,
     equal: equal,
     max: max,
@@ -906,13 +1171,13 @@ _.forEach(DTYPES, function(v,k){
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#arange">arange</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#arange">arange</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Sun Feb 14 2016 19:55:49 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 02:45:32 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>
