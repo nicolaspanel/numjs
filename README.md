@@ -73,10 +73,10 @@ array([[[ 1, 1, 1, 1],
         [ 1, 1, 1, 1]]], dtype=int32)
 
 > nj.random([4,3])
-array([[ 0.7131339153274894, 0.5784974242560565,0.39271794515661895],
-       [ 0.8187951485160738,  0.830815645866096, 0.7394127324223518],
-       [ 0.7980840434320271, 0.5938412109389901, 0.9076390236150473],
-       [ 0.8864211943000555,0.28645253647118807, 0.7208044717554003]])
+array([[ 0.9182 , 0.85176,0.22587],
+       [ 0.50088, 0.74376,0.84024],
+       [ 0.74045, 0.23345,0.20289],
+       [ 0.00612, 0.37732,0.06932]])
 ```
 
 To create sequences of numbers, __Num4JS__ provides a function called `arange`:
@@ -101,7 +101,6 @@ __Num4JS__’s array class is called `NdArray`. It is also known by the alias `a
  - `NdArray#dtype`: a string describing the type of the elements in the array. `int32`, `int16`, and `float64` are some examples. Default dtype is `array`.
 
 An `NdArray` can always be converted to a native JavaScript `Array` using `NdArray#tolist()` method.
-
 
 
 Example:
@@ -174,17 +173,20 @@ array([[    0,    1, ...,   98,   99],
        [ 9900, 9901, ..., 9998, 9999]])
 ```
 
-To customize this behaviour, you can change the printing options using `nj.config.printThreshold` (default is `5`):
+To customize this behaviour, you can change the printing options using `nj.config.printThreshold` (default is `7`):
 ```js
-> nj.config.printThreshold = 7;
+> nj.config.printThreshold = 9;
 > console.log(nj.arange(10000).reshape(100,100))
-array([[    0,    1,    2, ...,   97,   98,   99],
-       [  100,  101,  102, ...,  197,  198,  199],
-       [  200,  201,  202, ...,  297,  298,  299],
+array([[    0,    1,    2,    3, ...,   96,   97,   98,   99],
+       [  100,  101,  102,  103, ...,  196,  197,  198,  199],
+       [  200,  201,  202,  203, ...,  296,  297,  298,  299],
+       [  300,  301,  302,  303, ...,  396,  397,  398,  399],
         ...
-       [ 9700, 9701, 9702, ..., 9797, 9798, 9799],
-       [ 9800, 9801, 9802, ..., 9897, 9898, 9899],
-       [ 9900, 9901, 9902, ..., 9997, 9998, 9999]])
+       [ 9600, 9601, 9602, 9603, ..., 9696, 9697, 9698, 9699],
+       [ 9700, 9701, 9702, 9703, ..., 9796, 9797, 9798, 9799],
+       [ 9800, 9801, 9802, 9803, ..., 9896, 9897, 9898, 9899],
+       [ 9900, 9901, 9902, 9903, ..., 9996, 9997, 9998, 9999]])
+
 ```
 
 ### Basic operations
@@ -225,10 +227,12 @@ To modify an existing array rather than create a new one you can set the `copy` 
 array([[ 1, 1, 1, 1],
        [ 1, 1, 1, 1],
        [ 1, 1, 1, 1]])
+>
 > ones.add(ones, false)
 array([[ 2, 2, 2, 2],
        [ 2, 2, 2, 2],
        [ 2, 2, 2, 2]])
+>
 > ones
 array([[ 2, 2, 2, 2],
        [ 2, 2, 2, 2],
@@ -244,11 +248,13 @@ The matrix product can be performed using the `dot` function:
 array([[  0,  1,  2,  3],
        [  4,  5,  6,  7],
        [  8,  9, 10, 11]])
+>
 > nj.dot(a.T, a)
 array([[  80,  92, 104, 116],
        [  92, 107, 122, 137],
        [ 104, 122, 140, 158],
        [ 116, 137, 158, 179]])
+>
 > nj.dot(a, a.T)
 array([[  14,  38,  62],
        [  38, 126, 214],
@@ -342,10 +348,11 @@ array([[  0,  4,  8],
        [  2,  6, 10],
        [  3,  7, 11]])
 >
-> a.reshape(3,4)
-array([[  0,  1,  2,  3],
-       [  4,  5,  6,  7],
-       [  8,  9, 10, 11]])
+> a.reshape(4,3)
+array([[  0,  1,  2],
+       [  3,  4,  5],
+       [  6,  7,  8],
+       [  9, 10, 11]])
 ```
 
 ### Concatenate different arrays
@@ -418,7 +425,39 @@ array([[  0,  1,  2,  3],
 ```
 
 
-### More?
+### Convolution
+
+`convolve` function can be used to compute the discrete, linear convolution of two multi-dimensional array:
+```js
+> x = nj.array([0,0,1,2,1,0,0])
+array([ 0, 0, 1, 2, 1, 0, 0])
+>
+> nj.convolve(x, [-1,0,1])
+array([-1,-2, 0, 2, 1])
+>
+> var a = nj.arange(25).reshape(5,5)
+undefined
+> a
+array([[  0,  1,  2,  3,  4],
+       [  5,  6,  7,  8,  9],
+       [ 10, 11, 12, 13, 14],
+       [ 15, 16, 17, 18, 19],
+       [ 20, 21, 22, 23, 24]])
+> nj.convolve(a, [[ 1, 2, 1], [ 0, 0, 0], [-1,-2,-1]])
+array([[ 40, 40, 40],
+       [ 40, 40, 40],
+       [ 40, 40, 40]])
+> nj.convolve(nj.convolve(a, [[1, 2, 1]]), [[1],[0],[-1]])
+array([[ 40, 40, 40],
+       [ 40, 40, 40],
+       [ 40, 40, 40]])
+```
+
+__Note__: `convolve` uses FFT to speed up computation on large arrays.
+
+
+
+### More ?
 See [documentation](http://nicolaspanel.github.io/num4js/global.html).
 
 

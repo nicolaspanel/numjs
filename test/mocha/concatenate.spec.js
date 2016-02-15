@@ -17,7 +17,6 @@ describe('concat', function(){
         });
     });
 
-
     it('can concatenate 2 vectors', function () {
         expect(nj.concatenate([[0],[1]]).tolist())
             .to.eql([0,1]);

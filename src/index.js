@@ -10,7 +10,8 @@ var ndFFT = require('ndarray-fft');
 var ndPool = require('typedarray-pool');
 
 var CONF = {
-    printThreshold: 5
+    printThreshold: 7,
+    nFloatingValues: 5
 },  DTYPES = {
     int8: Int8Array,
     int16: Int16Array,
@@ -21,6 +22,10 @@ var CONF = {
     float32: Float32Array,
     float64: Float64Array
 };
+
+function formatNumber(v){
+    return String(Number((v || 0).toFixed(CONF.nFloatingValues)));
+}
 
 function isNumber(value) {
     return typeof value === 'number';
@@ -650,14 +655,16 @@ NdArray.prototype.tolist = function(){
     return unpackArray(this.selection);
 };
 
+NdArray.prototype.valueOf = function(){
+    return this.tolist();
+};
 /**
  * Stringify the array to make it readable by a human.
  *
  * @returns {string}
  */
 NdArray.prototype.toString = function(){
-    var max = this.max();
-    var nChars = String(max).length;
+    var nChars = formatNumber(this.max()).length;
 
     var reg1 = /\]\,(\s*)\[/g,
         spacer1  = '],\n$1      [',
@@ -669,7 +676,7 @@ NdArray.prototype.toString = function(){
     function formatArray(k, v){
         if (isString(v)){ return v; }
         if (isNumber(v)){
-            var s = String(v);
+            var s = formatNumber(v);
             return new Array(Math.max(0, nChars - s.length +2)).join(' ') + s;
         }
         k = k || 0;
@@ -1334,6 +1341,125 @@ function concatenate(arrays){
     return createArray(m, arrays[0].dtype);
 }
 
+
+var doConjMuleq = cwise({
+    args: ['array', 'array', 'array', 'array'],
+    body: function(xi, yi, ui, vi) {
+        var a = ui, b = vi, c = xi, d = yi,
+            k1 = c * (a + b);
+        xi = k1 - b * (c + d);
+        yi = k1 + a * (d - c);
+    }
+});
+
+NdArray.prototype.round = function (copy) {
+    if (arguments.length === 0){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+    ops.roundeq(arr.selection);
+    return arr;
+};
+
+/**
+ * Round an array to the to the nearest integer.
+ *
+ * @param {(Array|NdArray)} x
+ * @returns {NdArray}
+ */
+function round(x){
+    return createArray(x).round();
+}
+/**
+ * Returns the discrete, linear convolution of two arrays.
+ * 
+ * @note: Arrays must have the same dimensions and a must be greater than b.
+ * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
+ * 
+ * @param {Array|NdArray} a
+ * @param {Array|NdArray} b
+ */
+function convolve(a, b){
+    a = createArray(a);
+    b = createArray(b);
+
+    if (a.ndim !== b.ndim){
+        throw new errors.ValueError('arrays must have the same dimensions');
+    }
+
+    var as = a.selection,
+        bs = b.selection;
+    var d = a.ndim,
+        nsize = 1,
+        nstride = new Array(d),
+        nshape = new Array(d),
+        oshape = new Array(d),
+        i;
+    for(i=d-1; i>=0; --i) {
+        nshape[i] = as.shape[i];
+        nstride[i] = nsize;
+        nsize *= nshape[i];
+        oshape[i] = as.shape[i] - bs.shape[i] + 1;
+    }
+
+    var T = getType(as.dtype),
+        out = new NdArray(new T(size(oshape)), oshape),
+        outs = out.selection;
+
+    var xT = ndPool.mallocDouble(nsize),
+        x = ndarray(xT, nshape, nstride, 0);
+    ops.assigns(x, 0);
+    ops.assign(x.hi.apply(x, as.shape), as);
+
+    var yT = ndPool.mallocDouble(nsize),
+        y = ndarray(yT, nshape, nstride, 0);
+    ops.assigns(y, 0);
+
+    //FFT x/y
+    ndFFT(1, x, y);
+
+    var uT = ndPool.mallocDouble(nsize),
+        u = ndarray(uT, nshape, nstride, 0);
+    ops.assigns(u, 0);
+    ops.assign(u.hi.apply(u, bs.shape), bs);
+
+    var vT = ndPool.mallocDouble(nsize),
+        v = ndarray(vT, nshape, nstride, 0);
+    ops.assigns(v, 0);
+
+
+    ndFFT(1, u, v);
+
+    doConjMuleq(x, y, u, v);
+
+    ndFFT(-1, x, y);
+
+    var outShape = new Array(d),
+        outOffset = new Array(d),
+        needZeroFill = false;
+    for(i=0; i<d; ++i) {
+        if(outs.shape[i] > nshape[i]) {
+            needZeroFill = true;
+        }
+        outOffset[i] = + bs.shape[i] - 1;
+        outShape[i] = Math.min(outs.shape[i], nshape[i]-outOffset[i]);
+    }
+
+    var croppedX;
+    if(needZeroFill) {
+        ops.assign(outs, 0.0);
+    }
+    croppedX = x.lo.apply(x, outOffset);
+    croppedX = croppedX.hi.apply(croppedX, outShape);
+    ops.assign(outs.hi.apply(outs, outShape), croppedX);
+
+    ndPool.freeDouble(xT);
+    ndPool.freeDouble(yT);
+    ndPool.freeDouble(uT);
+    ndPool.freeDouble(vT);
+    return out;
+}
+
 module.exports = {
     config: CONF,
     dtypes: DTYPES,
@@ -1378,11 +1504,8 @@ module.exports = {
     transpose: transpose,
     errors: errors,
     broadcast: broadcast,
-    //locate: locateIndex,
-    //cwise: cwise,
-    fft: ndFFT,
-    ops: ops,
-    pool: ndPool,
+    round: round,
+    convolve: convolve,
     int8: function (array) { return createArray(array, DTYPES.int8); },
     uint8: function (array) { return createArray(array, DTYPES.uint8); },
     int16: function (array) { return createArray(array, DTYPES.int16); },
