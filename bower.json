@@ -2,7 +2,7 @@
   "name": "num4js",
   "version": "0.3.0",
   "description": "Like NumPy, in JavaScript",
-  "main": "num4js.min.js",
+  "main": "dist/num4js.min.js",
   "author": "Nicolas Panel",
   "license": "MIT",
   "keywords": [

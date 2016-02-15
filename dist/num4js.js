@@ -9120,6 +9120,40 @@ function sqrt(x){
     return s;
 }
 
+
+/**
+ * Raise array elements to powers from given array, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
+ * @returns {NdArray}
+ */
+NdArray.prototype.pow = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+    if (isNumber(x)){
+        ops.powseq(arr.selection, x);
+        return arr;
+    }
+
+    x = createArray(x, this.dtype);
+    ops.poweq(arr.selection, x.selection);
+    return arr;
+};
+
+/**
+ * Raise first array elements to powers from second array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x1
+ * @param {(Array|NdArray|number)} x2
+ * @returns {NdArray}
+ */
+function power(x1, x2){
+    return createArray(x1).pow(x2);
+}
+
 /**
  * Sum of array elements.
  *
@@ -9694,6 +9728,7 @@ module.exports = {
     clip: clip,
     exp: exp,
     sqrt: sqrt,
+    power: power,
     sum: sum,
     mean: mean,
     std: std,

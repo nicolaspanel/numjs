@@ -29,7 +29,7 @@ module.exports = function(grunt) {
         browserify: {
             dist: {
                 files: {
-                    'num4js.js': 'src/index.js'
+                    'dist/num4js.js': 'src/index.js'
                 }
             },
             options: {
@@ -55,7 +55,7 @@ module.exports = function(grunt) {
                     files: [
                         'test/karma/phantom.js',
                         // tested files
-                        'num4js.min.js',
+                        'dist/num4js.min.js',
                         //tests files
                         'test/karma/*.spec.js',
                         {pattern: 'test/data/**/*.png', watched: false, included: false, served: true}
@@ -66,7 +66,7 @@ module.exports = function(grunt) {
                 options: {
                     files: [
                         'test/karma/phantom.js',
-                        'num4js.js',
+                        'dist/num4js.js',
                         'test/karma/*.spec.js',
                         {pattern: 'test/data/**/*.png', watched: false, included: false, served: true}
                     ]
@@ -79,7 +79,7 @@ module.exports = function(grunt) {
                     banner: '/*! <%= pkg.name %>#<%= pkg.version %> */\n'
                 },
                 files: {
-                    'num4js.min.js': 'num4js.js'
+                    'dist/num4js.min.js': 'dist/num4js.js'
                 }
             }
         },
