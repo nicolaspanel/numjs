@@ -388,6 +388,72 @@ NdArray.prototype.subtract = function(x, copy){
 };
 
 /**
+ * Multiply array by `x`, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.multiply = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+    if (isNumber(x)){
+        ops.mulseq(arr.selection, x);
+        return arr;
+    }
+
+    x = createArray(x, this.dtype);
+    ops.muleq(arr.selection, x.selection);
+
+    return arr;
+};
+/**
+ * Multiply arguments, element-wise.
+ *
+ * @param {(Array|NdArray)} a
+ * @param {(Array|NdArray|number)} b
+ * @returns {NdArray}
+ */
+function multiply(a,b){
+    return createArray(a).multiply(b);
+}
+
+/**
+ * Divide array by `x`, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.divide = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+    if (isNumber(x)){
+        ops.divseq(arr.selection, x);
+        return arr;
+    }
+
+    x = createArray(x, this.dtype);
+    ops.diveq(arr.selection, x.selection);
+
+    return arr;
+};
+/**
+ * Divide `a` by `b`, element-wise.
+ *
+ * @param {(Array|NdArray)} a
+ * @param {(Array|NdArray|number)} b
+ * @returns {NdArray}
+ */
+function divide(a,b){
+    return createArray(a).divide(b);
+}
+
+/**
  * Subtract second argument from the first, element-wise.
  *
  * @param {(NdArray|Array|number)} a
@@ -461,37 +527,7 @@ function equal(array1, array2){
     return createArray(array1).equal(array2);
 }
 
-/**
- *
- * @param {(NdArray|Array|number)} x
- * @param {boolean} [copy=true]
- * @returns {NdArray}
- */
-NdArray.prototype.multiply = function(x, copy){
-    if (arguments.length === 1){
-        copy = true;
-    }
-    var arr = copy ? this.clone() : this;
-    if (isNumber(x)){
-        ops.mulseq(arr.selection, x);
-        return arr;
-    }
 
-    x = createArray(x, this.dtype);
-    ops.muleq(arr.selection, x.selection);
-
-    return arr;
-};
-/**
- * Multiply arguments, element-wise.
- *
- * @param {(Array|NdArray)} a
- * @param {(Array|NdArray|number)} b
- * @returns {NdArray}
- */
-function multiply(a,b){
-    return createArray(a).multiply(b);
-}
 
 /**
  * Return a copy of the array collapsed into one dimension using row-major order (C-style)
@@ -1192,8 +1228,9 @@ module.exports = {
     dot: dot,
     add: add,
     subtract: subtract,
-    negative: negative,
     multiply: multiply,
+    divide: divide,
+    negative: negative,
     size: size,
     equal: equal,
     max: max,
