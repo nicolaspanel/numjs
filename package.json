@@ -1,6 +1,6 @@
 {
   "name": "num4js",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Like NumPy, in JavaScript",
   "main": "src/index.js",
   "directories": {
@@ -12,7 +12,7 @@
     "ndarray-fft": "^1.0.0",
     "ndarray-ops": "^1.2.2",
     "ndarray-gemm": "^1.0.0",
-    "sharp": "git+https://github.com/lovell/sharp.git",
+    "sharp": "^0.13.0",
     "typedarray-pool": "^1.1.0"
   },
   "devDependencies": {
