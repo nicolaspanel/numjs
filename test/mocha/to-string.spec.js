@@ -59,4 +59,26 @@ describe('toString', function () {
             '       [ 80, 81, ..., 88, 89],\n' +
             '       [ 90, 91, ..., 98, 99]])');
     });
+    describe('with custom printThreshold', function () {
+        var def;
+        before(function () {
+            def = nj.config.printThreshold;
+            nj.config.printThreshold = 7;
+        });
+        after(function () {
+            nj.config.printThreshold = def;
+        });
+        it('should give more information', function () {
+            expect(nj.arange(100).reshape(10,10).toString())
+                .to.eql('' +
+                'array([[  0,  1,  2, ...,  7,  8,  9],\n' +
+                '       [ 10, 11, 12, ..., 17, 18, 19],\n' +
+                '       [ 20, 21, 22, ..., 27, 28, 29],\n' +
+                '        ...\n' +
+                '       [ 70, 71, 72, ..., 77, 78, 79],\n' +
+                '       [ 80, 81, 82, ..., 87, 88, 89],\n' +
+                '       [ 90, 91, 92, ..., 97, 98, 99]])');
+        });
+
+    });
 });
