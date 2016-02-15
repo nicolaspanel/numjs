@@ -73,10 +73,10 @@ array([[[ 1, 1, 1, 1],
         [ 1, 1, 1, 1]]], dtype=int32)
 
 > nj.random([4,3])
-array([[ 0.9182 , 0.85176,0.22587],
-       [ 0.50088, 0.74376,0.84024],
-       [ 0.74045, 0.23345,0.20289],
-       [ 0.00612, 0.37732,0.06932]])
+array([[ 0.9182 , 0.85176, 0.22587],
+       [ 0.50088, 0.74376, 0.84024],
+       [ 0.74045, 0.23345, 0.20289],
+       [ 0.00612, 0.37732, 0.06932]])
 ```
 
 To create sequences of numbers, __Num4JS__ provides a function called `arange`:
@@ -265,23 +265,22 @@ Many unary operations, such as computing the sum of all the elements in the arra
 
 ```js
 > a = nj.random([2,3])
-array([[0.3658842062577605, 0.740412384737283, 0.5527098260354251],
-       [0.4542409502901137,0.07926959334872663,0.3524212788324803]])
->
+array([[0.62755, 0.8278,0.21384],
+       [ 0.7029,0.27584,0.46472]])
 > a.sum()
-2.544938239501789
+3.1126488673035055
 >
 > a.min()
-0.07926959334872663
+0.2138431086204946
 >
 > a.max()
-0.740412384737283
+0.8278025290928781
 >
 > a.mean()
-0.4241563732502982
+0.5187748112172509
 >
 > a.std()
-0.20204677551180758
+0.22216977543691244
 ```
 
 ### Universal Functions
@@ -298,19 +297,19 @@ array([ 1, 0,-1])
 array([ 1, 0, 1])
 >
 > nj.exp(a)
-array([0.3678794411714424, 1, 2.718281828459045])
+array([ 0.36788,       1, 2.71828])
 >
 > nj.tanh(a)
-array([-0.7615941559557649, 0, 0.761594155955765])
+array([-0.76159,       0, 0.76159])
 >
 > nj.softmax(a)
-array([0.09003057317038048,0.24472847105479767, 0.6652409557748219])
+array([ 0.09003, 0.24473, 0.66524])
 >
 > nj.sigmoid(a)
-array([ 0.2689414213699951, 0.5, 0.7310585786300049])
+array([ 0.26894,     0.5, 0.73106])
 >
 > nj.exp(a)
-array([0.3678794411714424, 1, 2.718281828459045])
+array([ 0.36788,       1, 2.71828])
 >
 > nj.sqrt(nj.abs(a))
 array([ 1, 0, 1])
@@ -461,7 +460,9 @@ __Note__: both `fft` and `ifft` expect last dimension of the array to contain 2 
 
 ### Convolution
 
-`convolve` function can be used to compute the discrete, linear convolution of two multi-dimensional arrays:
+`convolve` function can be used to compute the discrete, linear convolution of two multi-dimensional arrays.
+
+Example:
 ```js
 > x = nj.array([0,0,1,2,1,0,0])
 array([ 0, 0, 1, 2, 1, 0, 0])
