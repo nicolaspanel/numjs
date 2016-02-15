@@ -9,8 +9,9 @@ var gemm = require('ndarray-gemm');
 var ndFFT = require('ndarray-fft');
 var ndPool = require('typedarray-pool');
 
-
-var DTYPES = {
+var CONF = {
+    printThreshold: 5
+},  DTYPES = {
     int8: Int8Array,
     int16: Int16Array,
     int32: Int32Array,
@@ -332,7 +333,7 @@ NdArray.prototype.hi = function () {
 };
 
 /**
- * Add argument, element-wise.
+ * Add `x` to the array, element-wise.
  *
  * @param {(NdArray|Array|number)} x
  * @param {boolean} [copy=true]
@@ -353,8 +354,48 @@ NdArray.prototype.add = function(x, copy){
     return arr;
 };
 
+/**
+ * Add arguments, element-wise.
+ *
+ * @param {(NdArray|Array|number)} a
+ * @param {(NdArray|Array|number)} b
+ * @returns {NdArray}
+ */
 function add(a,b){
     return createArray(a).add(b);
+}
+
+/**
+ * Subtract `x` to the array, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.subtract = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+
+    if (isNumber(x)){
+        ops.subseq(arr.selection, x);
+        return arr;
+    }
+    x = createArray(x, this.dtype);
+    ops.subeq(arr.selection, x.selection);
+    return arr;
+};
+
+/**
+ * Subtract second argument from the first, element-wise.
+ *
+ * @param {(NdArray|Array|number)} a
+ * @param {(NdArray|Array|number)} b
+ * @returns {NdArray}
+ */
+function subtract(a,b){
+    return createArray(a).subtract(b);
 }
 
 
@@ -562,23 +603,22 @@ NdArray.prototype.reshape = function(shape){
 function reshape(array, shape){
     return createArray(array).reshape(shape);
 }
-//NdArray.prototype.dtype = function(dtype){
-//    if (!arguments.length){
-//        return this.selection.dtype;
-//    }
-//    var type = getType(dtype);
-//    if (type === getType(this.selection.dtype)){
-//        return;
-//    }
-//    this.selection = ndarray(new type(this.selection.data), this.shape);
-//    return this;
-//};
 
+
+/**
+ * Converts {NdArray} to a native JavaScript {Array}
+ *
+ * @returns {Array}
+ */
 NdArray.prototype.tolist = function(){
     return unpackArray(this.selection);
 };
 
-
+/**
+ * Stringify the array to make it readable by a human.
+ *
+ * @returns {string}
+ */
 NdArray.prototype.toString = function(){
     var max = this.max();
     var nChars = String(max).length;
@@ -597,9 +637,9 @@ NdArray.prototype.toString = function(){
             return new Array(Math.max(0, nChars - s.length +2)).join(' ') + s;
         }
         k = k || 0;
-        var arr;
-        if (v.length>7){
-            arr = [].concat(v.slice(0,2), [' ...'], v.slice(v.length - 2));
+        var arr, th = CONF.printThreshold, hth = th / 2 | 0;
+        if (v.length>th){
+            arr = [].concat(v.slice(0, hth ), [' ...'], v.slice(v.length - hth));
         }
         else {
             arr = v;
@@ -622,19 +662,31 @@ NdArray.prototype.toString = function(){
             return 'array([' + base + ', dtype=' + this.dtype + ')';
     }
 };
+
+/**
+ * Stringify the array to make it readable in the console, by a human.
+ *
+ * @returns {string}
+ */
 NdArray.prototype.inspect = NdArray.prototype.toString;
 
 NdArray.prototype.toJSON = function () {
     return JSON.stringify(this.tolist());
 };
 
+
+/**
+ * Create a full copy of the array
+ *
+ * @returns {NdArray}
+ */
 NdArray.prototype.clone = function () {
     var s = this.selection;
     return new NdArray(ndarray(s.data.slice(), s.shape, s.stride, s.offset));
 };
 
 /**
- * Calculate the exponential of all elements in the array.
+ * Calculate the exponential of all elements in the array, element-wise.
  *
  * @returns {NdArray}
  */
@@ -644,7 +696,7 @@ NdArray.prototype.exp = function(){
     return arr;
 };
 /**
- * Calculate the exponential of all elements in the input array.
+ * Calculate the exponential of all elements in the input array, element-wise.
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
@@ -655,7 +707,7 @@ function exp(x){
 /**
  * Sum of array elements.
  *
- * @returns {NdArray}
+ * @returns {number}
  */
 NdArray.prototype.sum = function(){
     return ops.sum(this.selection);
@@ -693,7 +745,7 @@ function mean(x){
 /**
  * Returns the standard deviation, a measure of the spread of a distribution, of the array elements.
  *
- * @returns {NdArray}
+ * @returns {number}
  */
 NdArray.prototype.std = function(){
     var squares = this.clone();
@@ -1117,6 +1169,7 @@ function concatenate(arrays, dtype){
 }
 
 module.exports = {
+    config: CONF,
     dtypes: DTYPES,
     NdArray: NdArray,
     ndarray: ndarray,
@@ -1138,6 +1191,7 @@ module.exports = {
     std: std,
     dot: dot,
     add: add,
+    subtract: subtract,
     negative: negative,
     multiply: multiply,
     size: size,
