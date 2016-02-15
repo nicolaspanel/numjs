@@ -107,11 +107,13 @@ array([[  6,  7],
 array([[  5,  6],
        [  9, 10]])
 
-> selection.add(1, false) // do NOT create a new Array, modify selecition's data instead
+> selection.add(1, false) // do NOT create a new Array, modify selection's data instead
 > selection
 array([[  6,  7],
        [ 10, 11]])
-> selection.transpose()
+> selection.T
+array([[  6, 10],
+       [  7, 11]])
 
 > c  // since the selection shares its data with c, c has changed too
 array([[  0,  1,  2,  3],
@@ -119,11 +121,11 @@ array([[  0,  1,  2,  3],
        [  8, 10, 11, 11],
        [ 12, 13, 14, 15]])
 
-> c.pick(1)
-array([  4,  6,  7,  7])
+> selection.pick(1)
+array([ 6, 7])
 
-> c.pick(null, 1)
-array([  1,  6,  10, 13])
+> selection.pick(null, 1)
+array([ 7, 11])
 ```
 
 ## Doc
