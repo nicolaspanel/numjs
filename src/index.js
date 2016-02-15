@@ -1283,11 +1283,13 @@ function dot(a,b){
 /**
  * Join given arrays along the last axis.
  *
- * @param {Array[]|NdArray[]} arrays
- * @param dtype
+ * @param {...(Array|NdArray)} arrays
  * @returns {NdArray}
  */
-function concatenate(arrays, dtype){
+function concatenate(arrays){
+    if (arguments.length > 1){
+        arrays = arguments;
+    }
     var i, a;
     for (i = 0; i < arrays.length; i++){
         a = arrays[i];
@@ -1329,7 +1331,7 @@ function concatenate(arrays, dtype){
             throw new errors.ValueError('cannot concatenate  "' + mShape + '" with "' + aShape + '"');
         }
     }
-    return createArray(m, dtype);
+    return createArray(m, arrays[0].dtype);
 }
 
 module.exports = {

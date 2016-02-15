@@ -8,12 +8,12 @@ var nj = require('../../src');
 
 describe('concat', function(){
     describe('with numbers', function () {
-        var c = nj.concatenate([1,0], nj.dtypes.float32);
+        var c;
+        beforeEach(function(){
+            c = nj.concatenate([1,0]);
+        });
         it('should produce a vector', function () {
             expect(c.tolist()).to.eql([1,0]);
-        });
-        it('should output a float32 array', function () {
-            expect(c.dtype).to.be('float32');
         });
     });
 

@@ -319,6 +319,104 @@ array([-1, 0, 1])
 array([-1, 0, 1])
 ```
 
+### Shape Manipulation
+An array has a shape given by the number of elements along each axis:
+
+```js
+> a = nj.array([[  0,  1,  2,  3], [  4,  5,  6,  7], [  8,  9, 10, 11]]);
+array([[  0,  1,  2,  3],
+       [  4,  5,  6,  7],
+       [  8,  9, 10, 11]])
+
+> a.shape
+[ 3, 4 ]
+```
+The shape of an array can be changed with various commands:
+```js
+> a.flatten();
+array([  0,  1,  2, ...,  9, 10, 11])
+>
+> a.T                   // equivalent to a.transpose(1,0)
+array([[  0,  4,  8],
+       [  1,  5,  9],
+       [  2,  6, 10],
+       [  3,  7, 11]])
+>
+> a.reshape(3,4)
+array([[  0,  1,  2,  3],
+       [  4,  5,  6,  7],
+       [  8,  9, 10, 11]])
+```
+
+### Concatenate different arrays
+
+Several arrays can be stacked together using `concatenate` function:
+
+```js
+> a = nj.arange(12).reshape(3,4)
+array([[  0,  1,  2,  3],
+       [  4,  5,  6,  7],
+       [  8,  9, 10, 11]])
+>
+> b = nj.arange(3)
+array([ 0, 1, 2])
+>
+> nj.concatenate(a,b.reshape(3,1))
+array([[  0,  1,  2,  3,  0],
+       [  4,  5,  6,  7,  1],
+       [  8,  9, 10, 11,  2]])
+```
+__Notes__:
+ - the arrays must have the same shape, except in the last dimension
+ - arrays are concatenated along the last axis
+
+It is still possible to concatenate along other dimensions using transpositions:
+
+```js
+> a = nj.arange(12).reshape(3,4)
+array([[  0,  1,  2,  3],
+       [  4,  5,  6,  7],
+       [  8,  9, 10, 11]])
+>
+> b = nj.arange(4)
+array([ 0, 1, 2, 3])
+>
+> nj.concatenate(a.T,b.reshape(4,1)).T
+array([[  0,  1,  2,  3],
+       [  4,  5,  6,  7],
+       [  8,  9, 10, 11],
+       [  0,  1,  2,  3]])
+```
+
+
+### Deep Copy
+The `clone` method makes a complete copy of the array and its data.
+
+```js
+> a = nj.arange(12).reshape(3,4)
+array([[  0,  1,  2,  3],
+       [  4,  5,  6,  7],
+       [  8,  9, 10, 11]])
+>
+> b = a.clone()
+array([[  0,  1,  2,  3],
+       [  4,  5,  6,  7],
+       [  8,  9, 10, 11]])
+>
+> a === b
+false
+>
+> a.set(0,0,1)
+> a
+array([[  1,  1,  2,  3],
+       [  4,  5,  6,  7],
+       [  8,  9, 10, 11]])
+> b
+array([[  0,  1,  2,  3],
+       [  4,  5,  6,  7],
+       [  8,  9, 10, 11]])
+```
+
 
 ### More?
 See [documentation](http://nicolaspanel.github.io/num4js/global.html).
