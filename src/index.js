@@ -1137,6 +1137,18 @@ function arccos(x){
 }
 
 /**
+ * Return trigonometric inverse sine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function arcsin(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.asineq(s.selection);
+    return s;
+}
+
+/**
  * Dot product of two arrays.
  *
  * WARNING: supported products are:
@@ -1245,6 +1257,7 @@ module.exports = {
     leakyRelu: leakyRelu,
     abs: abs,
     arccos: arccos,
+    arcsin: arcsin,
     tanh: tanh,
     clip: clip,
     exp: exp,
