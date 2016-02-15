@@ -1125,6 +1125,18 @@ function abs(x){
 }
 
 /**
+ * Return trigonometric inverse cosine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function arccos(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.acoseq(s.selection);
+    return s;
+}
+
+/**
  * Dot product of two arrays.
  *
  * WARNING: supported products are:
@@ -1232,6 +1244,7 @@ module.exports = {
     sigmoid: sigmoid,
     leakyRelu: leakyRelu,
     abs: abs,
+    arccos: arccos,
     tanh: tanh,
     clip: clip,
     exp: exp,
