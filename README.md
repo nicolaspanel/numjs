@@ -80,9 +80,11 @@ array([[ 1, 1, 1, 1],
        [ 1, 1, 1, 1]])
 > nj.equal(zeros.add(1), ones)
 true
+> nj.equal(zeros.add(ones), ones)
+true
 > nj.equal(ones.multiply(-1), ones.negative())
 true
-> nj.dot(a.T, a)
+> nj.dot(ones.T, ones)
 array([[ 3, 3, 3, 3],
        [ 3, 3, 3, 3],
        [ 3, 3, 3, 3],
@@ -94,6 +96,11 @@ array([[  0,  1,  2,  3],
        [  4,  5,  6,  7],
        [  8,  9, 10, 11],
        [ 12, 13, 14, 15]])
+> c.T
+array([[  0,  4,  8, 12],
+       [  1,  5,  9, 13],
+       [  2,  6, 10, 14],
+       [  3,  7, 11, 15]])
 
 
 // Slicing and selections
@@ -102,41 +109,20 @@ array([[  0,  1,  2,  3],
 array([[  5,  6],
        [  9, 10]])
 
-> selection.add(1) // create a new array
-array([[  6,  7],
-       [ 10, 11]])
-> selection
-array([[  5,  6],
-       [  9, 10]])
-
-> selection.add(1, false) // do NOT create a new Array, modify selection's data instead
-> selection
-array([[  6,  7],
-       [ 10, 11]])
-> selection.T
-array([[  6, 10],
-       [  7, 11]])
-
-> c  // since the selection shares its data with c, c has changed too
-array([[  0,  1,  2,  3],
-       [  4,  6,  7,  7],
-       [  8, 10, 11, 11],
-       [ 12, 13, 14, 15]])
-
 > selection.pick(1)
-array([ 6, 7])
+array([  9, 10])
 
 > selection.pick(null, 1)
-array([ 7, 11])
+array([ 6, 10])
 ```
 
-## Doc
-See [documentation](http://nicolaspanel.github.io/num4js/global.html)
+See [documentation](http://nicolaspanel.github.io/num4js/global.html) for more information.
 
 
 ## TODO
  - Support broadcasting for additions and multiplications
  - Remove lodash dependency
+ - Add image processing features (such as read/save/resize/sobel/etc...)
 
 ## Credits
 __Num4JS__ is built on top of [ndarray](http://scijs.net/packages/#scijs/ndarray) and uses many [scijs packages](http://scijs.net/packages/)
