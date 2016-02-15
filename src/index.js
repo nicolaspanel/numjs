@@ -665,7 +665,7 @@ NdArray.prototype.sum = function(){
  * Return the sum of input array elements.
  *
  * @param {(Array|NdArray|number)} x
- * @returns {NdArray}
+ * @returns {number}
  */
 function sum(x){
     return createArray(x).sum();
@@ -674,8 +674,7 @@ function sum(x){
 /**
  * Return the arithmetic mean of array elements.
  *
- * @param {(Array|NdArray|number)} x
- * @returns {NdArray}
+ * @returns {number}
  */
 NdArray.prototype.mean = function(){
     return ops.sum(this.selection) / size(this.shape);
@@ -685,7 +684,7 @@ NdArray.prototype.mean = function(){
  * Return the arithmetic mean of input array elements.
  *
  * @param {(Array|NdArray|number)} x
- * @returns {NdArray}
+ * @returns {number}
  */
 function mean(x){
     return createArray(x).mean();
@@ -708,7 +707,7 @@ NdArray.prototype.std = function(){
  * Returns the standard deviation, a measure of the spread of a distribution, of the input array elements.
  *
  * @param {(Array|NdArray|number)} x
- * @returns {NdArray}
+ * @returns {number}
  */
 function std(x){
     return createArray(x).std();
@@ -737,7 +736,7 @@ NdArray.prototype.transpose = function (axes){
  * @param {(number|...number)} [axes]
  * @returns {NdArray}
  * @example
-
+ *
  arr = nj.arange(6).reshape(1,2,3)
  // array([[[ 0, 1, 2],
  //         [ 3, 4, 5]]])
@@ -751,7 +750,7 @@ NdArray.prototype.transpose = function (axes){
 
  arr.transpose(1,0,2)
  // array([[[ 0, 1, 2]],
- [[ 3, 4, 5]]])
+ //        [[ 3, 4, 5]]])
 
  */
 
