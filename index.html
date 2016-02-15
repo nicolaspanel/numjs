@@ -77,10 +77,10 @@ array([[[ 1, 1, 1, 1],
         [ 1, 1, 1, 1]]], dtype=int32)
 
 > nj.random([4,3])
-array([[ 0.7131339153274894, 0.5784974242560565,0.39271794515661895],
-       [ 0.8187951485160738,  0.830815645866096, 0.7394127324223518],
-       [ 0.7980840434320271, 0.5938412109389901, 0.9076390236150473],
-       [ 0.8864211943000555,0.28645253647118807, 0.7208044717554003]])</code></pre><p>To create sequences of numbers, <strong>Num4JS</strong> provides a function called <code>arange</code>:</p>
+array([[ 0.9182 , 0.85176,0.22587],
+       [ 0.50088, 0.74376,0.84024],
+       [ 0.74045, 0.23345,0.20289],
+       [ 0.00612, 0.37732,0.06932]])</code></pre><p>To create sequences of numbers, <strong>Num4JS</strong> provides a function called <code>arange</code>:</p>
 <pre class="prettyprint source lang-js"><code>> nj.arange(4);
 array([ 0, 1, 2, 3])
 
@@ -149,16 +149,18 @@ array([[    0,    1, ...,   98,   99],
        [  100,  101, ...,  198,  199],
         ...
        [ 9800, 9801, ..., 9898, 9899],
-       [ 9900, 9901, ..., 9998, 9999]])</code></pre><p>To customize this behaviour, you can change the printing options using <code>nj.config.printThreshold</code> (default is <code>5</code>):</p>
-<pre class="prettyprint source lang-js"><code>> nj.config.printThreshold = 7;
+       [ 9900, 9901, ..., 9998, 9999]])</code></pre><p>To customize this behaviour, you can change the printing options using <code>nj.config.printThreshold</code> (default is <code>7</code>):</p>
+<pre class="prettyprint source lang-js"><code>> nj.config.printThreshold = 9;
 > console.log(nj.arange(10000).reshape(100,100))
-array([[    0,    1,    2, ...,   97,   98,   99],
-       [  100,  101,  102, ...,  197,  198,  199],
-       [  200,  201,  202, ...,  297,  298,  299],
+array([[    0,    1,    2,    3, ...,   96,   97,   98,   99],
+       [  100,  101,  102,  103, ...,  196,  197,  198,  199],
+       [  200,  201,  202,  203, ...,  296,  297,  298,  299],
+       [  300,  301,  302,  303, ...,  396,  397,  398,  399],
         ...
-       [ 9700, 9701, 9702, ..., 9797, 9798, 9799],
-       [ 9800, 9801, 9802, ..., 9897, 9898, 9899],
-       [ 9900, 9901, 9902, ..., 9997, 9998, 9999]])</code></pre><h3>Basic operations</h3><p>Arithmetic operators such as <code>*</code> (<code>multiply</code>), <code>+</code> (<code>add</code>), <code>-</code> (<code>subtract</code>), <code>/</code> (<code>divide</code>), <code>**</code> (<code>pow</code>) apply elemen-twise. A new array is created and filled with the result:</p>
+       [ 9600, 9601, 9602, 9603, ..., 9696, 9697, 9698, 9699],
+       [ 9700, 9701, 9702, 9703, ..., 9796, 9797, 9798, 9799],
+       [ 9800, 9801, 9802, 9803, ..., 9896, 9897, 9898, 9899],
+       [ 9900, 9901, 9902, 9903, ..., 9996, 9997, 9998, 9999]])</code></pre><h3>Basic operations</h3><p>Arithmetic operators such as <code>*</code> (<code>multiply</code>), <code>+</code> (<code>add</code>), <code>-</code> (<code>subtract</code>), <code>/</code> (<code>divide</code>), <code>**</code> (<code>pow</code>) apply elemen-twise. A new array is created and filled with the result:</p>
 <pre class="prettyprint source lang-js"><code>> zeros = nj.zeros([3,4]);
 array([[ 0, 0, 0, 0],
        [ 0, 0, 0, 0],
@@ -187,10 +189,12 @@ array([[ 1, 1, 1, 1],
 array([[ 1, 1, 1, 1],
        [ 1, 1, 1, 1],
        [ 1, 1, 1, 1]])
+>
 > ones.add(ones, false)
 array([[ 2, 2, 2, 2],
        [ 2, 2, 2, 2],
        [ 2, 2, 2, 2]])
+>
 > ones
 array([[ 2, 2, 2, 2],
        [ 2, 2, 2, 2],
@@ -200,11 +204,13 @@ array([[ 2, 2, 2, 2],
 array([[  0,  1,  2,  3],
        [  4,  5,  6,  7],
        [  8,  9, 10, 11]])
+>
 > nj.dot(a.T, a)
 array([[  80,  92, 104, 116],
        [  92, 107, 122, 137],
        [ 104, 122, 140, 158],
        [ 116, 137, 158, 179]])
+>
 > nj.dot(a, a.T)
 array([[  14,  38,  62],
        [  38, 126, 214],
@@ -278,10 +284,11 @@ array([[  0,  4,  8],
        [  2,  6, 10],
        [  3,  7, 11]])
 >
-> a.reshape(3,4)
-array([[  0,  1,  2,  3],
-       [  4,  5,  6,  7],
-       [  8,  9, 10, 11]])</code></pre><h3>Concatenate different arrays</h3><p>Several arrays can be stacked together using <code>concatenate</code> function:</p>
+> a.reshape(4,3)
+array([[  0,  1,  2],
+       [  3,  4,  5],
+       [  6,  7,  8],
+       [  9, 10, 11]])</code></pre><h3>Concatenate different arrays</h3><p>Several arrays can be stacked together using <code>concatenate</code> function:</p>
 <pre class="prettyprint source lang-js"><code>> a = nj.arange(12).reshape(3,4)
 array([[  0,  1,  2,  3],
        [  4,  5,  6,  7],
@@ -333,7 +340,58 @@ array([[  1,  1,  2,  3],
 > b
 array([[  0,  1,  2,  3],
        [  4,  5,  6,  7],
-       [  8,  9, 10, 11]])</code></pre><h3>More?</h3><p>See <a href="http://nicolaspanel.github.io/num4js/global.html">documentation</a>.</p>
+       [  8,  9, 10, 11]])</code></pre><h3>Fast Fourier Transform (FFT)</h3><p><code>fft</code> and <code>ifft</code> functions can be used to compute the N-dimensional discrete Fourier Transform and its inverse.</p>
+<p>Example:</p>
+<pre class="prettyprint source lang-js"><code>> RI = nj.concatenate(nj.ones([10,1]), nj.zeros([10,1]))
+array([[ 1, 0],
+       [ 1, 0],
+       [ 1, 0],
+        ...
+       [ 1, 0],
+       [ 1, 0],
+       [ 1, 0]])
+>
+> fft = nj.fft(RI)
+array([[ 10,  0],
+       [  0,  0],
+       [  0,  0],
+        ...
+       [  0,  0],
+       [  0,  0],
+       [  0,  0]])
+>
+> nj.ifft(fft)
+array([[ 1, 0],
+       [ 1, 0],
+       [ 1, 0],
+        ...
+       [ 1, 0],
+       [ 1, 0],
+       [ 1, 0]])</code></pre><p><strong>Note</strong>: both <code>fft</code> and <code>ifft</code> expect last dimension of the array to contain 2 values: the real and the imaginary value</p>
+<h3>Convolution</h3><p><code>convolve</code> function can be used to compute the discrete, linear convolution of two multi-dimensional arrays:</p>
+<pre class="prettyprint source lang-js"><code>> x = nj.array([0,0,1,2,1,0,0])
+array([ 0, 0, 1, 2, 1, 0, 0])
+>
+> nj.convolve(x, [-1,0,1])
+array([-1,-2, 0, 2, 1])
+>
+> var a = nj.arange(25).reshape(5,5)
+undefined
+> a
+array([[  0,  1,  2,  3,  4],
+       [  5,  6,  7,  8,  9],
+       [ 10, 11, 12, 13, 14],
+       [ 15, 16, 17, 18, 19],
+       [ 20, 21, 22, 23, 24]])
+> nj.convolve(a, [[ 1, 2, 1], [ 0, 0, 0], [-1,-2,-1]])
+array([[ 40, 40, 40],
+       [ 40, 40, 40],
+       [ 40, 40, 40]])
+> nj.convolve(nj.convolve(a, [[1, 2, 1]]), [[1],[0],[-1]])
+array([[ 40, 40, 40],
+       [ 40, 40, 40],
+       [ 40, 40, 40]])</code></pre><p><strong>Note</strong>: <code>convolve</code> uses FFT to speed up computation on large arrays.</p>
+<h3>More ?</h3><p>See <a href="http://nicolaspanel.github.io/num4js/global.html">documentation</a>.</p>
 <h2>TODO</h2><ul>
 <li>Add image processing features (such as read/save/resize/sobel/etc...)</li>
 </ul>
@@ -348,13 +406,13 @@ array([[  0,  1,  2,  3],
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#power">power</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#convolve">convolve</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#power">power</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#round">round</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 18:23:31 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Mon Feb 15 2016 23:14:36 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>
