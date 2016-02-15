@@ -1149,6 +1149,18 @@ function arcsin(x){
 }
 
 /**
+ * Return trigonometric inverse tangent of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function arctan(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.ataneq(s.selection);
+    return s;
+}
+
+/**
  * Dot product of two arrays.
  *
  * WARNING: supported products are:
@@ -1258,6 +1270,7 @@ module.exports = {
     abs: abs,
     arccos: arccos,
     arcsin: arcsin,
+    arctan: arctan,
     tanh: tanh,
     clip: clip,
     exp: exp,
