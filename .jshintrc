@@ -12,6 +12,7 @@
         "afterEach",
         "before",
         "beforeEach",
+        "expect",
         "inject",
         "Image",
         "document",

@@ -36,5 +36,8 @@
     "node_modules",
     "bower_components",
     "test"
-  ]
+  ],
+  "devDependencies": {
+    "lodash": "~4.3.0"
+  }
 }

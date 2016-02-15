@@ -54,21 +54,10 @@ module.exports = function(grunt) {
                 options: {
                     files: [
                         'test/karma/phantom.js',
-                        'bower_components/lodash/lodash.js',
+                        'bower_components/lodash/dist/lodash.min.js',
                         // tested files
-                        'min/ph.min.js',
+                        'num4js.min.js',
                         //tests files
-                        'test/karma/*.spec.js',
-                        {pattern: 'test/data/**/*.png', watched: false, included: false, served: true}
-                    ]
-                }
-            },
-            underscore: {
-                options: {
-                    files: [
-                        'test/karma/phantom.js',
-                        'bower_components/underscore/underscore.js',
-                        'build/ph.js',
                         'test/karma/*.spec.js',
                         {pattern: 'test/data/**/*.png', watched: false, included: false, served: true}
                     ]
@@ -79,7 +68,7 @@ module.exports = function(grunt) {
                     files: [
                         'test/karma/phantom.js',
                         'bower_components/lodash/lodash.js',
-                        'build/ph.js',
+                        'num4js.js',
                         'test/karma/*.spec.js',
                         {pattern: 'test/data/**/*.png', watched: false, included: false, served: true}
                     ]
@@ -118,6 +107,6 @@ module.exports = function(grunt) {
         }
     });
     grunt.registerTask('mocha', ['simplemocha:full']);
-    grunt.registerTask('test', ['jshint', 'simplemocha:full', 'browserify' , 'uglify']); // 'karma:lodash', 'karma:underscore', 'karma:min'
+    grunt.registerTask('test', ['jshint', 'simplemocha:full', 'browserify', 'karma:lodash', 'uglify', 'karma:min' ]);
     grunt.registerTask('doc', ['jsdoc', 'githubPages:target']);
 };

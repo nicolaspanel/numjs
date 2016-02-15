@@ -13,6 +13,7 @@
     "ndarray-ops": "^1.2.2",
     "ndarray-gemm": "^1.0.0",
     "sharp": "git+https://github.com/lovell/sharp.git",
+    "lodash": "^3.10.1",
     "typedarray-pool": "^1.1.0"
   },
   "devDependencies": {
@@ -35,7 +36,6 @@
     "karma-jasmine": "^0.3.5",
     "karma-mocha-reporter": "latest",
     "karma-phantomjs-launcher": "^0.1.4",
-    "lodash": "^3.10.1",
     "mocha": "^2.3.4",
     "phantomjs": "^1.9.7-15",
     "sharp": "^0.12.2"
@@ -46,6 +46,9 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/nicolaspanel/num4js.git"
+  },
+  "browserify-shim": {
+    "lodash": "global:_"
   },
   "keywords": [
     "ndarray",

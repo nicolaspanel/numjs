@@ -1,6 +1,8 @@
 'use strict';
 
+/* jshint ignore:start */
 var expect = require('expect.js');
+ /* jshint ignore:end */
 var _ = require('lodash');
 var nj = require('../../src');
 
