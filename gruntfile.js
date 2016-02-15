@@ -95,8 +95,29 @@ module.exports = function(grunt) {
                     'num4js.min.js': 'num4js.js'
                 }
             }
+        },
+        jsdoc : {
+            dist : {
+                src: ['src/**/*.js', 'README.md'],
+                options: {
+                    destination: 'doc'
+                    //template : "node_modules/ink-docstrap/template",
+                    //configure : "node_modules/ink-docstrap/template/jsdoc.conf.json"
+                }
+            }
+        },
+        githubPages: {
+            target: {
+                options: {
+                    // The default commit message for the gh-pages branch
+                    commitMessage: 'update documentation'
+                },
+                // The folder where your gh-pages repo is
+                src: 'doc'
+            }
         }
     });
     grunt.registerTask('mocha', ['simplemocha:full']);
-    grunt.registerTask('test', ['jshint', 'simplemocha:full', 'browserify', 'karma:lodash', 'karma:underscore' , 'uglify', 'karma:min']);
+    grunt.registerTask('test', ['jshint', 'simplemocha:full', 'browserify' , 'uglify']); // 'karma:lodash', 'karma:underscore', 'karma:min'
+    grunt.registerTask('doc', ['jsdoc', 'githubPages:target']);
 };

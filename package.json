@@ -22,8 +22,11 @@
     "grunt-browserify": "^4.0.1",
     "grunt-contrib-jshint": "^0.11.3",
     "grunt-contrib-uglify": "latest",
+    "grunt-github-pages": "0.0.4",
+    "grunt-jsdoc": "^1.1.0",
     "grunt-karma": "^0.9.0",
     "grunt-simple-mocha": "^0.4.0",
+    "ink-docstrap": "^1.1.1",
     "jasmine": "^2.2.1",
     "jasmine-core": "^2.2.0",
     "jit-grunt": "^0.9.1",
@@ -32,9 +35,9 @@
     "karma-jasmine": "^0.3.5",
     "karma-mocha-reporter": "latest",
     "karma-phantomjs-launcher": "^0.1.4",
+    "lodash": "^3.10.1",
     "mocha": "^2.3.4",
     "phantomjs": "^1.9.7-15",
-    "lodash": "^3.10.1",
     "sharp": "^0.12.2"
   },
   "scripts": {
