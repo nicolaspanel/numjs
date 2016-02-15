@@ -1107,8 +1107,20 @@ var doTanh = cwise({
  * @returns {NdArray}
  */
 function tanh(x){
-    var s = createArray(x).clone();
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
     doTanh(s.selection);
+    return s;
+}
+
+/**
+ * Return absolute value of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
+function abs(x){
+    var s = (x instanceof NdArray)? x.clone(): createArray(x);
+    ops.abseq(s.selection);
     return s;
 }
 
@@ -1219,6 +1231,7 @@ module.exports = {
     softmax: softmax,
     sigmoid: sigmoid,
     leakyRelu: leakyRelu,
+    abs: abs,
     tanh: tanh,
     clip: clip,
     exp: exp,
