@@ -19,5 +19,6 @@ module.exports = {
     scharr: require('./scharr'),
     areaSum: require('./area-sum'),
     areaValue: require('./area-value'),
+    rgb2gray: require('./rgb2gray'),
     flip: require('./flip')
 };
