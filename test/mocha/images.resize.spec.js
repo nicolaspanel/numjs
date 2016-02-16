@@ -43,7 +43,6 @@ describe('images', function () {
                 expect(resized).to.be.an(nj.NdArray);
                 expect(resized.dtype).to.be('uint8');
                 expect(resized.shape).to.eql([32, 32]);
-                nj.images.save(resized, 'tmp.png', function () {});
                 done();
             });
         });

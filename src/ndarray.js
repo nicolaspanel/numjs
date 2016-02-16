@@ -173,6 +173,10 @@ NdArray.prototype.hi = function () {
     return new NdArray(this.selection.hi.apply(this.selection, arguments));
 };
 
+NdArray.prototype.step = function () {
+    return new NdArray(this.selection.step.apply(this.selection, arguments));
+};
+
 
 /**
  * Return a copy of the array collapsed into one dimension using row-major order (C-style)

@@ -18,5 +18,6 @@ module.exports = {
     sobel: require('./sobel'),
     scharr: require('./scharr'),
     areaSum: require('./area-sum'),
-    areaValue: require('./area-value')
+    areaValue: require('./area-value'),
+    flip: require('./flip')
 };
