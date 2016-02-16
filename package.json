@@ -70,5 +70,18 @@
   ],
   "author": "Nicolas Panel",
   "license": "MIT",
-  "readmeFilename": "README.md"
+  "readmeFilename": "README.md",
+  "browser": {
+    "./src/images/resize.js": "./src/images/resize-dom.js",
+    "./src/images/read.js": "./src/images/read-dom.js",
+    "./src/images/save.js": "./src/images/save-dom.js"
+  },
+  "browserify-shim": {
+  },
+  "browserify": {
+    "transform": [
+      "cwise",
+      "browserify-shim"
+    ]
+  }
 }

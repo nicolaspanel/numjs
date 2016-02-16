@@ -58,7 +58,7 @@ module.exports = function(grunt) {
                         'dist/num4js.min.js',
                         //tests files
                         'test/karma/*.spec.js',
-                        {pattern: 'test/data/**/*.png', watched: false, included: false, served: true}
+                        {pattern: 'data/**/*.png', watched: false, included: false, served: true}
                     ]
                 }
             },
@@ -68,7 +68,7 @@ module.exports = function(grunt) {
                         'test/karma/phantom.js',
                         'dist/num4js.js',
                         'test/karma/*.spec.js',
-                        {pattern: 'test/data/**/*.png', watched: false, included: false, served: true}
+                        {pattern: 'data/**/*.png', watched: false, included: false, served: true}
                     ]
                 }
             }

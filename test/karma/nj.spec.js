@@ -5,5 +5,4 @@ describe('Num4JS', function () {
     it('should be defined globally', function () {
         expect(nj).toBeTruthy();
     });
-
 });
