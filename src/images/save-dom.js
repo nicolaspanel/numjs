@@ -9,6 +9,7 @@ module.exports = function saveImageDom(img, dest, cb) {
         iH = iShape[0], iW = iShape[1];
     if (dest instanceof HTMLCanvasElement){
         var $tmp = document.createElement('canvas');
+        $tmp.height = iH; $tmp.width = iW;
         var tmpCtx=$tmp.getContext('2d');
         var originalImg = tmpCtx.createImageData(iW ,iH);
         var err = _.setRawData(img.selection, originalImg.data);
