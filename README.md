@@ -460,7 +460,10 @@ __Note__: both `fft` and `ifft` expect last dimension of the array to contain 2 
 
 ### Convolution
 
-`convolve` and `fftconvolve` functions can be used to compute the discrete, linear convolution of two multi-dimensional arrays.
+`convolve` function compute the discrete, linear convolution of two multi-dimensional arrays.
+
+__Note__: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is also known as the 'valid' mode.
+
 
 Example:
 ```js
@@ -487,7 +490,7 @@ array([[ 40, 40, 40],
        [ 40, 40, 40]])
 ```
 
-__Note__: `fftconvolve` uses Fast Fourier Transform (FFT) to speed up computation on large arrays.
+__Note__: `convolve` uses Fast Fourier Transform (FFT) to speed up computation on large arrays.
 
 
 ## Images manipulation

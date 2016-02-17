@@ -654,70 +654,234 @@ var doConvolve = cwise({
         return this.sum;
     }
 });
+
+var doConvolve3x3 = cwise({
+    args: [
+        'array',                     //c
+        'array',                     //xe
+        'scalar',                    //fa
+        'scalar',                    //fb
+        'scalar',                    //fc
+        'scalar',                    //fd
+        'scalar',                    //fe
+        'scalar',                    //ff
+        'scalar',                    //fg
+        'scalar',                    //fh
+        'scalar',                    //fi
+        {offset:[-1, -1], array:1},  //xa
+        {offset:[-1,  0], array:1},  //xb
+        {offset:[-1,  1], array:1},  //xc
+        {offset:[ 0, -1], array:1},  //xd
+        //{offset:[ 9,  0], array:1}, // useless since available already
+        {offset:[ 0,  1], array:1},  //xf
+        {offset:[ 1, -1], array:1},  //xg
+        {offset:[ 1,  0], array:1},  //xh
+        {offset:[ 1,  1], array:1}  //xi
+    ],
+    body: function (c, xe, fa, fb, fc, fd, fe, ff, fg, fh, fi, xa, xb, xc, xd, xf, xg, xh, xi) {
+        c = xa*fi + xb*fh + xc*fg + xd*ff + xe*fe + xf*fd + xg*fc + xh*fb + xi*fa;
+    }
+});
+
+var doConvolve5x5 = cwise({
+    args: [
+        'index',
+        'array',                     //c
+        'array',                     //xm
+        'scalar',                    //fa
+        'scalar',                    //fb
+        'scalar',                    //fc
+        'scalar',                    //fd
+        'scalar',                    //fe
+        'scalar',                    //ff
+        'scalar',                    //fg
+        'scalar',                    //fh
+        'scalar',                    //fi
+        'scalar',                    //fj
+        'scalar',                    //fk
+        'scalar',                    //fl
+        'scalar',                    //fm
+        'scalar',                    //fn
+        'scalar',                    //fo
+        'scalar',                    //fp
+        'scalar',                    //fq
+        'scalar',                    //fr
+        'scalar',                    //fs
+        'scalar',                    //ft
+        'scalar',                    //fu
+        'scalar',                    //fv
+        'scalar',                    //fw
+        'scalar',                    //fx
+        'scalar',                    //fy
+        {offset:[-2, -2], array:1},  //xa
+        {offset:[-2, -1], array:1},  //xb
+        {offset:[-2,  0], array:1},  //xc
+        {offset:[-2,  1], array:1},  //xd
+        {offset:[-2,  2], array:1},  //xe
+        {offset:[-1, -2], array:1},  //xf
+        {offset:[-1, -1], array:1},  //xg
+        {offset:[-1,  0], array:1},  //xh
+        {offset:[-1,  1], array:1},  //xi
+        {offset:[-1,  2], array:1},  //xj
+        {offset:[ 0, -2], array:1},  //xk
+        {offset:[ 0, -1], array:1},  //xl
+        //{offset:[ 0,  0], array:1},
+        {offset:[ 0,  1], array:1},  //xn
+        {offset:[ 0,  2], array:1},  //xo
+        {offset:[ 1, -2], array:1},  //xp
+        {offset:[ 1, -1], array:1},  //xq
+        {offset:[ 1,  0], array:1},  //xr
+        {offset:[ 1,  1], array:1},  //xs
+        {offset:[ 1,  2], array:1},  //xt
+        {offset:[ 2, -2], array:1},  //xu
+        {offset:[ 2, -1], array:1},  //xv
+        {offset:[ 2,  0], array:1},  //xw
+        {offset:[ 2,  1], array:1},  //xx
+        {offset:[ 2,  2], array:1}   //xy
+    ],
+    body: function (index, c, xm,
+                    fa,fb,fc,fd,fe,ff,fg,fh,fi,fj,fk,fl,fm,fn,fo,fp,fq,fr,fs,ft,fu,fv,fw,fx,fy,
+                    xa,xb,xc,xd,xe,xf,xg,xh,xi,xj,xk,xl,xn,xo,xp,xq,xr,xs,xt,xu,xv,xw,xx,xy) {
+        c = (index[0] < 2 || index[1] < 2) ? 0 : xa * fy + xb * fx + xc * fw + xd * fv + xe * fu + xf * ft + xg * fs + xh * fr + xi * fq + xj * fp + xk * fo + xl * fn + xm * fm + xn * fl + xo * fk + xp * fj + xq * fi + xr * fh + xs * fg + xt * ff + xu * fe + xv * fd + xw * fc + xx * fb + xy * fa;
+    }
+});
+
 /**
  * Returns the discrete, linear convolution of the array using the given filter.
  *
  * @note: Arrays must have the same dimensions and `filter` must be smaller than the array.
  * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
+ * @note: Use optimized code for 3x3, 3x3x1, 5x5, 5x5x1 filters, FFT otherwise.
  *
  * @param {Array|NdArray} filter
  */
 NdArray.prototype.convolve = function(filter) {
-
     filter = NdArray.new(filter);
     var ndim =this.ndim;
     if (ndim !== filter.ndim){
         throw new errors.ValueError('arrays must have the same dimensions');
     }
-    var i, j, k, outShape = new Array(ndim), step = new Array(ndim),
+    var outShape = new Array(ndim), step = new Array(ndim),
         ts = this.selection, tShape = this.shape,
         fs =filter.selection, fShape = filter.shape;
 
-    for (i=0; i<ndim ; i++){
+    for (var i=0; i<ndim ; i++){
         var l = tShape[i] - fShape[i] + 1;
-        if (l<=0){
-            throw new errors.ValueError('filter must be smoller than the array');
+        if (l<0){
+            throw new errors.ValueError('filter cannot be greater than the array');
         }
         outShape[i] = l;
         step[i] = -1;
     }
-    fs=fs.step.apply(fs, step);
-    var out = new NdArray(new Float32Array(_.shapeSize(outShape)), outShape),
-        outs = out.selection;
-    if (this.ndim === 1){
-        for (i=0; i<outShape[0]; i++){
-            outs.set(i, doConvolve(ts.lo(i).hi(fShape[0]), fs));
-        }
+
+    if (ndim === 2 && fShape[0] === 3 && fShape[1] === 3){
+        var out3x3 = new NdArray(new Float32Array(_.shapeSize(tShape)), tShape);
+        doConvolve3x3(
+            out3x3.selection, // c
+            ts,               // x
+            fs.get( 0, 0),    // fa
+            fs.get( 0, 1),    // fb
+            fs.get( 0, 2),    // fc
+            fs.get( 1, 0),    // fd
+            fs.get( 1, 1),    // fe
+            fs.get( 1, 2),    // ff
+            fs.get( 2, 0),    // fg
+            fs.get( 2, 1),    // fh
+            fs.get( 2, 2)     // fi
+        );
+        return out3x3.lo(1,1).hi(outShape[0], outShape[1]);
     }
-    else if (this.ndim === 2){
-        for (i=0; i<outShape[0]; i++){
-            for (j=0; j<outShape[1]; j++){
-                outs.set(i, j, doConvolve(ts.lo(i,j).hi(fShape[0], fShape[1]), fs));
-            }
-        }
+    else if (ndim === 3 && fShape[2] === 1 && tShape[2] === 1 && fShape[0] === 3 && fShape[1] === 3){
+        var out3x3x1 = new NdArray(new Float32Array(_.shapeSize(tShape)), tShape);
+        doConvolve3x3(
+            out3x3x1.selection.pick(null,null,0), // c
+            ts.pick(null,null, 0),               // x
+            fs.get( 0, 0, 0),    // fa
+            fs.get( 0, 1, 0),    // fb
+            fs.get( 0, 2, 0),    // fc
+            fs.get( 1, 0, 0),    // fd
+            fs.get( 1, 1, 0),    // fe
+            fs.get( 1, 2, 0),    // ff
+            fs.get( 2, 0, 0),    // fg
+            fs.get( 2, 1, 0),    // fh
+            fs.get( 2, 2, 0)     // fi
+        );
+        return out3x3x1.lo(1,1).hi(outShape[0], outShape[1]);
     }
-    else if (this.ndim === 3){
-        for (i=0; i<outShape[0]; i++){
-            for (j=0; j<outShape[1]; j++){
-                for (k=0; k<outShape[2]; k++){
-                    outs.set(i, j, k, doConvolve(ts.lo(i,j,k).hi(fShape[0], fShape[1], fShape[2]), fs));
-                }
-            }
-        }
+    else if (ndim === 2 && fShape[0] === 5 && fShape[1] === 5){
+        var out5x5 = new NdArray(new Float32Array(_.shapeSize(tShape)), tShape);
+        doConvolve5x5(
+            out5x5.selection, // c
+            ts,               // x
+            fs.get( 0, 0),    // fa
+            fs.get( 0, 1),    // fb
+            fs.get( 0, 2),    // fc
+            fs.get( 0, 3),    // fd
+            fs.get( 0, 4),    // fe
+            fs.get( 1, 0),    // ff
+            fs.get( 1, 1),    // fg
+            fs.get( 1, 2),    // fh
+            fs.get( 1, 3),    // fi
+            fs.get( 1, 4),    // fj
+            fs.get( 2, 0),    // fk
+            fs.get( 2, 1),    // fl
+            fs.get( 2, 2),    // fm
+            fs.get( 2, 3),    // fn
+            fs.get( 2, 4),    // fo
+            fs.get( 3, 0),    // fp
+            fs.get( 3, 1),    // fq
+            fs.get( 3, 2),    // fr
+            fs.get( 3, 3),    // fs
+            fs.get( 3, 4),    // ft
+            fs.get( 4, 0),    // fu
+            fs.get( 4, 1),    // fv
+            fs.get( 4, 2),    // fw
+            fs.get( 4, 3),    // fx
+            fs.get( 4, 4)     // fy
+        );
+        return out5x5.lo(2,2).hi(outShape[0], outShape[1]);
     }
+    else if (ndim === 3 && fShape[2] === 1 && tShape[2] === 1 && fShape[0] === 5 && fShape[1] === 5){
+        var out5x5x1 = new NdArray(new Float32Array(_.shapeSize(tShape)), tShape);
+        doConvolve5x5(
+            out5x5x1.selection, // c
+            ts,               // x
+            fs.get( 0, 0, 0),    // fa
+            fs.get( 0, 1, 0),    // fb
+            fs.get( 0, 2, 0),    // fc
+            fs.get( 0, 3, 0),    // fd
+            fs.get( 0, 4, 0),    // fe
+            fs.get( 1, 0, 0),    // ff
+            fs.get( 1, 1, 0),    // fg
+            fs.get( 1, 2, 0),    // fh
+            fs.get( 1, 3, 0),    // fi
+            fs.get( 1, 4, 0),    // fj
+            fs.get( 2, 0, 0),    // fk
+            fs.get( 2, 1, 0),    // fl
+            fs.get( 2, 2, 0),    // fm
+            fs.get( 2, 3, 0),    // fn
+            fs.get( 2, 4, 0),    // fo
+            fs.get( 3, 0, 0),    // fp
+            fs.get( 3, 1, 0),    // fq
+            fs.get( 3, 2, 0),    // fr
+            fs.get( 3, 3, 0),    // fs
+            fs.get( 3, 4, 0),    // ft
+            fs.get( 4, 0, 0),    // fu
+            fs.get( 4, 1, 0),    // fv
+            fs.get( 4, 2, 0),    // fw
+            fs.get( 4, 3, 0),    // fx
+            fs.get( 4, 4, 0)    // fy
+        );
+        return out5x5x1.lo(2,2).hi(outShape[0], outShape[1]);
+    }
+
+
     else {
-        throw new errors.NotImplementedError();
+        return this.fftconvolve(filter);
     }
-    return out;
 };
-/**
- * Returns the discrete, linear convolution of the array using the given filter and Fast Fourrier Transform
- *
- * @note: Arrays must have the same dimensions and `filter` must be smaller than the array.
- * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
- *
- * @param {Array|NdArray} filter
- */
+
+
 NdArray.prototype.fftconvolve = function(filter){
     filter = NdArray.new(filter);
 
