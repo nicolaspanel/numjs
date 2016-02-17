@@ -663,7 +663,7 @@ function round(x){
 
 
 /**
- * Returns the discrete, linear convolution of two arrays.
+ * Convolve 2 N-dimensionnal arrays
  * 
  * @note: Arrays must have the same dimensions and a must be greater than b.
  * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
@@ -673,6 +673,20 @@ function round(x){
  */
 function convolve(a, b){
     return NdArray.new(a).convolve(b);
+}
+
+
+/**
+ * Convolve 2 N-dimensionnal arrays using Fast Fourier Transform (FFT)
+ *
+ * @note: Arrays must have the same dimensions and a must be greater than b.
+ * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
+ *
+ * @param {Array|NdArray} a
+ * @param {Array|NdArray} b
+ */
+function fftconvolve(a, b){
+    return NdArray.new(a).fftconvolve(b);
 }
 
 function fft(x){
@@ -750,6 +764,7 @@ module.exports = {
     broadcast: broadcast,
     round: round,
     convolve: convolve,
+    fftconvolve: fftconvolve,
     fft: fft,
     ifft: ifft,
     int8: function (array) { return NdArray.new(array, DTYPES.int8); },

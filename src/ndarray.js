@@ -1,6 +1,5 @@
 'use strict';
 
-var iota = require('iota-array');
 var ndarray = require('ndarray');
 var cwise = require('cwise');
 var ops = require('ndarray-ops');
@@ -275,7 +274,11 @@ NdArray.prototype.reshape = function(shape){
  */
 NdArray.prototype.transpose = function (axes){
     if (arguments.length === 0) {
-        axes = iota(this.shape.length).reverse();
+        var d = this.ndim;
+        axes = new Array(d);
+        for (var i=0; i<d;i++){
+            axes[i] = d-i-1;
+        }
     }
     else if (arguments.length > 1){
         axes = arguments;
@@ -640,6 +643,17 @@ var doConjMuleq = cwise({
     }
 });
 
+
+var doConvolve = cwise({
+    args: ['array', 'array'],
+    pre: function () { this.sum = 0; },
+    body: function (x, f) {
+        this.sum += x * f;
+    },
+    post: function () {
+        return this.sum;
+    }
+});
 /**
  * Returns the discrete, linear convolution of the array using the given filter.
  *
@@ -648,7 +662,63 @@ var doConjMuleq = cwise({
  *
  * @param {Array|NdArray} filter
  */
-NdArray.prototype.convolve = function(filter){
+NdArray.prototype.convolve = function(filter) {
+
+    filter = NdArray.new(filter);
+    var ndim =this.ndim;
+    if (ndim !== filter.ndim){
+        throw new errors.ValueError('arrays must have the same dimensions');
+    }
+    var i, j, k, outShape = new Array(ndim), step = new Array(ndim),
+        ts = this.selection, tShape = this.shape,
+        fs =filter.selection, fShape = filter.shape;
+
+    for (i=0; i<ndim ; i++){
+        var l = tShape[i] - fShape[i] + 1;
+        if (l<=0){
+            throw new errors.ValueError('filter must be smoller than the array');
+        }
+        outShape[i] = l;
+        step[i] = -1;
+    }
+    fs=fs.step.apply(fs, step);
+    var out = new NdArray(new Float32Array(_.shapeSize(outShape)), outShape),
+        outs = out.selection;
+    if (this.ndim === 1){
+        for (i=0; i<outShape[0]; i++){
+            outs.set(i, doConvolve(ts.lo(i).hi(fShape[0]), fs));
+        }
+    }
+    else if (this.ndim === 2){
+        for (i=0; i<outShape[0]; i++){
+            for (j=0; j<outShape[1]; j++){
+                outs.set(i, j, doConvolve(ts.lo(i,j).hi(fShape[0], fShape[1]), fs));
+            }
+        }
+    }
+    else if (this.ndim === 3){
+        for (i=0; i<outShape[0]; i++){
+            for (j=0; j<outShape[1]; j++){
+                for (k=0; k<outShape[2]; k++){
+                    outs.set(i, j, k, doConvolve(ts.lo(i,j,k).hi(fShape[0], fShape[1], fShape[2]), fs));
+                }
+            }
+        }
+    }
+    else {
+        throw new errors.NotImplementedError();
+    }
+    return out;
+};
+/**
+ * Returns the discrete, linear convolution of the array using the given filter and Fast Fourrier Transform
+ *
+ * @note: Arrays must have the same dimensions and `filter` must be smaller than the array.
+ * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
+ *
+ * @param {Array|NdArray} filter
+ */
+NdArray.prototype.fftconvolve = function(filter){
     filter = NdArray.new(filter);
 
     if (this.ndim !== filter.ndim){

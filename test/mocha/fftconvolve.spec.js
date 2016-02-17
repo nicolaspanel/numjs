@@ -6,11 +6,11 @@ var expect = require('expect.js');
 var _ = require('lodash');
 var nj = require('../../src');
 
-describe('convolve', function () {
+describe('fftconvolve', function () {
     it('should work on vectors', function () {
         var x = nj.float32([0,0,1,2,1,0,0]),
             filter = [-1,0,1],
-            conv = nj.convolve(x, filter);
+            conv = nj.fftconvolve(x, filter);
         expect(conv.round().tolist())
             .to.eql([-1, -2,  0,  2,  1]);
         expect(conv.dtype).to.be('float32');
@@ -20,13 +20,15 @@ describe('convolve', function () {
         var x = nj.arange(256).reshape(16,16),
             sobelFilterH = nj.array([[ 1, 2, 1], [ 0, 0, 0], [-1,-2,-1]]),
             sobelFilterV = sobelFilterH.T;
-        var gX1 = nj.convolve(x, sobelFilterV),
-            gH1 = nj.convolve(x, sobelFilterH);
+        var gX1 = nj.fftconvolve(x, sobelFilterV),
+            gH1 = nj.fftconvolve(x, sobelFilterH);
 
-        var gX2 = x.convolve([[1, 0,-1]]).convolve([[1],[2],[1]]),
-            gY2 = x.convolve([[1, 2, 1]]).convolve([[1],[0],[-1]]);
+        var gX2 = nj.fftconvolve(nj.fftconvolve(x, [[1, 0,-1]]), [[1],[2],[1]]),
+            gY2 = nj.fftconvolve(nj.fftconvolve(x, [[1, 2, 1]]), [[1],[0],[-1]]);
 
         expect(gX1.round().tolist()).to.eql(gX2.round().tolist());
         expect(gH1.round().tolist()).to.eql(gY2.round().tolist());
+        var s = nj.sqrt(nj.add(gX1.pow(2), gH1.pow(2)));
+        console.log('G mean: ', s.mean());
     });
 });

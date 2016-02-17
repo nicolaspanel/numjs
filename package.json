@@ -1,6 +1,6 @@
 {
   "name": "num4js",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "description": "Like NumPy, in JavaScript",
   "main": "src/index.js",
   "directories": {
@@ -38,8 +38,7 @@
     "karma-phantomjs-launcher": "^0.1.4",
     "mocha": "^2.3.4",
     "lodash": "^3.10.1",
-    "phantomjs": "^1.9.7-15",
-    "sharp": "^0.12.2"
+    "phantomjs": "^1.9.7-15"
   },
   "scripts": {
     "test": "grunt test"
