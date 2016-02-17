@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: images/scharr.js</title>
+    <title>JSDoc: Source: images/save-dom.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,7 +17,7 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: images/scharr.js</h1>
+    <h1 class="page-title">Source: images/save-dom.js</h1>
 
     
 
@@ -28,63 +28,36 @@
         <article>
             <pre class="prettyprint source linenums"><code>'use strict';
 
-var cwise = require('cwise');
-var ops = require('ndarray-ops');
+var _ = require('./utils');
 var NdArray = require('../ndarray');
-var __ = require('../utils');
-var rgb2gray= require('./rgb2gray');
-
-
-var doScharr = cwise({
-    args:[
-        'array', //  schar
-        'array',  // img
-        {offset:[-1, -1], array:1}, //a
-        {offset:[-1,  0], array:1}, //b
-        {offset:[-1,  1], array:1}, //c
-        {offset:[ 0, -1], array:1}, //d
-        //{offset:[ 9,  0], array:1}, // useless since available already and always multiplied by zero
-        {offset:[ 0,  1], array:1}, //f
-        {offset:[ 1, -1], array:1}, //g
-        {offset:[ 1,  0], array:1}, //h
-        {offset:[ 1,  1], array:1}  //i
-    ],
-    body:function doSobelBody(s, img, a,b,c,d,f,g,h,i) {
-        var sV = (3 * a + 10 * b + 3 * c - 3 * g - 10 * h - 3 * i),
-            sH = (3 * a - 3 * c + 10 * d - 10 * f + 3 * g - 3 * i);
-        s = Math.sqrt(sH * sH + sV * sV);
-    }
-});
-
-
+var errors = require('../errors');
 
 /**
- * Find the edge magnitude using the Scharr transform.
- *
- * @note
- * Take the square root of the sum of the squares of the horizontal and vertical Scharrs to get a magnitude
- * that is somewhat insensitive to direction. The Scharr operator has a better rotation invariance than other
- * edge filters, such as the Sobel operators.
+ * Save image on the given destination
  *
  * @param {NdArray} img
+ * @param {HTMLCanvasElement} dest
  */
-module.exports = function computeScharr(img){
-    var gray = rgb2gray(img),
-        iShape = gray.shape, iH = iShape[0], iW = iShape[1];
+module.exports = function saveImageDom(img, dest) {
+    var iShape = img.shape,
+        iH = iShape[0], iW = iShape[1];
+    if (dest instanceof HTMLCanvasElement){
+        var $tmp = document.createElement('canvas');
+        $tmp.height = iH; $tmp.width = iW;
+        var tmpCtx=$tmp.getContext('2d');
+        var originalImg = tmpCtx.createImageData(iW ,iH);
+        var err = _.setRawData(img.selection, originalImg.data);
 
-    var out = new NdArray(new Float32Array(__.shapeSize(iShape)), iShape);
+        if (err){ throw err; }
 
-    doScharr(out.selection, gray.selection);
-
-    // set borders to zero (invalid anyway)
-    ops.assigns(out.selection.pick(0, null), 0);   // first line
-    ops.assigns(out.selection.pick(null, 0), 0);    // first col
-    ops.assigns(out.selection.pick(iH-1, null), 0); // last line
-    ops.assigns(out.selection.pick(null, iW-1), 0); // last col
-
-    return out.divide(16 * Math.sqrt(2), false);
-};
-</code></pre>
+        tmpCtx.putImageData(originalImg, 0, 0);
+        tmpCtx.drawImage($tmp, iW, iH);
+        dest.getContext('2d').drawImage($tmp, 0, 0, iW, iH, 0, 0, dest.width, dest.height);
+    }
+    else {
+        throw new errors.ValueError('expect input to be either an HTML Canvas or a (loaded) Image');
+    }
+};</code></pre>
         </article>
     </section>
 
