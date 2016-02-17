@@ -556,7 +556,7 @@ array([[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
        [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]], dtype=uint8)
 ```
 
-See also [this jsfiddle](#TODO) for more details on what is possible from the browser.
+See also [this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/) for more details on what is possible from the browser.
 
 
 ## More ?
