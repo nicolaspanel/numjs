@@ -1,36 +1,36 @@
 
-__Num4JS__ is a npm/bower package for scientific computing with JavaScript. It contains among other things:
+__NumJs__ is a npm/bower package for scientific computing with JavaScript. It contains among other things:
  - a powerful N-dimensional array object
  - linear algebra function
  - fast Fourier transform
  - tools for basic image processing
 
-Besides its obvious scientific uses, __Num4JS__ can also be used as an efficient multi-dimensional container of generic data.
+Besides its obvious scientific uses, __NumJs__ can also be used as an efficient multi-dimensional container of generic data.
 
 It works both in node.js and in the browser (with or without [browserify](http://browserify.org/))
 
-__Num4JS__ is licensed under the [MIT license](https://github.com/nicolaspanel/num4js/blob/master/LICENSE), enabling reuse with almost no restrictions.
+__NumJs__ is licensed under the [MIT license](https://github.com/nicolaspanel/numjs/blob/master/LICENSE), enabling reuse with almost no restrictions.
 
 ## Installation
 
 ### on node.js
 
 ```sh
-npm install num4js
+npm install numjs
 ```
 
 ```js
-var nj = require('num4js');
+var nj = require('numjs');
 ...
 ```
 
 ### on the browser
 ```sh
-bower install num4js
+bower install numjs
 ```
 
 ```html
-<script src="bower_packages/num4js/num4js.min.js"></script>
+<script src="bower_packages/numjs/numjs.min.js"></script>
 ```
 
 
@@ -79,7 +79,7 @@ array([[ 0.9182 , 0.85176, 0.22587],
        [ 0.00612, 0.37732, 0.06932]])
 ```
 
-To create sequences of numbers, __Num4JS__ provides a function called `arange`:
+To create sequences of numbers, __NumJs__ provides a function called `arange`:
 
 ```js
 > nj.arange(4);
@@ -94,7 +94,7 @@ array([ 1, 2, 3, 4], dtype=uint8)
 
 ### More info about the array
 
-__Num4JS__’s array class is called `NdArray`. It is also known by the alias `array`. The more important properties of an `NdArray` object are:
+__NumJs__’s array class is called `NdArray`. It is also known by the alias `array`. The more important properties of an `NdArray` object are:
  - `NdArray#ndim`: the number of axes (dimensions) of the array.
  - `NdArray#shape`: the dimensions of the array. This is a list of integers indicating the size of the array in each dimension. For a matrix with n rows and m columns, shape will be [n,m]. The length of the shape is therefore the number of dimensions, ndim.
  - `NdArray#size`: the total number of elements of the array. This is equal to the product of the elements of shape.
@@ -132,7 +132,7 @@ array([[  1,  1,  2,  3,  4],
 
 ### Printing arrays
 
-When you print an array, __Num4JS__ displays it in a similar way to nested lists, but with the following layout:
+When you print an array, __NumJs__ displays it in a similar way to nested lists, but with the following layout:
  - the last axis is printed from left to right,
  - the second-to-last is printed from top to bottom,
  - the rest are also printed from top to bottom, with each slice separated from the next by an empty line.
@@ -162,7 +162,7 @@ array([[[  0,  1,  2,  3],
 
 ```
 
-If an array is too large to be printed, __Num4JS__ automatically skips the central part of the array and only prints the corners:
+If an array is too large to be printed, __NumJs__ automatically skips the central part of the array and only prints the corners:
 
 ```js
 > console.log(nj.arange(10000).reshape(100,100))
@@ -284,7 +284,7 @@ array([[0.62755, 0.8278,0.21384],
 ```
 
 ### Universal Functions
-__Num4JS__ provides familiar mathematical functions such as `sin`, `cos`, and `exp`. These functions operate element-wise on an array, producing an `NdArray` as output:
+__NumJs__ provides familiar mathematical functions such as `sin`, `cos`, and `exp`. These functions operate element-wise on an array, producing an `NdArray` as output:
 
 ```js
 > a = nj.array([-1, 0, 1])
@@ -494,7 +494,7 @@ __Note__: `convolve` uses Fast Fourier Transform (FFT) to speed up computation o
 
 
 ## Images manipulation
-__Num4JS__’s comes with powerful functions for image processing. Theses function are located in `nj.images` module.
+__NumJs__’s comes with powerful functions for image processing. Theses function are located in `nj.images` module.
 
 The different color bands/channels are stored using the `NdArray` object such that a grey-image is `[H,W]`, an RGB-image is `[H,W,3]` and an RGBA-image is `[H,W,4]`.
 
@@ -561,9 +561,9 @@ See also [this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/) for more d
 
 
 ## More ?
-See [documentation](http://nicolaspanel.github.io/num4js/global.html).
+See [documentation](http://nicolaspanel.github.io/numjs/global.html).
 
 
 ## Credits
-__Num4JS__ is built on top of [ndarray](http://scijs.net/packages/#scijs/ndarray) and uses many [scijs packages](http://scijs.net/packages/)
+__NumJs__ is built on top of [ndarray](http://scijs.net/packages/#scijs/ndarray) and uses many [scijs packages](http://scijs.net/packages/)
 

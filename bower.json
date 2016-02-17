@@ -1,8 +1,8 @@
 {
-  "name": "num4js",
+  "name": "numjs",
   "version": "0.7.0",
   "description": "Like NumPy, in JavaScript",
-  "main": "dist/num4js.min.js",
+  "main": "dist/numjs.min.js",
   "author": "Nicolas Panel",
   "license": "MIT",
   "keywords": [
@@ -26,7 +26,7 @@
     "shape",
     "numpy"
   ],
-  "homepage": "https://github.com/nicolaspanel/num4js",
+  "homepage": "https://github.com/nicolaspanel/numjs",
   "moduleType": [
     "globals",
     "node"
