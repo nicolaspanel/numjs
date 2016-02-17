@@ -93,18 +93,14 @@ module.exports = function(grunt) {
                 }
             }
         },
-        githubPages: {
-            target: {
-                options: {
-                    // The default commit message for the gh-pages branch
-                    commitMessage: 'update documentation'
-                },
-                // The folder where your gh-pages repo is
-                src: 'doc'
-            }
+        'gh-pages': {
+            options: {
+                base: 'doc'
+            },
+            src: ['**']
         }
     });
     grunt.registerTask('mocha', ['simplemocha:full']);
     grunt.registerTask('test', ['jshint', 'simplemocha:full', 'browserify', 'karma:dist', 'uglify', 'karma:min' ]);
-    grunt.registerTask('doc', ['jsdoc', 'githubPages:target']);
+    grunt.registerTask('doc', ['jsdoc', 'gh-pages']);
 };

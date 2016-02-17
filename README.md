@@ -48,7 +48,7 @@ array([[ 1, 2, 3],
        [ 4, 5, 6]])
 ```
 
-__Note__: Default data container is Javascript `Array` object. If needed, you can also use typed array such as `Int8Array`:
+__Note__: Default data container is Javascript `Array` object. If needed, you can also use typed array such as `Uint8Array`:
 
 ```js
 > var a = nj.uint8([1,2,3]);
