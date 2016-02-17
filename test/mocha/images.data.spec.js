@@ -8,12 +8,11 @@ var nj = require('../../src');
 
 describe('images', function () {
     describe('data', function () {
-        it('should have the "five" img', function (done) {
-            nj.images.data.five(function (err, img) {
-                if (err){ return done(err); }
-                expect(img).to.be.an(nj.NdArray);
-                expect(img.shape).to.eql([28, 28]);
-                expect(img.tolist()).to.eql([
+        it('should have the "five" img', function () {
+            var img = nj.images.data.digit;
+            expect(img).to.be.an(nj.NdArray);
+            expect(img.shape).to.eql([28, 28]);
+            expect(img.tolist()).to.eql([
                     [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0],
                     [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0],
                     [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0],
@@ -43,32 +42,25 @@ describe('images', function () {
                     [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0],
                     [  0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  0,   0]]);
 
-                done();
-            });
         });
-        it('should have the "nodejs" PNG img', function (done) {
-            nj.images.data.nodejs(function (err, img) {
-                if (err){ return done(err); }
-                expect(img).to.be.an(nj.NdArray);
-                expect(img.shape).to.eql([300, 600,4]); // PNG COLOR images have 4 color channels: RGBA
-                done();
-            });
+
+        it('should have the "nodejs" PNG img', function () {
+            var img = nj.images.data.node;
+            expect(img).to.be.an(nj.NdArray);
+            expect(img.shape).to.eql([300, 600,4]); // PNG COLOR images have 4 color channels: RGBA
+
         });
-        it('should have the "lena" img', function (done) {
-            nj.images.data.lena(function (err, img) {
-                if (err){ return done(err); }
+        it('should have the "lenna" img', function () {
+            var img = nj.images.data.lenna;
+
                 expect(img).to.be.an(nj.NdArray);
                 expect(img.shape).to.eql([512, 512,3]); // TIFF COLOR images have 3 color channels: RGB
-                done();
-            });
+
         });
-        it('should have the "moon" img', function (done) {
-            nj.images.data.moon(function (err, img) {
-                if (err){ return done(err); }
-                expect(img).to.be.an(nj.NdArray);
-                expect(img.shape).to.eql([256, 256]);
-                done();
-            });
+        it('should have the "moon" img', function () {
+            var img =nj.images.data.moon;
+            expect(img).to.be.an(nj.NdArray);
+            expect(img.shape).to.eql([600, 600]);
         });
     });
 });

@@ -4733,42 +4733,69 @@ var read = require('./read');
 
 var DATA_DIR = path.join(path.resolve(__dirname), '../../data');
 
-/**
- * 28x28 grayscale image with an handwritten (5) digit
- *
- * Extracted from Mnist database
- * @param {imgCallback} cb
- * @returns {undefined}
- */
-module.exports.five = function (cb) { return read(path.join(DATA_DIR, 'five.png'), cb); };
+function getArray(fileName){
+    return read(path.join(DATA_DIR, fileName));
+}
+
+var exports = {};
 
 /**
- * 300x600 COLOR image
- *
- * @param {imgCallback} cb
- * @returns {undefined}
+ * @property {NdArray} digit - 28x28 grayscale image with an handwritten digit extracted from MNIST database
  */
-module.exports.nodejs = function (cb) { return read(path.join(DATA_DIR, 'nodejs.png'), cb); };
+Object.defineProperty(exports, 'digit',{
+    get: function() {
+        return getArray('five.png');
+    }
+});
 
 /**
- * Colour “Lena” image.
- *
- * The standard, yet sometimes controversial Lena test image was scanned from the November 1972 edition of Playboy magazine.
- *
- * From an image processing perspective, this image is useful because it contains smooth, textured, shaded as well as detail areas.
- * @param {imgCallback} cb
- * @returns {undefined}
+ * @property {NdArray} five - 28x28 grayscale image with an handwritten digit extracted from MNIST database
  */
-module.exports.lena = function (cb) { return read(path.join(DATA_DIR, 'lena.tiff'), cb); };
+Object.defineProperty(exports, 'five',{
+    get: function() {
+        return getArray('five.png');
+    }
+});
 
 /**
- * Surface of the moon.
- *
- * This low-contrast image of the surface of the moon is useful for illustrating histogram equalization and contrast stretching.
- * @param {imgCallback} cb
- * @returns {undefined}
+ * @property {NdArray} node - 300x600 COLOR image representing Node.js's logo
  */
-module.exports.moon = function (cb) { return read(path.join(DATA_DIR, 'moon.tiff'), cb); };
+Object.defineProperty(exports, 'node',{
+    get: function() {
+        return getArray('nodejs.png');
+    }
+});
+
+/**
+ * @property {NdArray} lena - The standard, yet sometimes controversial Lena test image was scanned from the November 1972 edition of Playboy magazine. From an image processing perspective, this image is useful because it contains smooth, textured, shaded as well as detail areas.
+ */
+Object.defineProperty(exports, 'lena',{
+    get: function() {
+        return getArray('lenna.png');
+    }
+});
+
+/**
+ * @property {NdArray} lenna - The standard, yet sometimes controversial Lena test image was scanned from the November 1972 edition of Playboy magazine. From an image processing perspective, this image is useful because it contains smooth, textured, shaded as well as detail areas.
+ */
+Object.defineProperty(exports, 'lenna',{
+    get: function() {
+        return getArray('lenna.png');
+    }
+});
+
+/**
+ * @property {NdArray} moon - This low-contrast image of the surface of the moon is useful for illustrating histogram equalization and contrast stretching.
+ */
+Object.defineProperty(exports, 'moon',{
+    get: function() {
+        return getArray('moon.jpg');
+    }
+});
+
+module.exports = exports;
+
+
 }).call(this,"/src/images")
 },{"./read":32,"path":19}],29:[function(require,module,exports){
 'use strict';
@@ -4831,40 +4858,27 @@ module.exports = function isGrayscaleImage(arr){
     return false;
 };
 },{"../ndarray":42,"cwise/lib/wrapper":8}],32:[function(require,module,exports){
-(function (Buffer){
 'use strict';
 
-var _ = require('./utils');
 var ndarray = require('ndarray');
 var NdArray = require('../ndarray');
+var errors = require('../errors');
+var _ = require('./utils');
 var isGrayscale = require('./is-grayscale');
 
-module.exports =  function readImageDom(input, type, cb){
-    if (arguments.length === 2){
-        cb = type;
-        type = 'input';
+module.exports =  function readImageDom(input){
+    if (input instanceof HTMLCanvasElement){
+        return processCanvas(input);
     }
-    if(Buffer.isBuffer(input)) {
-        //url = 'data:' + type + ';base64,' + url.toString('base64')
-        input = 'data:image/png;base64,' + input.toString('base64');
-    }
-
-    if ((input instanceof HTMLImageElement)){
-        return processImg(input, cb);
-    }
-    else if ((input instanceof HTMLCanvasElement)){
-        return processCanvas(input, cb);
+    else if (input instanceof HTMLImageElement){
+        return processImg(input);
     }
     else {
-        var img = new Image();
-        img.crossOrigin = 'Anonymous';
-        img.onload = function() { processImg(img, cb); };
-        img.onerror = function(err) { cb(err); };
-        img.src = input;
+        throw new errors.ValueError('expect input to be either an HTML Canvas or a (loaded) Image');
     }
 };
 
-function processCanvas(canvas, cb){
+function processCanvas(canvas){
     var context = canvas.getContext('2d');
     var pixels = context.getImageData(0, 0, canvas.width, canvas.height);
 
@@ -4876,11 +4890,11 @@ function processCanvas(canvas, cb){
     if (isGrayscale(hxw)){
         hxw = hxw.pick(null,null,0);
     }
-    cb(null, new NdArray(hxw));
+    return new NdArray(hxw);
 }
 
 
-function processImg(img, cb){
+function processImg(img){
     var canvas = document.createElement('canvas');
     canvas.width = img.width;
     canvas.height = img.height;
@@ -4896,17 +4910,16 @@ function processImg(img, cb){
     if (isGrayscale(hxw)){
         hxw = hxw.pick(null,null,0);
     }
-    cb(null, new NdArray(hxw));
+    return new NdArray(hxw);
 }
-}).call(this,{"isBuffer":require("../../node_modules/is-buffer/index.js")})
-},{"../../node_modules/is-buffer/index.js":12,"../ndarray":42,"./is-grayscale":31,"./utils":40,"ndarray":18}],33:[function(require,module,exports){
+},{"../errors":25,"../ndarray":42,"./is-grayscale":31,"./utils":40,"ndarray":18}],33:[function(require,module,exports){
 'use strict';
 
 var _ = require('./utils');
 var ndarray = require('ndarray');
 var NdArray = require('../ndarray');
 
-module.exports = function resizeImageDom (img, height, width, cb) {
+module.exports = function resizeImageDom (img, height, width) {
     var iShape = img.shape,
         H = iShape[0], W = iShape[1], K = iShape[2] || 1;
     var originalCanvas = document.createElement('canvas');
@@ -4915,7 +4928,7 @@ module.exports = function resizeImageDom (img, height, width, cb) {
     var originalCtx=originalCanvas.getContext('2d');
     var originalImg = originalCtx.createImageData(W ,H);
     var err = _.setRawData(img.selection, originalImg.data);
-    if (err){ return cb(err); }
+    if (err){ throw err; }
 
     // compute cropping
     var cfH = H / height, cfW = W / width,
@@ -4943,7 +4956,7 @@ module.exports = function resizeImageDom (img, height, width, cb) {
     else if (iShape.length === 3 && K === 1){
         hxw = hxw.pick(null, null, 0);
     }
-    cb(null, new NdArray(hxw));
+    return new NdArray(hxw);
 };
 },{"../ndarray":42,"./utils":40,"ndarray":18}],34:[function(require,module,exports){
 'use strict';
@@ -4986,7 +4999,7 @@ module.exports = function rgb2gray(img){
 var NdArray = require('../ndarray');
 var rgb2gray  = require('./rgb2gray');
 
-var doIntegrate = require('cwise/lib/wrapper')({"args":["array","array","index",{"offset":[-1,-1],"array":0},{"offset":[-1,0],"array":0},{"offset":[0,-1],"array":0}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_58_arg0_=0!==_inline_58_arg2_[0]&&0!==_inline_58_arg2_[1]?_inline_58_arg1_+_inline_58_arg4_+_inline_58_arg5_-_inline_58_arg3_:0===_inline_58_arg2_[0]&&0===_inline_58_arg2_[1]?_inline_58_arg1_:0===_inline_58_arg2_[0]?_inline_58_arg1_+_inline_58_arg5_:_inline_58_arg1_+_inline_58_arg4_}","args":[{"name":"_inline_58_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_58_arg1_","lvalue":false,"rvalue":true,"count":4},{"name":"_inline_58_arg2_","lvalue":false,"rvalue":true,"count":5},{"name":"_inline_58_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_58_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_58_arg5_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doIntegrateBody","blockSize":64});
+var doIntegrate = require('cwise/lib/wrapper')({"args":["array","array","index",{"offset":[-1,-1],"array":0},{"offset":[-1,0],"array":0},{"offset":[0,-1],"array":0}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_55_arg0_=0!==_inline_55_arg2_[0]&&0!==_inline_55_arg2_[1]?_inline_55_arg1_+_inline_55_arg4_+_inline_55_arg5_-_inline_55_arg3_:0===_inline_55_arg2_[0]&&0===_inline_55_arg2_[1]?_inline_55_arg1_:0===_inline_55_arg2_[0]?_inline_55_arg1_+_inline_55_arg5_:_inline_55_arg1_+_inline_55_arg4_}","args":[{"name":"_inline_55_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_55_arg1_","lvalue":false,"rvalue":true,"count":4},{"name":"_inline_55_arg2_","lvalue":false,"rvalue":true,"count":5},{"name":"_inline_55_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_55_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_55_arg5_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doIntegrateBody","blockSize":64});
 
 /**
  * Compute Sum Area Table, also known as the integral of the image
@@ -5009,9 +5022,15 @@ module.exports = function computeSumAreaTable(img){
 
 var _ = require('./utils');
 var NdArray = require('../ndarray');
+var errors = require('../errors');
 
-module.exports = function saveImageDom(img, dest, cb) {
-    cb = cb || function () {};
+/**
+ * Save image on the given destination
+ *
+ * @param {NdArray} img
+ * @param {HTMLCanvasElement} dest
+ */
+module.exports = function saveImageDom(img, dest) {
     var iShape = img.shape,
         iH = iShape[0], iW = iShape[1];
     if (dest instanceof HTMLCanvasElement){
@@ -5020,15 +5039,18 @@ module.exports = function saveImageDom(img, dest, cb) {
         var tmpCtx=$tmp.getContext('2d');
         var originalImg = tmpCtx.createImageData(iW ,iH);
         var err = _.setRawData(img.selection, originalImg.data);
-        if (err){ return cb(err); }
+
+        if (err){ throw err; }
 
         tmpCtx.putImageData(originalImg, 0, 0);
         tmpCtx.drawImage($tmp, iW, iH);
         dest.getContext('2d').drawImage($tmp, 0, 0, iW, iH, 0, 0, dest.width, dest.height);
-        return cb();
+    }
+    else {
+        throw new errors.ValueError('expect input to be either an HTML Canvas or a (loaded) Image');
     }
 };
-},{"../ndarray":42,"./utils":40}],37:[function(require,module,exports){
+},{"../errors":25,"../ndarray":42,"./utils":40}],37:[function(require,module,exports){
 'use strict';
 
 
@@ -5038,7 +5060,7 @@ var __ = require('../utils');
 var rgb2gray= require('./rgb2gray');
 
 
-var doScharr = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_64_q=3*_inline_64_arg2_+10*_inline_64_arg3_+3*_inline_64_arg4_-3*_inline_64_arg7_-10*_inline_64_arg8_-3*_inline_64_arg9_,_inline_64_s=3*_inline_64_arg2_-3*_inline_64_arg4_+10*_inline_64_arg5_-10*_inline_64_arg6_+3*_inline_64_arg7_-3*_inline_64_arg9_;_inline_64_arg0_=Math.sqrt(_inline_64_s*_inline_64_s+_inline_64_q*_inline_64_q)}","args":[{"name":"_inline_64_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_64_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_64_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_64_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_64_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_64_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_64_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_64_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_64_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_64_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_64_q","_inline_64_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
+var doScharr = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_61_q=3*_inline_61_arg2_+10*_inline_61_arg3_+3*_inline_61_arg4_-3*_inline_61_arg7_-10*_inline_61_arg8_-3*_inline_61_arg9_,_inline_61_s=3*_inline_61_arg2_-3*_inline_61_arg4_+10*_inline_61_arg5_-10*_inline_61_arg6_+3*_inline_61_arg7_-3*_inline_61_arg9_;_inline_61_arg0_=Math.sqrt(_inline_61_s*_inline_61_s+_inline_61_q*_inline_61_q)}","args":[{"name":"_inline_61_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_61_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_61_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_61_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_61_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_61_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_61_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_61_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_61_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_61_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_61_q","_inline_61_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
 
 
 
@@ -5079,7 +5101,7 @@ var __ = require('../utils');
 var rgb2gray= require('./rgb2gray');
 
 
-var doSobel = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_61_q=_inline_61_arg2_+2*_inline_61_arg3_+_inline_61_arg4_-_inline_61_arg7_-2*_inline_61_arg8_-_inline_61_arg9_,_inline_61_s=_inline_61_arg2_-_inline_61_arg4_+2*_inline_61_arg5_-2*_inline_61_arg6_+_inline_61_arg7_-_inline_61_arg9_;_inline_61_arg0_=Math.sqrt(_inline_61_s*_inline_61_s+_inline_61_q*_inline_61_q)}","args":[{"name":"_inline_61_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_61_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_61_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_61_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_61_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_61_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_61_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_61_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_61_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_61_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_61_q","_inline_61_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
+var doSobel = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_64_q=_inline_64_arg2_+2*_inline_64_arg3_+_inline_64_arg4_-_inline_64_arg7_-2*_inline_64_arg8_-_inline_64_arg9_,_inline_64_s=_inline_64_arg2_-_inline_64_arg4_+2*_inline_64_arg5_-2*_inline_64_arg6_+_inline_64_arg7_-_inline_64_arg9_;_inline_64_arg0_=Math.sqrt(_inline_64_s*_inline_64_s+_inline_64_q*_inline_64_q)}","args":[{"name":"_inline_64_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_64_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_64_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_64_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_64_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_64_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_64_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_64_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_64_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_64_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_64_q","_inline_64_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
 
 
 
@@ -5118,7 +5140,7 @@ module.exports = function computeSobel(img){
 var NdArray = require('../ndarray');
 var rgb2gray  = require('./rgb2gray');
 
-var doIntegrate = require('cwise/lib/wrapper')({"args":["array","array","index",{"offset":[-1,-1],"array":0},{"offset":[-1,0],"array":0},{"offset":[0,-1],"array":0}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_55_arg0_=0!==_inline_55_arg2_[0]&&0!==_inline_55_arg2_[1]?_inline_55_arg1_*_inline_55_arg1_+_inline_55_arg4_+_inline_55_arg5_-_inline_55_arg3_:0===_inline_55_arg2_[0]&&0===_inline_55_arg2_[1]?_inline_55_arg1_*_inline_55_arg1_:0===_inline_55_arg2_[0]?_inline_55_arg1_*_inline_55_arg1_+_inline_55_arg5_:_inline_55_arg1_*_inline_55_arg1_+_inline_55_arg4_}","args":[{"name":"_inline_55_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_55_arg1_","lvalue":false,"rvalue":true,"count":8},{"name":"_inline_55_arg2_","lvalue":false,"rvalue":true,"count":5},{"name":"_inline_55_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_55_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_55_arg5_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doIntegrateBody","blockSize":64});
+var doIntegrate = require('cwise/lib/wrapper')({"args":["array","array","index",{"offset":[-1,-1],"array":0},{"offset":[-1,0],"array":0},{"offset":[0,-1],"array":0}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_58_arg0_=0!==_inline_58_arg2_[0]&&0!==_inline_58_arg2_[1]?_inline_58_arg1_*_inline_58_arg1_+_inline_58_arg4_+_inline_58_arg5_-_inline_58_arg3_:0===_inline_58_arg2_[0]&&0===_inline_58_arg2_[1]?_inline_58_arg1_*_inline_58_arg1_:0===_inline_58_arg2_[0]?_inline_58_arg1_*_inline_58_arg1_+_inline_58_arg5_:_inline_58_arg1_*_inline_58_arg1_+_inline_58_arg4_}","args":[{"name":"_inline_58_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_58_arg1_","lvalue":false,"rvalue":true,"count":8},{"name":"_inline_58_arg2_","lvalue":false,"rvalue":true,"count":5},{"name":"_inline_58_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_58_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_58_arg5_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doIntegrateBody","blockSize":64});
 
 /**
  * Compute Squared Sum Area Table, also known as the integral of the squared image

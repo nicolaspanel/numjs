@@ -2,9 +2,15 @@
 
 var _ = require('./utils');
 var NdArray = require('../ndarray');
+var errors = require('../errors');
 
-module.exports = function saveImageDom(img, dest, cb) {
-    cb = cb || function () {};
+/**
+ * Save image on the given destination
+ *
+ * @param {NdArray} img
+ * @param {HTMLCanvasElement} dest
+ */
+module.exports = function saveImageDom(img, dest) {
     var iShape = img.shape,
         iH = iShape[0], iW = iShape[1];
     if (dest instanceof HTMLCanvasElement){
@@ -13,11 +19,14 @@ module.exports = function saveImageDom(img, dest, cb) {
         var tmpCtx=$tmp.getContext('2d');
         var originalImg = tmpCtx.createImageData(iW ,iH);
         var err = _.setRawData(img.selection, originalImg.data);
-        if (err){ return cb(err); }
+
+        if (err){ throw err; }
 
         tmpCtx.putImageData(originalImg, 0, 0);
         tmpCtx.drawImage($tmp, iW, iH);
         dest.getContext('2d').drawImage($tmp, 0, 0, iW, iH, 0, 0, dest.width, dest.height);
-        return cb();
+    }
+    else {
+        throw new errors.ValueError('expect input to be either an HTML Canvas or a (loaded) Image');
     }
 };

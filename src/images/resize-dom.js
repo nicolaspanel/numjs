@@ -4,7 +4,7 @@ var _ = require('./utils');
 var ndarray = require('ndarray');
 var NdArray = require('../ndarray');
 
-module.exports = function resizeImageDom (img, height, width, cb) {
+module.exports = function resizeImageDom (img, height, width) {
     var iShape = img.shape,
         H = iShape[0], W = iShape[1], K = iShape[2] || 1;
     var originalCanvas = document.createElement('canvas');
@@ -13,7 +13,7 @@ module.exports = function resizeImageDom (img, height, width, cb) {
     var originalCtx=originalCanvas.getContext('2d');
     var originalImg = originalCtx.createImageData(W ,H);
     var err = _.setRawData(img.selection, originalImg.data);
-    if (err){ return cb(err); }
+    if (err){ throw err; }
 
     // compute cropping
     var cfH = H / height, cfW = W / width,
@@ -41,5 +41,5 @@ module.exports = function resizeImageDom (img, height, width, cb) {
     else if (iShape.length === 3 && K === 1){
         hxw = hxw.pick(null, null, 0);
     }
-    cb(null, new NdArray(hxw));
+    return new NdArray(hxw);
 };

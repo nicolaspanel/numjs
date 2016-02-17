@@ -502,8 +502,7 @@ Example:
 ```js
 > nj.config.printThreshold = 28;
 >
-> var img, resized;
-> nj.images.data.five(function callback(err, _img_){ img = _img_;  })
+> var img = nj.images.data.digit;  // WARN: this is a property, not a function. See also `nj.images.data.moon`, `nj.images.data.lenna` and `nj.images.data.node`
 >
 > img
 array([[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
@@ -534,7 +533,7 @@ array([[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  
        [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
        [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
        [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]], dtype=uint8)
-> nj.images.resize(img, 14, 14, function callback(err, _resized_) { resized=_resized_; })
+> var resized = nj.images.resize(img, 14, 14)
 >
 > resized.shape
 [ 14, 14 ]

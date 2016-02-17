@@ -1,6 +1,6 @@
 {
   "name": "num4js",
-  "version": "0.5.2",
+  "version": "0.6.0",
   "description": "Like NumPy, in JavaScript",
   "main": "src/index.js",
   "directories": {
@@ -8,10 +8,11 @@
   },
   "dependencies": {
     "cwise": "^1.0.8",
+    "deasync": "^0.1.4",
     "ndarray": "^1.0.18",
     "ndarray-fft": "^1.0.0",
-    "ndarray-ops": "^1.2.2",
     "ndarray-gemm": "^1.0.0",
+    "ndarray-ops": "^1.2.2",
     "sharp": "^0.13.0",
     "typedarray-pool": "^1.1.0"
   },
@@ -76,8 +77,7 @@
     "./src/images/read.js": "./src/images/read-dom.js",
     "./src/images/save.js": "./src/images/save-dom.js"
   },
-  "browserify-shim": {
-  },
+  "browserify-shim": {},
   "browserify": {
     "transform": [
       "cwise",

@@ -1,36 +1,24 @@
 'use strict';
 
-var _ = require('./utils');
 var ndarray = require('ndarray');
 var NdArray = require('../ndarray');
+var errors = require('../errors');
+var _ = require('./utils');
 var isGrayscale = require('./is-grayscale');
 
-module.exports =  function readImageDom(input, type, cb){
-    if (arguments.length === 2){
-        cb = type;
-        type = 'input';
+module.exports =  function readImageDom(input){
+    if (input instanceof HTMLCanvasElement){
+        return processCanvas(input);
     }
-    if(Buffer.isBuffer(input)) {
-        //url = 'data:' + type + ';base64,' + url.toString('base64')
-        input = 'data:image/png;base64,' + input.toString('base64');
-    }
-
-    if ((input instanceof HTMLImageElement)){
-        return processImg(input, cb);
-    }
-    else if ((input instanceof HTMLCanvasElement)){
-        return processCanvas(input, cb);
+    else if (input instanceof HTMLImageElement){
+        return processImg(input);
     }
     else {
-        var img = new Image();
-        img.crossOrigin = 'Anonymous';
-        img.onload = function() { processImg(img, cb); };
-        img.onerror = function(err) { cb(err); };
-        img.src = input;
+        throw new errors.ValueError('expect input to be either an HTML Canvas or a (loaded) Image');
     }
 };
 
-function processCanvas(canvas, cb){
+function processCanvas(canvas){
     var context = canvas.getContext('2d');
     var pixels = context.getImageData(0, 0, canvas.width, canvas.height);
 
@@ -42,11 +30,11 @@ function processCanvas(canvas, cb){
     if (isGrayscale(hxw)){
         hxw = hxw.pick(null,null,0);
     }
-    cb(null, new NdArray(hxw));
+    return new NdArray(hxw);
 }
 
 
-function processImg(img, cb){
+function processImg(img){
     var canvas = document.createElement('canvas');
     canvas.width = img.width;
     canvas.height = img.height;
@@ -62,5 +50,5 @@ function processImg(img, cb){
     if (isGrayscale(hxw)){
         hxw = hxw.pick(null,null,0);
     }
-    cb(null, new NdArray(hxw));
+    return new NdArray(hxw);
 }

@@ -5,39 +5,65 @@ var read = require('./read');
 
 var DATA_DIR = path.join(path.resolve(__dirname), '../../data');
 
-/**
- * 28x28 grayscale image with an handwritten (5) digit
- *
- * Extracted from Mnist database
- * @param {imgCallback} cb
- * @returns {undefined}
- */
-module.exports.five = function (cb) { return read(path.join(DATA_DIR, 'five.png'), cb); };
+function getArray(fileName){
+    return read(path.join(DATA_DIR, fileName));
+}
+
+var exports = {};
 
 /**
- * 300x600 COLOR image
- *
- * @param {imgCallback} cb
- * @returns {undefined}
+ * @property {NdArray} digit - 28x28 grayscale image with an handwritten digit extracted from MNIST database
  */
-module.exports.nodejs = function (cb) { return read(path.join(DATA_DIR, 'nodejs.png'), cb); };
+Object.defineProperty(exports, 'digit',{
+    get: function() {
+        return getArray('five.png');
+    }
+});
 
 /**
- * Colour “Lena” image.
- *
- * The standard, yet sometimes controversial Lena test image was scanned from the November 1972 edition of Playboy magazine.
- *
- * From an image processing perspective, this image is useful because it contains smooth, textured, shaded as well as detail areas.
- * @param {imgCallback} cb
- * @returns {undefined}
+ * @property {NdArray} five - 28x28 grayscale image with an handwritten digit extracted from MNIST database
  */
-module.exports.lena = function (cb) { return read(path.join(DATA_DIR, 'lena.tiff'), cb); };
+Object.defineProperty(exports, 'five',{
+    get: function() {
+        return getArray('five.png');
+    }
+});
 
 /**
- * Surface of the moon.
- *
- * This low-contrast image of the surface of the moon is useful for illustrating histogram equalization and contrast stretching.
- * @param {imgCallback} cb
- * @returns {undefined}
+ * @property {NdArray} node - 300x600 COLOR image representing Node.js's logo
  */
-module.exports.moon = function (cb) { return read(path.join(DATA_DIR, 'moon.tiff'), cb); };
+Object.defineProperty(exports, 'node',{
+    get: function() {
+        return getArray('nodejs.png');
+    }
+});
+
+/**
+ * @property {NdArray} lena - The standard, yet sometimes controversial Lena test image was scanned from the November 1972 edition of Playboy magazine. From an image processing perspective, this image is useful because it contains smooth, textured, shaded as well as detail areas.
+ */
+Object.defineProperty(exports, 'lena',{
+    get: function() {
+        return getArray('lenna.png');
+    }
+});
+
+/**
+ * @property {NdArray} lenna - The standard, yet sometimes controversial Lena test image was scanned from the November 1972 edition of Playboy magazine. From an image processing perspective, this image is useful because it contains smooth, textured, shaded as well as detail areas.
+ */
+Object.defineProperty(exports, 'lenna',{
+    get: function() {
+        return getArray('lenna.png');
+    }
+});
+
+/**
+ * @property {NdArray} moon - This low-contrast image of the surface of the moon is useful for illustrating histogram equalization and contrast stretching.
+ */
+Object.defineProperty(exports, 'moon',{
+    get: function() {
+        return getArray('moon.jpg');
+    }
+});
+
+module.exports = exports;
+
