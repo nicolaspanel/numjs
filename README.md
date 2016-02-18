@@ -264,7 +264,7 @@ array([[  7,  8,  9],
        [ 17, 18, 19],
        [ 22, 23, 24]])
 >
-> b.slice(null, [null, null, -1]) // reverse raws, same as b[:, ::-1]
+> b.slice(null, [null, null, -1]) // reverse rows, same as b[:, ::-1]
 array([[  4,  3,  2,  1,  0],
        [  9,  8,  7,  6,  5],
        [ 14, 13, 12, 11, 10],
