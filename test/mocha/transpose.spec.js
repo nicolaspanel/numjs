@@ -24,9 +24,15 @@ describe('transpose', function(){
                 [ 1,  4,  7, 10],
                 [ 2,  5,  8, 11]]);
     });
-    it('should work on multdimensional array with custom axes', function(){
+    it('should work on multdimensional array with custom axes passed as a list', function(){
         var x = nj.arange(5*4*3*2).reshape([5,4,3,2]),
             y = x.transpose([0,2,1,3]);
+        expect(x.shape).to.eql([5,4,3,2]);
+        expect(y.shape).to.eql([5,3,4,2]);
+    });
+    it('should work on multdimensional array with custom axes', function(){
+        var x = nj.arange(5*4*3*2).reshape([5,4,3,2]),
+            y = x.transpose(0,2,1,3);
         expect(x.shape).to.eql([5,4,3,2]);
         expect(y.shape).to.eql([5,3,4,2]);
     });

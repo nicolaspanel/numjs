@@ -76,7 +76,9 @@ var NdArray = function NdArray(){
         }.bind(this),
         set: function (dtype) {
             var T = _.getType(dtype);
-            this.selection = ndarray(new T(this.selection.data), this.selection.shape, this.selection.stride, this.selection.offset);
+            if (T !== _.getType(this.dtype)) {
+                this.selection = ndarray(new T(this.selection.data), this.selection.shape, this.selection.stride, this.selection.offset);
+            }
         }.bind(this)
     });
     /**
@@ -223,7 +225,7 @@ NdArray.prototype.step = function () {
  * @returns {NdArray}
  */
 NdArray.prototype.flatten = function () {
-    if (this.shape.length === 1){ // already flattened
+    if (this.ndim === 1){ // already flattened
         return new NdArray(this.selection);
     }
     var T = _.getType(this.dtype);
@@ -310,7 +312,7 @@ NdArray.prototype.reshape = function(shape){
  * Permute the dimensions of the array.
  *
  * @param {...number} [axes]
- * @returns {NdArray}
+ * @returns {NfdArray}
  */
 NdArray.prototype.transpose = function (axes){
     if (arguments.length === 0) {
@@ -705,17 +707,17 @@ var doConjMuleq = cwise({
     }
 });
 
-
-var doConvolve = cwise({
-    args: ['array', 'array'],
-    pre: function () { this.sum = 0; },
-    body: function (x, f) {
-        this.sum += x * f;
-    },
-    post: function () {
-        return this.sum;
-    }
-});
+// // obsolete
+//var doConvolve = cwise({
+//    args: ['array', 'array'],
+//    pre: function () { this.sum = 0; },
+//    body: function (x, f) {
+//        this.sum += x * f;
+//    },
+//    post: function () {
+//        return this.sum;
+//    }
+//});
 
 var doConvolve3x3 = cwise({
     args: [

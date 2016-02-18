@@ -327,8 +327,8 @@ function zeros(shape, dtype){
         shape = [shape];
     }
     var s = _.shapeSize(shape);
-    var type = _.getType(dtype);
-    var arr =  new NdArray(new type(s), shape);
+    var T = _.getType(dtype);
+    var arr =  new NdArray(new T(s), shape);
     ops.assigns(arr.selection, 0);
     return arr;
 }
@@ -346,10 +346,27 @@ function ones(shape, dtype){
         shape = [shape];
     }
     var s = _.shapeSize(shape);
-    var type = _.getType(dtype);
-    var arr =  new NdArray(new type(s), shape);
+    var T = _.getType(dtype);
+    var arr =  new NdArray(new T(s), shape);
     ops.assigns(arr.selection, 1);
     return arr;
+}
+
+/**
+ * Return a new array of given shape and type, filled with `undefined` values.
+ *
+ * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
+ * @param {(String|Object)}  [dtype=Array] - The type of the output array.
+ *
+ * @return {NdArray} Array of `undefined` values with the given shape and dtype
+ */
+function empty(shape, dtype){
+    if (_.isNumber(shape) && shape >=0){
+        shape = [shape];
+    }
+    var s = _.shapeSize(shape);
+    var T = _.getType(dtype);
+    return new NdArray(new T(s), shape);
 }
 
 
@@ -729,6 +746,7 @@ module.exports = {
     reshape: reshape,
     zeros: zeros,
     ones: ones,
+    empty: empty,
     flatten: flatten,
     random: random,
     softmax: softmax,
