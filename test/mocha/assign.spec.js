@@ -32,4 +32,13 @@ describe('assign', function () {
             .to.eql([1,2,3]);
 
     });
+    it('can assign to a matrix without creating a copy', function () {
+        var zeros = nj.zeros([3,4]);
+        zeros.slice([1,-1],[1,-1]).assign(1, false);
+
+        expect(zeros.tolist()).to.eql([
+            [ 0, 0, 0, 0],
+            [ 0, 1, 1, 0],
+            [ 0, 0, 0, 0]]);
+    });
 });

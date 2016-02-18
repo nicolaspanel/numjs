@@ -5060,7 +5060,7 @@ var __ = require('../utils');
 var rgb2gray= require('./rgb2gray');
 
 
-var doScharr = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_82_q=3*_inline_82_arg2_+10*_inline_82_arg3_+3*_inline_82_arg4_-3*_inline_82_arg7_-10*_inline_82_arg8_-3*_inline_82_arg9_,_inline_82_s=3*_inline_82_arg2_-3*_inline_82_arg4_+10*_inline_82_arg5_-10*_inline_82_arg6_+3*_inline_82_arg7_-3*_inline_82_arg9_;_inline_82_arg0_=Math.sqrt(_inline_82_s*_inline_82_s+_inline_82_q*_inline_82_q)}","args":[{"name":"_inline_82_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_82_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_82_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_82_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_82_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_82_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_82_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_82_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_82_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_82_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_82_q","_inline_82_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
+var doScharr = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_79_q=3*_inline_79_arg2_+10*_inline_79_arg3_+3*_inline_79_arg4_-3*_inline_79_arg7_-10*_inline_79_arg8_-3*_inline_79_arg9_,_inline_79_s=3*_inline_79_arg2_-3*_inline_79_arg4_+10*_inline_79_arg5_-10*_inline_79_arg6_+3*_inline_79_arg7_-3*_inline_79_arg9_;_inline_79_arg0_=Math.sqrt(_inline_79_s*_inline_79_s+_inline_79_q*_inline_79_q)}","args":[{"name":"_inline_79_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_79_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_79_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_79_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_79_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_79_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_79_q","_inline_79_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
 
 
 
@@ -5101,7 +5101,7 @@ var __ = require('../utils');
 var rgb2gray= require('./rgb2gray');
 
 
-var doSobel = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_79_q=_inline_79_arg2_+2*_inline_79_arg3_+_inline_79_arg4_-_inline_79_arg7_-2*_inline_79_arg8_-_inline_79_arg9_,_inline_79_s=_inline_79_arg2_-_inline_79_arg4_+2*_inline_79_arg5_-2*_inline_79_arg6_+_inline_79_arg7_-_inline_79_arg9_;_inline_79_arg0_=Math.sqrt(_inline_79_s*_inline_79_s+_inline_79_q*_inline_79_q)}","args":[{"name":"_inline_79_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_79_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_79_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_79_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_79_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_79_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_79_q","_inline_79_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
+var doSobel = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_82_q=_inline_82_arg2_+2*_inline_82_arg3_+_inline_82_arg4_-_inline_82_arg7_-2*_inline_82_arg8_-_inline_82_arg9_,_inline_82_s=_inline_82_arg2_-_inline_82_arg4_+2*_inline_82_arg5_-2*_inline_82_arg6_+_inline_82_arg7_-_inline_82_arg9_;_inline_82_arg0_=Math.sqrt(_inline_82_s*_inline_82_s+_inline_82_q*_inline_82_q)}","args":[{"name":"_inline_82_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_82_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_82_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_82_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_82_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_82_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_82_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_82_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_82_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_82_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_82_q","_inline_82_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
 
 
 
@@ -6148,6 +6148,7 @@ NdArray.prototype.set = function(){
 };
 
 
+
 NdArray.prototype.slice = function () {
     var d = this.ndim,
         hi = new Array(d),
@@ -6363,6 +6364,28 @@ NdArray.prototype.transpose = function (axes){
         axes = arguments;
     }
     return new NdArray(this.selection.transpose.apply(this.selection, axes));
+};
+
+/**
+ * Assign `x` to the array, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.assign = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+
+    if (_.isNumber(x)){
+        ops.assigns(arr.selection, x);
+        return arr;
+    }
+    x = createArray(x, this.dtype);
+    ops.assign(arr.selection, x.selection);
+    return arr;
 };
 
 /**
