@@ -1,5 +1,14 @@
 language: node_js
 sudo: false
+env:
+  CXX=g++-4.8
+addons:
+  apt:
+    sources:
+    - ubuntu-toolchain-r-test
+    packages:
+    - g++-4.8
+
 node_js:
   - "0.12"
   - "iojs-1"
@@ -7,8 +16,8 @@ node_js:
   - 4
   - 5
 
-script:
-  - grunt travis
 before_script:
   - npm install -g bower grunt-cli
   - bower install
+script:
+  - grunt travis

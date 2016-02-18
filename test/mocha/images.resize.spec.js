@@ -9,12 +9,9 @@ var nj = require('../../src');
 describe('images', function () {
 
     describe('resize', function () {
-        var img;
-        before(function () {
-            img = nj.images.data.digit;
-        });
+
         it('should be able to downscale a Grayscale img', function(){
-            var resized = nj.images.resize(img, 14, 10);
+            var resized = nj.images.resize(nj.images.data.digit, 14, 10);
             expect(resized).to.be.an(nj.NdArray);
             expect(resized.shape).to.eql([14, 10]);
             expect(resized.tolist())
@@ -36,7 +33,7 @@ describe('images', function () {
 
         });
         it('should be able to upscale a Grayscale img', function(){
-            var resized = nj.images.resize(img, 32, 32);
+            var resized = nj.images.resize(nj.images.data.digit, 32, 32);
 
             expect(resized).to.be.an(nj.NdArray);
             expect(resized.dtype).to.be('uint8');
