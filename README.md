@@ -1,3 +1,4 @@
+[![Build Status](https://travis-ci.org/nicolaspanel/numjs.png)](https://travis-ci.org/nicolaspanel/numjs) [![npm version](https://badge.fury.io/js/numjs.svg)](https://badge.fury.io/js/numjs) [![Bower version](https://badge.fury.io/bo/numjs.svg)](https://badge.fury.io/bo/numjs) [![Built with Grunt](https://cdn.gruntjs.com/builtwith.svg)](http://gruntjs.com/)
 
 __NumJs__ is a npm/bower package for scientific computing with JavaScript. It contains among other things:
  - a powerful N-dimensional array object
