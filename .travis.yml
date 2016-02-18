@@ -6,10 +6,9 @@ node_js:
   - "iojs-2"
   - 4
   - 5
-before_install:
-  - npm install -g npm@~1.4.6
+
 script:
   - grunt travis
 before_script:
-  - npm install -g bower
+  - npm install -g bower grunt-cli
   - bower install

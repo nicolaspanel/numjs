@@ -8,6 +8,7 @@ lib-cov
 *.gz
 
 .idea
+.grunt
 
 pids
 logs
