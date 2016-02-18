@@ -192,7 +192,7 @@ array([[    0,    1,    2,    3, ...,   96,   97,   98,   99],
 
 ### Indexing
 
-Single element indexing for a 1-D array uses `get` method. It is 0-based, and accepts negative indices for indexing from the end of the array:
+Single element indexing  uses `get` and `set` methods. It is 0-based, and accepts negative indices for indexing from the end of the array:
 ```js
 > var a = nj.array([0,1,2]);
 > a.get(1)
@@ -200,27 +200,25 @@ Single element indexing for a 1-D array uses `get` method. It is 0-based, and ac
 >
 > a.get(-1)
 2
-```
-
-__NumJs__ also support multidimensional indexing:
-```js
-> var a = nj.arange(3*3).reshape(3,3);
-> a
+>
+> var b = nj.arange(3*3).reshape(3,3);
+> b
 array([[  0,  1,  2],
        [  3,  4,  5],
        [  6,  7,  8])
 >
-> a.get(1, 1);
+> b.get(1, 1);
 4
 >
-> a.get(-1, -1);
+> b.get(-1, -1);
 8
-> a.set(0,0,1);
-> a
+> b.set(0,0,1);
+> b
 array([[ 1, 1, 2],
        [ 3, 4, 5],
        [ 6, 7, 8]])
 ```
+
 
 ### Slicing and Striding
 
