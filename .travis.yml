@@ -1,6 +1,15 @@
 language: node_js
+sudo: false
 node_js:
-  - "0.8"
-  - "0.10"
+  - "0.12"
+  - "iojs-1"
+  - "iojs-2"
+  - 4
+  - 5
 before_install:
   - npm install -g npm@~1.4.6
+script:
+  - grunt travis
+before_script:
+  - npm install -g bower
+  - bower install

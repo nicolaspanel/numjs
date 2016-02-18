@@ -58,7 +58,7 @@ array([ 1, 2, 3], dtype=uint8)
 
 __Note__: possible types are int8, uint8, int16, uint16, int32, uint32, float32, float64 and array (the default)
 
-To create arrays with a given shape, you can use `zeros`, ones or `random` functions:
+To create arrays with a given shape, you can use `zeros`, `ones` or `random` functions:
 
 ```js
 > nj.zeros([2,3]);
