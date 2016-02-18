@@ -592,7 +592,7 @@ __NumJs__’s comes with powerful functions for image processing. Theses functio
 
 The different color bands/channels are stored using the `NdArray` object such that a grey-image is `[H,W]`, an RGB-image is `[H,W,3]` and an RGBA-image is `[H,W,4]`.
 
-Use `nj.images.read`, `nj.images.write` and `nj.images.resize` to (respectively) read, write or resize images.
+Use `nj.images.read`, `nj.images.write` and `nj.images.resize` functions to (respectively) read, write or resize images.
 
 Example:
 ```js
