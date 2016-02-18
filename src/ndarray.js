@@ -108,6 +108,7 @@ NdArray.prototype.set = function(){
 };
 
 
+
 NdArray.prototype.slice = function () {
     var d = this.ndim,
         hi = new Array(d),
@@ -323,6 +324,28 @@ NdArray.prototype.transpose = function (axes){
         axes = arguments;
     }
     return new NdArray(this.selection.transpose.apply(this.selection, axes));
+};
+
+/**
+ * Assign `x` to the array, element-wise.
+ *
+ * @param {(NdArray|Array|number)} x
+ * @param {boolean} [copy=true]
+ * @returns {NdArray}
+ */
+NdArray.prototype.assign = function(x, copy){
+    if (arguments.length === 1){
+        copy = true;
+    }
+    var arr = copy ? this.clone() : this;
+
+    if (_.isNumber(x)){
+        ops.assigns(arr.selection, x);
+        return arr;
+    }
+    x = createArray(x, this.dtype);
+    ops.assign(arr.selection, x.selection);
+    return arr;
 };
 
 /**

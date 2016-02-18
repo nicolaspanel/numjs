@@ -276,7 +276,7 @@ Note that slices do not copy the internal array data, it produces a new views of
 
 ### Basic operations
 
-Arithmetic operators such as `*` (`multiply`), `+` (`add`), `-` (`subtract`), `/` (`divide`), `**` (`pow`) apply elemen-twise. A new array is created and filled with the result:
+Arithmetic operators such as `*` (`multiply`), `+` (`add`), `-` (`subtract`), `/` (`divide`), `**` (`pow`), `=` (`assign`) apply elemen-twise. A new array is created and filled with the result:
 
 ```js
 > zeros = nj.zeros([3,4]);
@@ -303,6 +303,8 @@ array([[ 0, 0, 0, 0],
 array([[ 1, 1, 1, 1],
        [ 1, 1, 1, 1],
        [ 1, 1, 1, 1]])
+>
+
 ```
 
 To modify an existing array rather than create a new one you can set the `copy` parameter to `false`:
@@ -322,8 +324,15 @@ array([[ 2, 2, 2, 2],
 array([[ 2, 2, 2, 2],
        [ 2, 2, 2, 2],
        [ 2, 2, 2, 2]])
+>
+> zeros = nj.zeros([3,4])
+> zeros.slice([1,-1],[1,-1]).assign(1, false);
+> zeros
+array([[ 0, 0, 0, 0],
+       [ 0, 1, 1, 0],
+       [ 0, 0, 0, 0]])
 ```
-__Note__: available for `add`, `subtract`, `multiply`, `divide` and `pow` methods.
+__Note__: available for `add`, `subtract`, `multiply`, `divide`, `assign` and `pow` methods.
 
 
 The matrix product can be performed using the `dot` function:
