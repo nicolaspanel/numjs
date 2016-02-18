@@ -12,6 +12,8 @@ It works both in node.js and in the browser (with or without [browserify](http:/
 
 __NumJs__ is licensed under the [MIT license](https://github.com/nicolaspanel/numjs/blob/master/LICENSE), enabling reuse with almost no restrictions.
 
+__[See this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/)__ for a concrete example of how to use the library to manipulate images.
+
 ## Installation
 
 ### on node.js
