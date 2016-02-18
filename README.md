@@ -190,6 +190,87 @@ array([[    0,    1,    2,    3, ...,   96,   97,   98,   99],
 
 ```
 
+### Indexing
+
+Single element indexing for a 1-D array uses `get` method. It is 0-based, and accepts negative indices for indexing from the end of the array:
+```js
+> var a = nj.array([0,1,2]);
+> a.get(1)
+1
+>
+> a.get(-1)
+2
+```
+
+__NumJs__ also support multidimensional indexing:
+```js
+> var a = nj.arange(3*3).reshape(3,3);
+> a
+array([[  0,  1,  2],
+       [  3,  4,  5],
+       [  6,  7,  8])
+>
+> a.get(1, 1)
+4
+>
+> a.get(-1, -1)
+8
+```
+
+### Slicing and Striding
+
+It is possible to slice and stride arrays to extract arrays of the same number of dimensions, but of different sizes than the original. The slicing and striding works exactly the same way it does in NumPy:
+
+```js
+> var a = nj.arange(5);
+> a
+array([  0,  1,  2,  3,  4])
+>
+> a.slice(1) // skip the first item, same as a[1:]
+array([ 1, 2, 3, 4])
+>
+> a.slice(-3) // takes the last 3 items, same as a[-3:]
+array([ 2, 3, 4])
+>
+> a.slice([4]) // takes the first 4 items, same as a[:4]
+array([ 0, 1, 2, 3])
+>
+> a.slice([-2]) // skip the last 2 items, same as a[:-2]
+array([ 0, 1, 2])
+>
+> a.slice([1,4]) // same as a[1:4]
+array([ 1, 2, 3])
+>
+> a.slice([1,4,-1]) // same as a[1:4:-1]
+array([ 3, 2, 1])
+>
+> a.slice([null,null,-1]) // same as a[::-1]
+array([ 4, 3, 2, 1, 0])
+>
+> var b = nj.arange(5*5).reshape(5,5);
+> b
+array([[  0,  1,  2,  3,  4],
+       [  5,  6,  7,  8,  9],
+       [ 10, 11, 12, 13, 14],
+       [ 15, 16, 17, 18, 19],
+       [ 20, 21, 22, 23, 24]])
+>
+> b.slice(1,2) //  skip the first row and the 2 first  columns, same as b[1:,2:]
+array([[  7,  8,  9],
+       [ 12, 13, 14],
+       [ 17, 18, 19],
+       [ 22, 23, 24]])
+>
+> b.slice(null, [null, null, -1]) // reverse raws, same as b[:, ::-1]
+array([[  4,  3,  2,  1,  0],
+       [  9,  8,  7,  6,  5],
+       [ 14, 13, 12, 11, 10],
+       [ 19, 18, 17, 16, 15],
+       [ 24, 23, 22, 21, 20]])
+```
+
+Note that slices do not copy the internal array data, it produces a new views of the original data.
+
 ### Basic operations
 
 Arithmetic operators such as `*` (`multiply`), `+` (`add`), `-` (`subtract`), `/` (`divide`), `**` (`pow`) apply elemen-twise. A new array is created and filled with the result:

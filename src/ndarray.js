@@ -94,11 +94,50 @@ var NdArray = function NdArray(){
 };
 
 NdArray.prototype.get = function(){
+    var n = arguments.length;
+    for (var i = 0; i<n; i++){
+        if (arguments[i] < 0){
+            arguments[i] += this.shape[i];
+        }
+    }
     return this.selection.get.apply(this.selection, arguments);
 };
 
 NdArray.prototype.set = function(){
     return this.selection.set.apply(this.selection, arguments);
+};
+
+
+NdArray.prototype.slice = function () {
+    var d = this.ndim,
+        hi = new Array(d),
+        lo = new Array(d),
+        step = new Array(d),
+        tShape = this.shape;
+
+    for (var i = 0; i<d; i++){
+        var arg = arguments[i];
+        if (typeof arg === 'undefined'){ break; }
+        if (arg === null){ continue; }
+        if (_.isNumber(arg)){
+            lo[i] = (arg < 0) ? arg + tShape[i]: arg;
+            hi[i] = null;
+            step[i] = 1;
+        }
+        else {
+            // assume it is an array
+            var start = (arg[0] < 0) ? arg[0] + tShape[i]: arg[0],
+                end = (arg[1] < 0) ? arg[1] + tShape[i]: arg[1];
+            lo[i] = end ? start: 0;
+            hi[i] = end ?end - start: start;
+            step[i] = arg[2] || 1;
+        }
+    }
+
+    var slo = this.selection.lo.apply(this.selection, lo);
+    var shi = slo.hi.apply(slo, hi);
+    var sstep = shi.step.apply(shi, step);
+    return new NdArray(sstep);
 };
 
 /**
