@@ -16,3 +16,7 @@ node_modules
 bower_components
 *.DS_Store
 test
+doc
+dist
+.grunt
+.idea

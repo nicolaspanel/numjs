@@ -335,13 +335,12 @@ NdArray.prototype.transpose = function (axes){
  * @returns {NdArray}
  */
 NdArray.prototype.dot = function(x){
-    x = createArray(x, this.dtype);
+    x = (x instanceof NdArray) ? x:  createArray(x, this.dtype);
     var tShape = this.shape,
         xShape = x.shape;
-    var cShape, c, T = _.getType(this.dtype);
+
     if (tShape.length === 2 && xShape.length === 2 && tShape[1] === xShape[0]){ // matrix/matrix
-        cShape = [tShape[0], xShape[1]];
-        c = new NdArray(new T(_.shapeSize(cShape)), cShape);
+        var T = _.getType(this.dtype),  c = new NdArray(new T(tShape[0] * xShape[1]), [tShape[0], xShape[1]]);
         gemm(c.selection, this.selection, x.selection);
         return c;
     }

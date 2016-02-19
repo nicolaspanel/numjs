@@ -5281,7 +5281,6 @@ module.exports.setRawData = function setRawData(array, data) {
 var ndarray = require('ndarray');
 
 var ops = require('ndarray-ops');
-var gemm = require('ndarray-gemm');
 var ndFFT = require('ndarray-fft');
 
 var CONF = require('./config');
@@ -5290,38 +5289,6 @@ var NdArray = require('./ndarray');
 var _ = require('./utils');
 var errors = require('./errors');
 
-
-//function locateIndex(index, shape){
-//    var max = size(shape);
-//    if (index < 0 || index >= max){
-//        throw new errors.ValueError('index must be gt 0 and lt "'+max+'"');
-//    }
-//    return []
-//        .concat(shape)
-//        .reverse()
-//        .map(function(d){
-//            var i = index % d;
-//            index -= i;
-//            index /= d;
-//            return i;
-//        })
-//        .reverse();
-//}
-
-
-
-function haveSameShape(shape1, shape2){
-    if (_.shapeSize(shape1) !== _.shapeSize(shape2)){
-        return false;
-    }
-    var d = shape1.length;
-    for (var i= 0; i<d;i++){
-        if (shape1[i] !== shape2[i]){
-            return false;
-        }
-    }
-    return true;
-}
 
 function broadcast(shape1, shape2) {
     if (shape1.length === 0 || shape2.length === 0){
@@ -5843,31 +5810,7 @@ function arctan(x){
  * @returns {NdArray}
  */
 function dot(a,b){
-    a = NdArray.new(a);
-    b = NdArray.new(b);
-    var aShape = a.shape,
-        bShape = b.shape;
-    var shape, c, rxa, rxb, type = _.getType(a.dtype);
-
-    if (aShape.length === 2 && bShape.length === 2 && aShape[1] === bShape[0]){ // matrix/matrix
-        shape = [aShape[0], bShape[1]];
-        c = new NdArray(new type(_.shapeSize(shape)), shape);
-        gemm(c.selection, a.selection, b.selection);
-        return c;
-    }
-    else if (aShape.length === 1 && bShape.length === 2 && aShape[0] === bShape[0]){ // vector/matrix
-        return dot(a.reshape([aShape[0], 1]).transpose(), b).reshape(bShape[1]);
-    }
-    else if (aShape.length === 2 && bShape.length === 1 && aShape[1] === bShape[0]){ // matrix/vector
-        return dot(a, b.reshape([bShape[0], 1])).reshape(aShape[0]);
-    }
-    else if (aShape.length === 1 && bShape.length === 1 && aShape[0] === bShape[0]){ // vector/vector
-        return dot(a.reshape([aShape[0], 1]).transpose(),  b.reshape([bShape[0], 1])).reshape([1]);
-    }
-    else {
-        throw new errors.ValueError('cannot compute the matrix product of given arrays');
-        //throw new errors.ValueError('shapes ('+xaShape[0]+',) and ('+xbShape[0]+',) not aligned: '+xaShape[0]+ '(dim 0) != '+xbShape[0]+' (dim 0)');
-    }
+    return NdArray.new(a).dot(b);
 }
 
 /**
@@ -6055,7 +5998,7 @@ module.exports = {
 };
 
 
-},{"./config":23,"./dtypes":24,"./errors":25,"./images":30,"./ndarray":42,"./utils":43,"cwise/lib/wrapper":8,"ndarray":18,"ndarray-fft":13,"ndarray-gemm":15,"ndarray-ops":17}],42:[function(require,module,exports){
+},{"./config":23,"./dtypes":24,"./errors":25,"./images":30,"./ndarray":42,"./utils":43,"cwise/lib/wrapper":8,"ndarray":18,"ndarray-fft":13,"ndarray-ops":17}],42:[function(require,module,exports){
 'use strict';
 
 var ndarray = require('ndarray');
@@ -6384,6 +6327,37 @@ NdArray.prototype.transpose = function (axes){
         axes = arguments;
     }
     return new NdArray(this.selection.transpose.apply(this.selection, axes));
+};
+
+/**
+ * Dot product of two arrays.
+ *
+ * @param {(Array|NdArray)} x
+ * @returns {NdArray}
+ */
+NdArray.prototype.dot = function(x){
+    x = (x instanceof NdArray) ? x:  createArray(x, this.dtype);
+    var tShape = this.shape,
+        xShape = x.shape;
+
+    if (tShape.length === 2 && xShape.length === 2 && tShape[1] === xShape[0]){ // matrix/matrix
+        var T = _.getType(this.dtype),  c = new NdArray(new T(tShape[0] * xShape[1]), [tShape[0], xShape[1]]);
+        gemm(c.selection, this.selection, x.selection);
+        return c;
+    }
+    else if (tShape.length === 1 && xShape.length === 2 && tShape[0] === xShape[0]){ // vector/matrix
+        return this.reshape([tShape[0], 1]).T.dot(x).reshape(xShape[1]);
+    }
+    else if (tShape.length === 2 && xShape.length === 1 && tShape[1] === xShape[0]){ // matrix/vector
+        return this.dot(x.reshape([xShape[0], 1])).reshape(tShape[0]);
+    }
+    else if (tShape.length === 1 && xShape.length === 1 && tShape[0] === xShape[0]){ // vector/vector
+       return this.reshape([tShape[0], 1]).T.dot(x.reshape([xShape[0], 1])).reshape([1]);
+    }
+    else {
+        throw new errors.ValueError('cannot compute the matrix product of given arrays');
+        //throw new errors.ValueError('shapes ('+xaShape[0]+',) and ('+xbShape[0]+',) not aligned: '+xaShape[0]+ '(dim 0) != '+xbShape[0]+' (dim 0)');
+    }
 };
 
 /**
@@ -7116,6 +7090,19 @@ function getShape(array) {
         return [array.length];
     }
     return [];
+}
+
+function haveSameShape(shape1, shape2){
+    if (shapeSize(shape1) !== shapeSize(shape2) || shape1.length !== shape2.length){
+        return false;
+    }
+    var d = shape1.length;
+    for (var i= 0; i<d;i++){
+        if (shape1[i] !== shape2[i]){
+            return false;
+        }
+    }
+    return true;
 }
 
 module.exports = {
