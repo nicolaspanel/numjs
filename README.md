@@ -33,7 +33,7 @@ bower install numjs
 ```
 
 ```html
-<script src="bower_packages/numjs/numjs.min.js"></script>
+<script src="bower_packages/numjs/dist/numjs.min.js"></script>
 ```
 
 
