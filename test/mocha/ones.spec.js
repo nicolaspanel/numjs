@@ -7,9 +7,6 @@ var _ = require('lodash');
 var nj = require('../../src');
 
 describe('ones', function () {
-    it('should exist', function () {
-        expect(nj.ones).to.be.ok();
-    });
 
     it('can generate a vectors', function(){
         expect(nj.ones(0).tolist()).to.eql([]);
@@ -23,6 +20,6 @@ describe('ones', function () {
     });
 
     it('should accept a dtype', function(){
-        expect(nj.ones(0, 'uint8').dtype).to.be('uint8');
+        expect(nj.ones(0, 'uint8').dtype).to.equal('uint8');
     });
 });

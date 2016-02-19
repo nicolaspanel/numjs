@@ -14,7 +14,9 @@ module.exports = function(grunt) {
                 timeout: '5000'
             },
             full: {
-                src: ['test/mocha/**/*.spec.js']
+                src: [
+                    'test/mocha/**/*.spec.js'
+                ]
             }
         },
         jshint: {
@@ -40,7 +42,7 @@ module.exports = function(grunt) {
         },
         karma: {
             options: {
-                frameworks: ['jasmine'],
+                frameworks: ['mocha', 'chai'],
                 reporters: ['dots'],
                 // web server port
                 port: 9876,
@@ -101,7 +103,7 @@ module.exports = function(grunt) {
         }
     });
     grunt.registerTask('mocha', ['simplemocha:full']);
-    grunt.registerTask('test', ['jshint', 'simplemocha:full', 'browserify', 'karma:dist', 'uglify', 'karma:min' ]);
+    grunt.registerTask('test', ['jshint', 'simplemocha:full', 'browserify', 'karma:dist', 'uglify', 'karma:min']);
     grunt.registerTask('travis', ['jshint', 'simplemocha:full', 'karma:dist', 'karma:min' ]);
     grunt.registerTask('doc', ['jsdoc', 'gh-pages']);
 };

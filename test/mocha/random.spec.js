@@ -7,9 +7,6 @@ var _ = require('lodash');
 var nj = require('../../src');
 
 describe('random', function () {
-    it('should exists', function () {
-        expect(nj.random).to.be.ok();
-    });
 
     it('can generate vectors', function () {
         expect(nj.random(3).shape).to.eql([3]);

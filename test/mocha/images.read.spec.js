@@ -9,10 +9,6 @@ var nj = require('../../src');
 describe('images', function () {
     describe('read', function () {
 
-        it('should exists', function(){
-            expect(nj.images.read).to.be.ok();
-        });
-
         it('should be able to convert Color images', function () {
             var img = nj.images.read('data/five.png');
 

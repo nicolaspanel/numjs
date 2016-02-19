@@ -7,9 +7,6 @@ var _ = require('lodash');
 var nj = require('../../src');
 
 describe('softmax', function(){
-    it('should exists', function () {
-        expect(nj.softmax).to.be.ok();
-    });
 
     it('should work on vectors', function () {
         var x  = nj.zeros(3),

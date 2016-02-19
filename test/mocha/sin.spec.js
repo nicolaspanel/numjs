@@ -8,8 +8,8 @@ var nj = require('../../src');
 
 describe('sin', function () {
     it('should work on vectors', function () {
-        var x = nj.array([-Math.PI,0,Math.PI]);
-        expect(nj.sin(x).tolist())
-            .to.eql([ -1.2246467991473532e-16, 0, 1.2246467991473532e-16]);
+        var x = nj.array([-Math.PI/2,0,Math.PI/2]);
+        expect(nj.sin(x).round().tolist())
+            .to.eql([ -1, 0, 1]);
     });
 });

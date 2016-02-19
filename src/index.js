@@ -256,22 +256,16 @@ function negative(x){
  */
 function arange(start, stop, step, dtype) {
     if (arguments.length === 1){
-        stop  = start;
-        start = 0;
-        step = 1;
+        return arange(0, start, 1, undefined);
     }
     else if (arguments.length === 2 && _.isNumber(stop)){
-        step = 1;
+        return arange(start, stop, 1, undefined);
     }
     else if (arguments.length === 2){
-        dtype = stop;
-        stop = start;
-        start = 0;
-        step = 1;
+        return arange(0, start, 1, stop);
     }
     else if (arguments.length === 3 && !_.isNumber(step)){
-        dtype = step;
-        step = 1;
+        return arange(start, stop, 1, step);
     }
     var result = [], i=0;
     while (start < stop){
@@ -350,7 +344,7 @@ function random(shape){
         shape = _.isNumber(shape)? [shape | 0] : shape;
     }
     else {
-        shape = arguments;
+        shape = [].slice.call(arguments);
     }
     var s = _.shapeSize(shape);
     var arr =  new NdArray(new Array(s), shape);
@@ -728,14 +722,14 @@ module.exports = {
     fftconvolve: fftconvolve,
     fft: fft,
     ifft: ifft,
-    int8: function (array) { return NdArray.new(array, DTYPES.int8); },
-    uint8: function (array) { return NdArray.new(array, DTYPES.uint8); },
-    int16: function (array) { return NdArray.new(array, DTYPES.int16); },
-    uint16: function (array) { return NdArray.new(array, DTYPES.uint16); },
-    int32: function (array) { return NdArray.new(array, DTYPES.int32); },
-    uint32: function (array) { return NdArray.new(array, DTYPES.uint32); },
-    float32: function (array) { return NdArray.new(array, DTYPES.float32); },
-    float64: function (array) { return NdArray.new(array, DTYPES.float64); },
+    int8: function (array) { return NdArray.new(array, 'int8'); },
+    uint8: function (array) { return NdArray.new(array, 'uint8'); },
+    int16: function (array) { return NdArray.new(array, 'int16'); },
+    uint16: function (array) { return NdArray.new(array, 'uint16'); },
+    int32: function (array) { return NdArray.new(array, 'int32'); },
+    uint32: function (array) { return NdArray.new(array, 'uint32'); },
+    float32: function (array) { return NdArray.new(array, 'float32'); },
+    float64: function (array) { return NdArray.new(array, 'float64'); },
     images: require('./images')
 };
 

@@ -15,32 +15,30 @@ describe('images', function () {
             sat = nj.images.sat(img);
             ssat = nj.images.ssat(img);
         });
-        it('should exsits', function () {
-            expect(nj.images.areaValue).to.be.ok();
-        });
+
         it('should work on the top left corner', function () {
             expect(nj.images.areaValue(0,   0,   2, 3, sat))
-                .to.be(18/6);
+                .to.equal(18/6);
             expect(nj.images.areaValue(0,   0,   3, 2, sat))
-                .to.be(27/6);
+                .to.equal(27/6);
         });
         it('should work on the middle corner', function () {
             expect(nj.images.areaValue(1, 1, 2, 2, sat))
-                .to.be(30/4);
+                .to.equal(30/4);
         });
         it('should work on the first line', function () {
             expect(nj.images.areaValue(0,   0,   1, 4, sat))
-                .to.be(6/4);
+                .to.equal(6/4);
             expect(nj.images.areaValue(0,   0,   1, 4, ssat))
-                .to.be(14/4);
+                .to.equal(14/4);
         });
         it('should work on the last line', function () {
             expect(nj.images.areaValue(3, 0, 1, 4, sat))
-                .to.be(54/4);
+                .to.equal(54/4);
         });
         it('should work on the last col', function () {
             expect(nj.images.areaValue(0, 3, 4, 1, sat))
-                .to.be(36/4);
+                .to.equal(36/4);
         });
     });
 

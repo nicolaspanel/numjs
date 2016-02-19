@@ -13,7 +13,7 @@ describe('images', function () {
             var A = nj.arange(9).reshape([3, 3]),
                 SAT = nj.images.sat(A);
             expect(SAT.shape).to.eql([3,3]);
-            expect(SAT.dtype).to.be('uint32');
+            expect(SAT.dtype).to.equal('uint32');
             expect(SAT.tolist())
                 .to.eql([
                     [  0,  1,  3],

@@ -16,7 +16,7 @@ describe('array', function () {
     });
 
     it('can use a given dtype', function () {
-        expect(nj.array([], nj.dtypes.uint8).dtype).to.eql('uint8');
+        expect(nj.array([], 'uint8').dtype).to.eql('uint8');
         expect(nj.uint8([]).dtype).to.eql('uint8');
     });
 
@@ -44,8 +44,8 @@ describe('array', function () {
     });
     it('can be converted to uint8', function () {
         var vect = nj.zeros(12);
-        expect(vect.dtype).to.be('array');
+        expect(vect.dtype).to.equal('array');
         vect.dtype = 'uint8';
-        expect(vect.dtype).to.be('uint8');
+        expect(vect.dtype).to.equal('uint8');
     });
 });

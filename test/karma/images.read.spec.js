@@ -1,16 +1,15 @@
 'use strict';
 
 var urlToData = 'http://localhost:9876/base/data/';
-var nj = window.nj;
+
 describe('images', function () {
 
     describe('read', function () {
         it('should accept loaded img as input', function(done){
             var $img = new Image();
             $img.onload = function() {
-                expect($img instanceof HTMLImageElement).toBeTruthy();
                 var img = nj.images.read($img);
-                expect(img.shape).toEqual([28,28]); // grayscale image from mnist
+                expect(img.shape).to.eql([28,28]); // grayscale image from mnist
                 done();
             };
             $img.onerror = done.fail;
@@ -20,14 +19,14 @@ describe('images', function () {
             var $c = document.createElement('canvas');
             $c.height = $c.width = 28;
             var img =nj.images.read($c);
-            expect(img.shape).toEqual([28,28]); // grayscale image from mnist
+            expect(img.shape).to.eql([28,28]); // grayscale image from mnist
         });
 
         it('should work from base64 data', function (done) {
             var $img = new Image();
             $img.onload = function() {
                 var img = nj.images.read($img);
-                expect(img.shape).toEqual([28,28]); // grayscale image from mnist
+                expect(img.shape).to.eql([28,28]); // grayscale image from mnist
                 done();
             };
             $img.onerror = done.fail;
@@ -38,7 +37,7 @@ describe('images', function () {
             var $img = new Image();
             $img.onload = function() {
                 var img = nj.images.read($img);
-                expect(img.shape).toEqual([28,28]); // grayscale image from mnist
+                expect(img.shape).to.eql([28,28]); // grayscale image from mnist
                 done();
             };
             $img.onerror = done.fail;
@@ -50,7 +49,7 @@ describe('images', function () {
             var $img = new Image();
             $img.onload = function() {
                 var img = nj.images.read($img);
-                expect(img.shape).toEqual([300, 600, 4]);
+                expect(img.shape).to.eql([300, 600, 4]);
                 done();
             };
             $img.onerror = done.fail;

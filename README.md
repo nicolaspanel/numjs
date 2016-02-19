@@ -67,7 +67,7 @@ To create arrays with a given shape, you can use `zeros`, `ones` or `random` fun
 > nj.zeros([2,3]);
 array([[ 0, 0, 0],
        [ 0, 0, 0]])
-> nj.ones([2,3,4], nj.dtypes.int32)     // dtype can also be specified
+> nj.ones([2,3,4], 'int32')     // dtype can also be specified
 array([[[ 1, 1, 1, 1],
         [ 1, 1, 1, 1],
         [ 1, 1, 1, 1]],
@@ -91,7 +91,7 @@ array([ 0, 1, 2, 3])
 > nj.arange( 10, 30, 5 )
 array([ 10, 15, 20, 25])
 
-> nj.arange(1, 5, nj.dtypes.uint8);
+> nj.arange(1, 5, 'uint8');
 array([ 1, 2, 3, 4], dtype=uint8)
 ```
 

@@ -13,13 +13,13 @@ describe('get', function () {
             a = nj.arange(3);
         });
         it('can locate with positive index', function () {
-            expect(a.get(1)).to.be(1);
+            expect(a.get(1)).to.equal(1);
         });
         it('can locate with positive index', function () {
-            expect(a.get(1)).to.be(1);
+            expect(a.get(1)).to.equal(1);
         });
         it('can locate with negative index', function () {
-            expect(a.get(-1)).to.be(2);
+            expect(a.get(-1)).to.equal(2);
         });
     });
     describe('on 2d array', function () {
@@ -28,10 +28,10 @@ describe('get', function () {
             a = nj.arange(3*3).reshape(3,3);
         });
         it('should work with positive index', function () {
-            expect(a.get(1,1)).to.be(4);
+            expect(a.get(1,1)).to.equal(4);
         });
         it('should accept negative integer', function () {
-            expect(a.get(-1, -1)).to.be(8);
+            expect(a.get(-1, -1)).to.equal(8);
         });
     });
 

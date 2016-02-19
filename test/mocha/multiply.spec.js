@@ -7,15 +7,13 @@ var _ = require('lodash');
 var nj = require('../../src');
 
 describe('multiply', function () {
-    it('should exists', function () {
-        expect(nj.multiply).to.be.ok();
-    });
+
     it('can multiply a vector with a scalar and create a new copy', function () {
         var x = nj.arange(3),
             scalar = 2,
             expected = [0,2,4];
         var newX = x.multiply(scalar);
-        expect(newX).not.to.be(x);
+        expect(newX).not.to.equal(x);
         expect(newX.tolist())
             .to.eql(expected);
     });
@@ -24,7 +22,7 @@ describe('multiply', function () {
             scalar = 2,
             expected = [0,2,4];
         var newX = x.multiply(scalar, false);
-        expect(newX).to.be(x);
+        expect(newX).to.equal(x);
         expect(newX.tolist())
             .to.eql(expected);
     });

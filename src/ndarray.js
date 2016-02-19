@@ -249,7 +249,7 @@ NdArray.prototype.reshape = function(shape){
         shape = [shape];
     }
     if (arguments.length > 1){
-        shape = arguments;
+        shape = [].slice.call(arguments);
     }
     if (this.size !== _.shapeSize(shape)){
         throw new errors.ValueError('total size of new array must be unchanged');
@@ -656,6 +656,9 @@ NdArray.prototype.toJSON = function () {
  */
 NdArray.prototype.clone = function () {
     var s = this.selection;
+    if (typeof s.data.slice === 'undefined'){
+        return new NdArray(ndarray([].slice.apply(s.data), s.shape, s.stride, s.offset)); // for legacy browsers
+    }
     return new NdArray(ndarray(s.data.slice(), s.shape, s.stride, s.offset));
 };
 

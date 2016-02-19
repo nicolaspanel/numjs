@@ -12,7 +12,7 @@ describe('power', function () {
             newX = nj.power(x, 2);
         expect(newX.tolist())
             .to.eql([1, 0, 1, 4]);
-        expect(newX).not.to.be(x); // should have create a copy
+        expect(newX).not.to.equal(x); // should have create a copy
         expect(x.tolist())
             .to.eql([-1,0,1, 2]);
     });
@@ -21,7 +21,7 @@ describe('power', function () {
             newX = nj.power(x, x);
         expect(newX.tolist())
             .to.eql([-1, 1, 1, 4]);
-        expect(newX).not.to.be(x); // should have create a copy
+        expect(newX).not.to.equal(x); // should have create a copy
     });
     it('can pow a vector with a scalar without crating a copy', function () {
         var x = nj.array([-1,0,1, 2]);

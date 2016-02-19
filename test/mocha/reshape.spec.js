@@ -8,10 +8,6 @@ var nj = require('../../src');
 
 describe('reshape', function () {
 
-    it('should exists', function () {
-        expect(nj.reshape).to.be.ok();
-    });
-
     it('should accept native array as input', function () {
         var arr = nj.reshape([0,1,2,3], [2,2]);
         expect(arr.tolist())
@@ -36,8 +32,8 @@ describe('reshape', function () {
             .to.eql([[0,1,2,3],[4,5,6,7],[8,9,10,11]]);
     });
     it('should preserve type', function(){
-        expect(nj.arange(12, nj.dtypes.float32).reshape([4,3]).dtype)
-            .to.be('float32');
+        expect(nj.arange(12, 'float32').reshape([4,3]).dtype)
+            .to.equal('float32');
     });
     it('should work on a sliced array but create a cpy', function(){
         var x = nj.arange(15).reshape([3,5]),

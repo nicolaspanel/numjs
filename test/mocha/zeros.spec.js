@@ -7,9 +7,7 @@ var _ = require('lodash');
 var nj = require('../../src');
 
 describe('zeros', function () {
-    it('should exist', function () {
-        expect(nj.zeros).to.be.ok();
-    });
+
 
     it('can generate a vectors', function(){
         expect(nj.zeros(0).tolist()).to.eql([]);
@@ -25,6 +23,6 @@ describe('zeros', function () {
     });
 
     it('should accept a dtype', function(){
-        expect(nj.zeros(0, 'uint8').dtype).to.be('uint8');
+        expect(nj.zeros(0, 'uint8').dtype).to.equal('uint8');
     });
 });

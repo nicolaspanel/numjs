@@ -36,7 +36,7 @@ describe('images', function () {
             var resized = nj.images.resize(nj.images.data.digit, 32, 32);
 
             expect(resized).to.be.an(nj.NdArray);
-            expect(resized.dtype).to.be('uint8');
+            expect(resized.dtype).to.equal('uint8');
             expect(resized.shape).to.eql([32, 32]);
 
         });

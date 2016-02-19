@@ -7,14 +7,12 @@ var _ = require('lodash');
 var nj = require('../../src');
 
 describe('divide', function () {
-    it('should exists', function () {
-        expect(nj.divide).to.be.ok();
-    });
+
     it('can divide a vector with a scalar and create a new copy', function () {
         var x = nj.arange(3),
             scalar = 2;
         var newX = x.divide(scalar);
-        expect(newX).not.to.be(x);
+        expect(newX).not.to.equal(x);
         expect(newX.tolist())
             .to.eql([0, 0.5, 1]);
     });
@@ -22,7 +20,7 @@ describe('divide', function () {
         var x = nj.arange(3),
             scalar = 2;
         var newX = x.divide(scalar, false);
-        expect(newX).to.be(x);
+        expect(newX).to.equal(x);
         expect(newX.tolist())
             .to.eql([0, 0.5, 1]);
     });

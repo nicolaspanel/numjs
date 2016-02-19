@@ -9,7 +9,7 @@ var nj = require('../../src');
 describe('utils', function(){
 
     it('broadcast', function () {
-        expect(nj.broadcast([], [])).to.be(undefined);
+        expect(nj.broadcast([], [])).to.equal(undefined);
         expect(nj.broadcast([256,256,3], [3])).to.eql([256,256,3]);
         expect(nj.broadcast([8, 1, 6, 1], [7, 1, 5])).to.eql([8, 7, 6, 5]);
         expect(nj.broadcast([5, 4], [1])).to.eql([5,4]);
@@ -26,7 +26,7 @@ describe('utils', function(){
             expect(function(){
                 x.iteraxis(2, function(xi){});
             }).to.throwException(function (e) {
-                    expect(e.toString()).to.be('ValueError: invalid axis');
+                    expect(e.toString()).to.equal('ValueError: invalid axis');
                 });
         });
         it('can iterate over rows', function(){

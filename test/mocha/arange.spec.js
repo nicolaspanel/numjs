@@ -7,9 +7,7 @@ var _ = require('lodash');
 var nj = require('../../src');
 
 describe('arange', function () {
-    it('should exist', function () {
-        expect(nj.arange).to.be.ok();
-    });
+
     it('should work if only stop given', function () {
         var arr = nj.arange(3);
         expect(arr.tolist()).to.eql([0,1,2]);
@@ -27,8 +25,8 @@ describe('arange', function () {
     });
 
     it('should accept a dtype', function () {
-        expect(nj.arange(3, nj.dtypes.uint8).dtype).to.be('uint8');
-        expect(nj.arange(0, 3, nj.dtypes.uint8).dtype).to.be('uint8');
-        expect(nj.arange(0, 3, 1, nj.dtypes.uint8).dtype).to.be('uint8');
+        expect(nj.arange(3, 'uint8').dtype).to.equal('uint8');
+        expect(nj.arange(0, 3, 'uint8').dtype).to.equal('uint8');
+        expect(nj.arange(0, 3, 1, 'uint8').dtype).to.equal('uint8');
     });
 });

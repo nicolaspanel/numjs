@@ -11,27 +11,27 @@ describe('errors', function () {
         expect(function(){
             throw new errors.ValueError('txt...');
         }).to.throwException(function (e) { // get the exception object
-                expect(e.name).to.be('ValueError');
-                expect(util.isError(e)).to.be(true);
-                expect(e.toString()).to.be('ValueError: txt...');
+                expect(e.name).to.equal('ValueError');
+                expect(util.isError(e)).to.equal(true);
+                expect(e.toString()).to.equal('ValueError: txt...');
             });
     });
     it('can be a ConfigError', function () {
         expect(function(){
             throw new errors.ConfigError('txt...');
         }).to.throwException(function (e) { // get the exception object
-                expect(e.name).to.be('ConfigError');
-                expect(util.isError(e)).to.be(true);
-                expect(e.toString()).to.be('ConfigError: txt...');
+                expect(e.name).to.equal('ConfigError');
+                expect(util.isError(e)).to.equal(true);
+                expect(e.toString()).to.equal('ConfigError: txt...');
             });
     });
     it('can be a NotImplementedError', function () {
         expect(function(){
             throw new errors.NotImplementedError();
         }).to.throwException(function (e) { // get the exception object
-                expect(e.name).to.be('NotImplementedError');
-                expect(util.isError(e)).to.be(true);
-                expect(e.toString()).to.be('NotImplementedError');
+                expect(e.name).to.equal('NotImplementedError');
+                expect(util.isError(e)).to.equal(true);
+                expect(e.toString()).to.equal('NotImplementedError');
             });
     });
 });

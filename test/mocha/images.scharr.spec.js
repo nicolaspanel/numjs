@@ -14,9 +14,6 @@ describe('images', function () {
                 [-3,-10,-3]]).divide(16, false),
             FILTER_V = FILTER_H.T;
 
-        it('should exists', function () {
-            expect(nj.images.scharr).to.be.ok();
-        });
         it('should work on 3x3 images', function () {
             var img = nj.arange(3*3).reshape([3,3]),
                 sV = nj.convolve(img, FILTER_V),

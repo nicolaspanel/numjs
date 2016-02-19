@@ -13,7 +13,7 @@ describe('convolve', function () {
             conv = nj.convolve(x, filter);
         expect(conv.round().tolist())
             .to.eql([-1, -2,  0,  2,  1]);
-        expect(conv.dtype).to.be('float32');
+        expect(conv.dtype).to.equal('float32');
     });
 
     it('should work with 3x3 filter', function () {
@@ -76,7 +76,7 @@ describe('convolve', function () {
     });
 
     it('should be fast with 3x3 filter even if X is large', function () {
-        this.timeout(300);
+        this.timeout(500);
         var N = 1000,
             x = nj.arange(N*N).reshape(N,N),
             filter = nj.arange(9).reshape(3,3);
@@ -84,7 +84,7 @@ describe('convolve', function () {
     });
 
     it('should be fast with 3x3x1 filter even if X is large', function () {
-        this.timeout(300);
+        this.timeout(500);
         var N = 1000,
             x = nj.arange(N*N).reshape(N,N,1),
             filter = nj.arange(9).reshape(3,3,1);
@@ -92,7 +92,7 @@ describe('convolve', function () {
     });
 
     it('should be fast with 5x5 filter even if X is large', function () {
-        this.timeout(300);
+        this.timeout(500);
         var N = 1000,
             x = nj.arange(N*N).reshape(N,N),
             filter = nj.arange(25).reshape(5,5);
@@ -100,7 +100,7 @@ describe('convolve', function () {
     });
 
     it('should be fast with 5x5x1 filter even if X is large', function () {
-        this.timeout(300);
+        this.timeout(500);
         var N = 1000,
             x = nj.arange(N*N).reshape(N,N,1),
             filter = nj.arange(25).reshape(5,5,1);
@@ -115,7 +115,7 @@ describe('fftconvolve', function () {
             conv = nj.fftconvolve(x, filter);
         expect(conv.round().tolist())
             .to.eql([-1, -2,  0,  2,  1]);
-        expect(conv.dtype).to.be('float32');
+        expect(conv.dtype).to.equal('float32');
     });
 
     it('should work with 3x3 filter', function () {

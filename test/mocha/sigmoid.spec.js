@@ -7,9 +7,7 @@ var _ = require('lodash');
 var nj = require('../../src');
 
 describe('sigmoid', function () {
-    it('should exists', function () {
-        expect(nj.sigmoid).to.be.ok();
-    });
+
     it('should work on vectors', function () {
         var x = nj.array([-100, -1,0, 1,100]);
         expect(nj.sigmoid(x).tolist())

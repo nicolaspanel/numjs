@@ -1,12 +1,9 @@
 'use strict';
 
-var nj = window.nj;
 describe('images', function () {
 
     describe('save', function () {
-        it('should exist', function () {
-            expect(nj.images.save).toBeTruthy();
-        });
+
         it('should be able to render a Grayscale img into a canvas', function(){
             var H = 10, W = 12,
                 img = nj.ones([H,W]),
@@ -15,7 +12,7 @@ describe('images', function () {
             nj.images.save(img, $cv);
 
             expect(nj.images.read($cv).tolist())
-                .toEqual(img.tolist());
+                .to.eql(img.tolist());
         });
         it('should be able to render a RGB img into a canvas', function(){
             var H = 10, W = 12,
@@ -24,7 +21,7 @@ describe('images', function () {
             $cv.height = H; $cv.width = W;
             nj.images.save(img, $cv);
             expect(nj.images.read($cv).tolist())
-                .toEqual(img.tolist());
+                .to.eql(img.tolist());
         });
     });
 });

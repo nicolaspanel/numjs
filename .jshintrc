@@ -1,6 +1,7 @@
 {
     "globals": {
-        "_": true
+        "_": true,
+        "nj": true
     },
     "predef": [
         "window",

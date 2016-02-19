@@ -1,6 +1,6 @@
 {
   "name": "numjs",
-  "version": "0.11.1",
+  "version": "0.11.2",
   "description": "Like NumPy, in JavaScript",
   "main": "src/index.js",
   "directories": {
@@ -18,6 +18,7 @@
   },
   "devDependencies": {
     "browserify-shim": "^3.8.12",
+    "chai": "^3.5.0",
     "expect.js": "^0.3.1",
     "grunt": "^0.4.5",
     "grunt-browserify": "^4.0.1",
@@ -33,12 +34,14 @@
     "jit-grunt": "^0.9.1",
     "karma": "^0.12.31",
     "karma-browserify": "^5.0.1",
+    "karma-chai": "^0.1.0",
     "karma-jasmine": "^0.3.5",
+    "karma-mocha": "^0.2.2",
     "karma-mocha-reporter": "latest",
     "karma-phantomjs-launcher": "^0.1.4",
     "lodash": "^3.10.1",
     "mocha": "^2.3.4",
-    "phantomjs": "^1.9.7-15"
+    "phantomjs": "^2.1.1"
   },
   "scripts": {
     "test": "grunt test"
@@ -74,7 +77,8 @@
   "browser": {
     "./src/images/resize.js": "./src/images/resize-dom.js",
     "./src/images/read.js": "./src/images/read-dom.js",
-    "./src/images/save.js": "./src/images/save-dom.js"
+    "./src/images/save.js": "./src/images/save-dom.js",
+    "buffer": "./src/buffer-dom.js"
   },
   "browserify-shim": {},
   "browserify": {

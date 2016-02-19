@@ -1,7 +1,7 @@
 'use strict';
 
 var urlToData = 'http://localhost:9876/base/data/';
-var nj = window.nj;
+
 describe('images', function () {
 
     describe('resize', function () {
@@ -28,11 +28,11 @@ describe('images', function () {
         });
 
         it('should be able to downscale a Grayscale img', function(){
-            expect(gray.shape).toEqual([28,28]);
+            expect(gray.shape).to.eql([28,28]);
             var resized = nj.images.resize(gray, 14, 10);
-            expect(resized.shape).toEqual([14, 10]);
+            expect(resized.shape).to.eql([14, 10]);
             expect(resized.tolist())
-                .toEqual([
+                .to.eql([
                     [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 ],
                     [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0 ],
                     [   0,   0,   0,   0,   5,   8,  65,  50, 105,  93 ],
@@ -51,16 +51,16 @@ describe('images', function () {
         });
 
         it('should be able to upscale a Grayscale img', function(){
-            expect(gray.shape).toEqual([28,28]);
+            expect(gray.shape).to.eql([28,28]);
             expect(nj.images.resize(gray, 32, 30).shape)
-                .toEqual([32, 30]);
+                .to.eql([32, 30]);
 
         });
 
         it('should be able to downscale an RGB img', function(){
-            expect(rgba.shape).toEqual([300,600,4]);
+            expect(rgba.shape).to.eql([300,600,4]);
             expect(nj.images.resize(rgba, 150, 300).shape)
-                .toEqual([150, 300, 4]);
+                .to.eql([150, 300, 4]);
         });
     });
 

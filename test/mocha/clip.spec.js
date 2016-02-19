@@ -7,9 +7,7 @@ var _ = require('lodash');
 var nj = require('../../src');
 
 describe('clip', function () {
-    it('should exist', function () {
-        expect(nj.clip).to.be.ok();
-    });
+
     it('should work on vectors', function () {
         var x = nj.array([-1,0,1]);
         expect(nj.clip(x, 0, Number.POSITIVE_INFINITY).tolist())

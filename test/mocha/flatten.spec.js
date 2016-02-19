@@ -7,9 +7,7 @@ var _ = require('lodash');
 var nj = require('../../src');
 
 describe('flatten', function () {
-    it('should exist', function () {
-        expect(nj.flatten).to.be.ok();
-    });
+
     it('should work on vectors', function () {
         expect(nj.flatten([[0], [1], [2]]).tolist())
             .to.eql([0,1,2]);

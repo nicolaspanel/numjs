@@ -7,9 +7,7 @@ var _ = require('lodash');
 var nj = require('../../src');
 
 describe('dot', function(){
-    it('should exists', function () {
-        expect(nj.dot).to.be.ok();
-    });
+
     describe('on vectors', function () {
         var v3, v12;
 

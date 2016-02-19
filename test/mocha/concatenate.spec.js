@@ -31,7 +31,7 @@ describe('concat', function(){
         expect(function(){
             nj.concatenate([a,b]);
         }).to.throwException(function (e) {
-                expect(e.toString()).to.be('ValueError: all the input arrays must have same number of dimensions');
+                expect(e.toString()).to.equal('ValueError: all the input arrays must have same number of dimensions');
             });
     });
     it('should concatenate multidimensional arrays along the last axis', function(){

@@ -7,9 +7,6 @@ var _ = require('lodash');
 var nj = require('../../src');
 
 describe('sum', function () {
-    it('should exists', function () {
-        expect(nj.sum).to.be.ok();
-    });
 
     it('should work on vectors', function () {
         var x  = nj.arange(3);
