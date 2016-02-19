@@ -65,6 +65,19 @@ function getShape(array) {
     return [];
 }
 
+function haveSameShape(shape1, shape2){
+    if (shapeSize(shape1) !== shapeSize(shape2) || shape1.length !== shape2.length){
+        return false;
+    }
+    var d = shape1.length;
+    for (var i= 0; i<d;i++){
+        if (shape1[i] !== shape2[i]){
+            return false;
+        }
+    }
+    return true;
+}
+
 module.exports = {
     isNumber:isNumber,
     isString: isString,

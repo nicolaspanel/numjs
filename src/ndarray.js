@@ -329,6 +329,38 @@ NdArray.prototype.transpose = function (axes){
 };
 
 /**
+ * Dot product of two arrays.
+ *
+ * @param {(Array|NdArray)} x
+ * @returns {NdArray}
+ */
+NdArray.prototype.dot = function(x){
+    x = createArray(x, this.dtype);
+    var tShape = this.shape,
+        xShape = x.shape;
+    var cShape, c, T = _.getType(this.dtype);
+    if (tShape.length === 2 && xShape.length === 2 && tShape[1] === xShape[0]){ // matrix/matrix
+        cShape = [tShape[0], xShape[1]];
+        c = new NdArray(new T(_.shapeSize(cShape)), cShape);
+        gemm(c.selection, this.selection, x.selection);
+        return c;
+    }
+    else if (tShape.length === 1 && xShape.length === 2 && tShape[0] === xShape[0]){ // vector/matrix
+        return this.reshape([tShape[0], 1]).T.dot(x).reshape(xShape[1]);
+    }
+    else if (tShape.length === 2 && xShape.length === 1 && tShape[1] === xShape[0]){ // matrix/vector
+        return this.dot(x.reshape([xShape[0], 1])).reshape(tShape[0]);
+    }
+    else if (tShape.length === 1 && xShape.length === 1 && tShape[0] === xShape[0]){ // vector/vector
+       return this.reshape([tShape[0], 1]).T.dot(x.reshape([xShape[0], 1])).reshape([1]);
+    }
+    else {
+        throw new errors.ValueError('cannot compute the matrix product of given arrays');
+        //throw new errors.ValueError('shapes ('+xaShape[0]+',) and ('+xbShape[0]+',) not aligned: '+xaShape[0]+ '(dim 0) != '+xbShape[0]+' (dim 0)');
+    }
+};
+
+/**
  * Assign `x` to the array, element-wise.
  *
  * @param {(NdArray|Array|number)} x

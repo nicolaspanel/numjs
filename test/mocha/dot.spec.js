@@ -36,7 +36,18 @@ describe('dot', function(){
             [ 92, 113, 134, 155],
             [128, 158, 188, 218]
         ]);
+        expect(a.dot(b).tolist()).to.eql([
+            [ 20,  23,  26,  29],
+            [ 56,  68,  80,  92],
+            [ 92, 113, 134, 155],
+            [128, 158, 188, 218]
+        ]);
         expect(nj.dot(b, a).tolist()).to.eql([
+            [ 42,  48,  54],
+            [114, 136, 158],
+            [186, 224, 262]
+        ]);
+        expect(b.dot(a).tolist()).to.eql([
             [ 42,  48,  54],
             [114, 136, 158],
             [186, 224, 262]
@@ -49,8 +60,19 @@ describe('dot', function(){
 
         expect(nj.dot(a,b).tolist())
             .to.eql([3,4,5]);
-        expect(nj.dot(b.transpose(), a).tolist())
+        expect(nj.dot(b.T, a).tolist())
             .to.eql([3,4,5]);
     });
-
+    it('should be fast on vectors even if they are very large', function () {
+        var N = 100000, a = nj.ones([N]);
+        expect(a.dot(a).tolist()).to.eql([N]);
+    });
+    it('should be fast on V.M even if they are very large', function () {
+        var n = 1000, m = 1000,
+            V = nj.ones([n]),
+            M = nj.ones([n,m]),
+            VdotM = nj.ones([m]).multiply(n, false);
+        expect(V.dot(M).tolist())
+            .to.eql(VdotM.tolist());
+    });
 });
