@@ -41,7 +41,7 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "lodash": "^4.11.1",
     "mocha": "^2.3.4",
-    "phantomjs": "^2.1.1"
+    "phantomjs-prebuilt": "^2.1.7"
   },
   "scripts": {
     "test": "grunt test"
