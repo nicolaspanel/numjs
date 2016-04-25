@@ -290,7 +290,9 @@ function zeros(shape, dtype){
     var s = _.shapeSize(shape);
     var T = _.getType(dtype);
     var arr =  new NdArray(new T(s), shape);
-    ops.assigns(arr.selection, 0);
+    if (arr.dtype === 'array') {
+        ops.assigns(arr.selection, 0);
+    }
     return arr;
 }
 
@@ -347,7 +349,7 @@ function random(shape){
         shape = [].slice.call(arguments);
     }
     var s = _.shapeSize(shape);
-    var arr =  new NdArray(new Array(s), shape);
+    var arr =  new NdArray(new Float64Array(s), shape);
     ops.random(arr.selection);
     return arr;
 }

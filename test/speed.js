@@ -1,32 +1,32 @@
-var nj = require('../src');
-var S = 100;
-var img = nj.arange(S * S).reshape(S,S);
-var start = new Date().valueOf();
+'use strict';
+var nj = require('../src'),
+    numeric = require('numeric');
 
-var FILTER_H = nj.array([
-        [ 1, 2, 1],
-        [ 0, 0, 0],
-        [-1,-2,-1]]).divide(4, false),
-    FILTER_V = FILTER_H.T;
+var experiments =[
+    {shape: [1000], n: 200, dtype: 'float64'},
+    {shape: [100,100], n:200, dtype: 'float64'},
+    {shape: [1000,100], n:200, dtype: 'float64'}
+];
+var start;
 
-var sobel;
-for (var i=0;i<100;i++){
-    var H = img.convolve(FILTER_H);
-    var V= img.convolve(FILTER_V);
-    sobel = nj.add(H.pow(2), V.pow(2)).sqrt(false).divide(Math.sqrt(2), false);
-}
+start = +new Date();
+experiments.forEach(function (exp) {
+    var a = numeric.rep(exp.shape, 0);
+    for (var i=0; i<exp.n; i++){
+        numeric.add(a,a);
+        numeric.div(a,a);
+        numeric.dot(numeric.transpose(a), a);
+    }
+});
+console.log('numericjs took %dms', +new Date() - start);
 
-console.log('duration: %dms', new Date().valueOf() - start);
-console.log('sobel: \n', sobel);
-/*
-CWISE
-S=10000: 40ms
-
----
-CONV full
-S=1000: 2552ms 2509ms
-
----
-CONV SEP
- S=1000: 4942ms 5180ms
- */
+start = +new Date();
+experiments.forEach(function (exp) {
+    var a = nj.zeros(exp.shape, exp.dtype);
+    for (var i=0; i<exp.n; i++){
+        nj.add(a,a);
+        nj.divide(a,a);
+        nj.dot(a.T, a);
+    }
+});
+console.log('numjs took %dms', +new Date() - start);

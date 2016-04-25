@@ -8,5 +8,6 @@ module.exports =  {
     uint16: Uint16Array,
     uint32: Uint32Array,
     float32: Float32Array,
-    float64: Float64Array
+    float64: Float64Array,
+    array: Array
 };
