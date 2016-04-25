@@ -42,7 +42,6 @@ describe('images', function () {
             };
             $img.onerror = done.fail;
             $img.src = urlToData + 'five.png';
-
         });
 
         it('should accept url to a PNG file containing a Color image', function (done) {
