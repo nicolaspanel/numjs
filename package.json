@@ -27,6 +27,7 @@
     "grunt-gh-pages": "^1.0.0",
     "grunt-jsdoc": "^1.1.0",
     "grunt-karma": "^0.12.2",
+    "grunt-semistandard": "^1.0.6",
     "grunt-simple-mocha": "^0.4.0",
     "ink-docstrap": "^1.1.1",
     "jasmine": "^2.2.1",
@@ -41,7 +42,8 @@
     "karma-phantomjs-launcher": "^1.0.0",
     "lodash": "^4.11.1",
     "mocha": "^2.3.4",
-    "phantomjs-prebuilt": "^2.1.7"
+    "phantomjs-prebuilt": "^2.1.7",
+    "semistandard": "^7.0.5"
   },
   "scripts": {
     "test": "grunt test"

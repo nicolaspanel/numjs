@@ -11,34 +11,29 @@ var NdArray = require('./ndarray');
 var _ = require('./utils');
 var errors = require('./errors');
 
+function broadcast (shape1, shape2) {
+  if (shape1.length === 0 || shape2.length === 0) {
+    return;
+  }
+  var reversed1 = shape1.slice().reverse();
+  var reversed2 = shape2.slice().reverse();
 
-function broadcast(shape1, shape2) {
-    if (shape1.length === 0 || shape2.length === 0){
-        return;
+  var maxLength = Math.max(shape1.length, shape2.length);
+  var outShape = new Array(maxLength);
+  for (var i = 0; i < maxLength; i++) {
+    if (!reversed1[i] || reversed1[i] === 1) {
+      outShape[i] = reversed2[i];
+    } else if (!reversed2[i] || reversed2[i] === 1) {
+      outShape[i] = reversed1[i];
+    } else if (reversed1[i] === reversed2[i]) {
+      outShape[i] = reversed1[i];
+    } else {
+      return;
     }
-    var reversed1 = shape1.slice().reverse();
-    var reversed2 = shape2.slice().reverse();
+  }
 
-    var maxLength = Math.max(shape1.length, shape2.length);
-    var outShape = new Array(maxLength);
-    for (var i = 0; i<maxLength; i++){
-        if (!reversed1[i] || reversed1[i] === 1){
-            outShape[i] = reversed2[i];
-        }
-        else if (!reversed2[i] || reversed2[i] === 1){
-            outShape[i] = reversed1[i];
-        }
-        else if (reversed1[i] === reversed2[i]){
-            outShape[i] = reversed1[i];
-        }
-        else {
-            return;
-        }
-    }
-
-    return outShape.reverse();
+  return outShape.reverse();
 }
-
 
 /**
  * Add arguments, element-wise.
@@ -47,8 +42,8 @@ function broadcast(shape1, shape2) {
  * @param {(NdArray|Array|number)} b
  * @returns {NdArray}
  */
-function add(a,b){
-    return NdArray.new(a).add(b);
+function add (a, b) {
+  return NdArray.new(a).add(b);
 }
 
 /**
@@ -58,8 +53,8 @@ function add(a,b){
  * @param {(Array|NdArray|number)} b
  * @returns {NdArray}
  */
-function multiply(a,b){
-    return NdArray.new(a).multiply(b);
+function multiply (a, b) {
+  return NdArray.new(a).multiply(b);
 }
 
 /**
@@ -69,8 +64,8 @@ function multiply(a,b){
  * @param {(Array|NdArray|number)} b
  * @returns {NdArray}
  */
-function divide(a,b){
-    return NdArray.new(a).divide(b);
+function divide (a, b) {
+  return NdArray.new(a).divide(b);
 }
 
 /**
@@ -80,10 +75,9 @@ function divide(a,b){
  * @param {(NdArray|Array|number)} b
  * @returns {NdArray}
  */
-function subtract(a,b){
-    return NdArray.new(a).subtract(b);
+function subtract (a, b) {
+  return NdArray.new(a).subtract(b);
 }
-
 
 /**
  * Return true if two arrays have the same shape and elements, false otherwise.
@@ -91,10 +85,9 @@ function subtract(a,b){
  * @param {(Array|NdArray)} array2
  * @returns {boolean}
  */
-function equal(array1, array2){
-    return NdArray.new(array1).equal(array2);
+function equal (array1, array2) {
+  return NdArray.new(array1).equal(array2);
 }
-
 
 /**
  * Return a copy of the array collapsed into one dimension using row-major order (C-style)
@@ -102,11 +95,9 @@ function equal(array1, array2){
  * @param {(Array|NdArray)} array
  * @returns {NdArray}
  */
-function flatten(array){
-    return NdArray.new(array).flatten();
+function flatten (array) {
+  return NdArray.new(array).flatten();
 }
-
-
 
 /**
  * Gives a new shape to an array without changing its data.
@@ -114,19 +105,17 @@ function flatten(array){
  * @param {Array} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length
  * @returns {NdArray}
  */
-function reshape(array, shape){
-    return NdArray.new(array).reshape(shape);
+function reshape (array, shape) {
+  return NdArray.new(array).reshape(shape);
 }
-
-
 
 /**
  * Calculate the exponential of all elements in the input array, element-wise.
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function exp(x){
-    return NdArray.new(x).exp();
+function exp (x) {
+  return NdArray.new(x).exp();
 }
 
 /**
@@ -134,12 +123,9 @@ function exp(x){
  * @param {(Array|NdArray|number)} x
  * @returns {NdArray}
  */
-function sqrt(x){
-    return NdArray.new(x).sqrt();
-
+function sqrt (x) {
+  return NdArray.new(x).sqrt();
 }
-
-
 
 /**
  * Raise first array elements to powers from second array, element-wise.
@@ -148,10 +134,9 @@ function sqrt(x){
  * @param {(Array|NdArray|number)} x2
  * @returns {NdArray}
  */
-function power(x1, x2){
-    return NdArray.new(x1).pow(x2);
+function power (x1, x2) {
+  return NdArray.new(x1).pow(x2);
 }
-
 
 /**
  * Return the sum of input array elements.
@@ -159,8 +144,8 @@ function power(x1, x2){
  * @param {(Array|NdArray|number)} x
  * @returns {number}
  */
-function sum(x){
-    return NdArray.new(x).sum();
+function sum (x) {
+  return NdArray.new(x).sum();
 }
 
 /**
@@ -169,8 +154,8 @@ function sum(x){
  * @param {(Array|NdArray|number)} x
  * @returns {number}
  */
-function mean(x){
-    return NdArray.new(x).mean();
+function mean (x) {
+  return NdArray.new(x).mean();
 }
 
 /**
@@ -620,10 +605,10 @@ function round(x){
 
 /**
  * Convolve 2 N-dimensionnal arrays
- * 
+ *
  * @note: Arrays must have the same dimensions and a must be greater than b.
  * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
- * 
+ *
  * @param {Array|NdArray} a
  * @param {Array|NdArray} b
  */
@@ -734,4 +719,3 @@ module.exports = {
     float64: function (array) { return NdArray.new(array, 'float64'); },
     images: require('./images')
 };
-
