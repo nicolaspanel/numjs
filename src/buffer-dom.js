@@ -1,3 +1,3 @@
 'use strict';
 
-module.exports.Buffer = function MockedBuffer(){};
+module.exports.Buffer = function MockedBuffer () {};

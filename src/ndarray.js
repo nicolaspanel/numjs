@@ -23,7 +23,7 @@ var NdArray = function NdArray () {
   if (arguments.length === 1) {
     this.selection = arguments[0];
   } else if (arguments.length === 0) {
-    throw new errors.ValueError('Required argument \'data\' not found');
+    throw new errors.ValueError("Required argument 'data' not found");
   } else {
     this.selection = ndarray.apply(null, arguments);
   }
@@ -729,26 +729,26 @@ var doConjMuleq = cwise({
 
 var doConvolve3x3 = cwise({
   args: [
-    'array',                       // c
-    'array',                       // xe
-    'scalar',                      // fa
-    'scalar',                      // fb
-    'scalar',                      // fc
-    'scalar',                      // fd
-    'scalar',                      // fe
-    'scalar',                      // ff
-    'scalar',                      // fg
-    'scalar',                      // fh
-    'scalar',                      // fi
-    {offset: [-1, -1], array: 1},  // xa
-    {offset: [-1, 0], array: 1},  // xb
-    {offset: [-1, 1], array: 1},  // xc
-    {offset: [0, -1], array: 1},  // xd
+    'array', // c
+    'array', // xe
+    'scalar', // fa
+    'scalar', // fb
+    'scalar', // fc
+    'scalar', // fd
+    'scalar', // fe
+    'scalar', // ff
+    'scalar', // fg
+    'scalar', // fh
+    'scalar', // fi
+    {offset: [-1, -1], array: 1}, // xa
+    {offset: [-1, 0], array: 1}, // xb
+    {offset: [-1, 1], array: 1}, // xc
+    {offset: [0, -1], array: 1}, // xd
     // {offset:[ 9,  0], array:1}, // useless since available already
-    {offset: [0, 1], array: 1},  // xf
-    {offset: [1, -1], array: 1},  // xg
-    {offset: [1, 0], array: 1},  // xh
-    {offset: [1, 1], array: 1}   // xi
+    {offset: [0, 1], array: 1}, // xf
+    {offset: [1, -1], array: 1}, // xg
+    {offset: [1, 0], array: 1}, // xh
+    {offset: [1, 1], array: 1} // xi
   ],
   body: function (c, xe, fa, fb, fc, fd, fe, ff, fg, fh, fi, xa, xb, xc, xd, xf, xg, xh, xi) {
     c = xa * fi + xb * fh + xc * fg + xd * ff + xe * fe + xf * fd + xg * fc + xh * fb + xi * fa;
@@ -758,62 +758,62 @@ var doConvolve3x3 = cwise({
 var doConvolve5x5 = cwise({
   args: [
     'index',
-    'array',                     // c
-    'array',                     // xm
-    'scalar',                    // fa
-    'scalar',                    // fb
-    'scalar',                    // fc
-    'scalar',                    // fd
-    'scalar',                    // fe
-    'scalar',                    // ff
-    'scalar',                    // fg
-    'scalar',                    // fh
-    'scalar',                    // fi
-    'scalar',                    // fj
-    'scalar',                    // fk
-    'scalar',                    // fl
-    'scalar',                    // fm
-    'scalar',                    // fn
-    'scalar',                    // fo
-    'scalar',                    // fp
-    'scalar',                    // fq
-    'scalar',                    // fr
-    'scalar',                    // fs
-    'scalar',                    // ft
-    'scalar',                    // fu
-    'scalar',                    // fv
-    'scalar',                    // fw
-    'scalar',                    // fx
-    'scalar',                    // fy
-    {offset: [-2, -2], array: 1},  // xa
-    {offset: [-2, -1], array: 1},  // xb
-    {offset: [-2, 0], array: 1},  // xc
-    {offset: [-2, 1], array: 1},  // xd
-    {offset: [-2, 2], array: 1},  // xe
-    {offset: [-1, -2], array: 1},  // xf
-    {offset: [-1, -1], array: 1},  // xg
-    {offset: [-1, 0], array: 1},  // xh
-    {offset: [-1, 1], array: 1},  // xi
-    {offset: [-1, 2], array: 1},  // xj
-    {offset: [0, -2], array: 1},  // xk
-    {offset: [0, -1], array: 1},  // xl
+    'array', // c
+    'array', // xm
+    'scalar', // fa
+    'scalar', // fb
+    'scalar', // fc
+    'scalar', // fd
+    'scalar', // fe
+    'scalar', // ff
+    'scalar', // fg
+    'scalar', // fh
+    'scalar', // fi
+    'scalar', // fj
+    'scalar', // fk
+    'scalar', // fl
+    'scalar', // fm
+    'scalar', // fn
+    'scalar', // fo
+    'scalar', // fp
+    'scalar', // fq
+    'scalar', // fr
+    'scalar', // fs
+    'scalar', // ft
+    'scalar', // fu
+    'scalar', // fv
+    'scalar', // fw
+    'scalar', // fx
+    'scalar', // fy
+    {offset: [-2, -2], array: 1}, // xa
+    {offset: [-2, -1], array: 1}, // xb
+    {offset: [-2, 0], array: 1}, // xc
+    {offset: [-2, 1], array: 1}, // xd
+    {offset: [-2, 2], array: 1}, // xe
+    {offset: [-1, -2], array: 1}, // xf
+    {offset: [-1, -1], array: 1}, // xg
+    {offset: [-1, 0], array: 1}, // xh
+    {offset: [-1, 1], array: 1}, // xi
+    {offset: [-1, 2], array: 1}, // xj
+    {offset: [0, -2], array: 1}, // xk
+    {offset: [0, -1], array: 1}, // xl
     // {offset:[ 0,  0], array:1},
-    {offset: [0, 1], array: 1},  // xn
-    {offset: [0, 2], array: 1},  // xo
-    {offset: [1, -2], array: 1},  // xp
-    {offset: [1, -1], array: 1},  // xq
-    {offset: [1, 0], array: 1},  // xr
-    {offset: [1, 1], array: 1},  // xs
-    {offset: [1, 2], array: 1},  // xt
-    {offset: [2, -2], array: 1},  // xu
-    {offset: [2, -1], array: 1},  // xv
-    {offset: [2, 0], array: 1},  // xw
-    {offset: [2, 1], array: 1},  // xx
-    {offset: [2, 2], array: 1}   // xy
+    {offset: [0, 1], array: 1}, // xn
+    {offset: [0, 2], array: 1}, // xo
+    {offset: [1, -2], array: 1}, // xp
+    {offset: [1, -1], array: 1}, // xq
+    {offset: [1, 0], array: 1}, // xr
+    {offset: [1, 1], array: 1}, // xs
+    {offset: [1, 2], array: 1}, // xt
+    {offset: [2, -2], array: 1}, // xu
+    {offset: [2, -1], array: 1}, // xv
+    {offset: [2, 0], array: 1}, // xw
+    {offset: [2, 1], array: 1}, // xx
+    {offset: [2, 2], array: 1} // xy
   ],
   body: function (index, c, xm,
-                  fa, fb, fc, fd, fe, ff, fg, fh, fi, fj, fk, fl, fm, fn, fo, fp, fq, fr, fs, ft, fu, fv, fw, fx, fy,
-                  xa, xb, xc, xd, xe, xf, xg, xh, xi, xj, xk, xl, xn, xo, xp, xq, xr, xs, xt, xu, xv, xw, xx, xy) {
+    fa, fb, fc, fd, fe, ff, fg, fh, fi, fj, fk, fl, fm, fn, fo, fp, fq, fr, fs, ft, fu, fv, fw, fx, fy,
+    xa, xb, xc, xd, xe, xf, xg, xh, xi, xj, xk, xl, xn, xo, xp, xq, xr, xs, xt, xu, xv, xw, xx, xy) {
     c = (index[0] < 2 || index[1] < 2) ? 0 : xa * fy + xb * fx + xc * fw + xd * fv + xe * fu + xf * ft + xg * fs + xh * fr + xi * fq + xj * fp + xk * fo + xl * fn + xm * fm + xn * fl + xo * fk + xp * fj + xq * fi + xr * fh + xs * fg + xt * ff + xu * fe + xv * fd + xw * fc + xx * fb + xy * fa;
   }
 });
@@ -853,96 +853,96 @@ NdArray.prototype.convolve = function (filter) {
     var out3x3 = new NdArray(new Float32Array(_.shapeSize(tShape)), tShape);
     doConvolve3x3(
       out3x3.selection, // c
-      ts,               // x
-      fs.get(0, 0),    // fa
-      fs.get(0, 1),    // fb
-      fs.get(0, 2),    // fc
-      fs.get(1, 0),    // fd
-      fs.get(1, 1),    // fe
-      fs.get(1, 2),    // ff
-      fs.get(2, 0),    // fg
-      fs.get(2, 1),    // fh
-      fs.get(2, 2)     // fi
+      ts, // x
+      fs.get(0, 0), // fa
+      fs.get(0, 1), // fb
+      fs.get(0, 2), // fc
+      fs.get(1, 0), // fd
+      fs.get(1, 1), // fe
+      fs.get(1, 2), // ff
+      fs.get(2, 0), // fg
+      fs.get(2, 1), // fh
+      fs.get(2, 2) // fi
     );
     return out3x3.lo(1, 1).hi(outShape[0], outShape[1]);
   } else if (ndim === 3 && fShape[2] === 1 && tShape[2] === 1 && fShape[0] === 3 && fShape[1] === 3) {
     var out3x3x1 = new NdArray(new Float32Array(_.shapeSize(tShape)), tShape);
     doConvolve3x3(
       out3x3x1.selection.pick(null, null, 0), // c
-      ts.pick(null, null, 0),               // x
-      fs.get(0, 0, 0),    // fa
-      fs.get(0, 1, 0),    // fb
-      fs.get(0, 2, 0),    // fc
-      fs.get(1, 0, 0),    // fd
-      fs.get(1, 1, 0),    // fe
-      fs.get(1, 2, 0),    // ff
-      fs.get(2, 0, 0),    // fg
-      fs.get(2, 1, 0),    // fh
-      fs.get(2, 2, 0)     // fi
+      ts.pick(null, null, 0), // x
+      fs.get(0, 0, 0), // fa
+      fs.get(0, 1, 0), // fb
+      fs.get(0, 2, 0), // fc
+      fs.get(1, 0, 0), // fd
+      fs.get(1, 1, 0), // fe
+      fs.get(1, 2, 0), // ff
+      fs.get(2, 0, 0), // fg
+      fs.get(2, 1, 0), // fh
+      fs.get(2, 2, 0) // fi
     );
     return out3x3x1.lo(1, 1).hi(outShape[0], outShape[1]);
   } else if (ndim === 2 && fShape[0] === 5 && fShape[1] === 5) {
     var out5x5 = new NdArray(new Float32Array(_.shapeSize(tShape)), tShape);
     doConvolve5x5(
       out5x5.selection, // c
-      ts,               // x
-      fs.get(0, 0),    // fa
-      fs.get(0, 1),    // fb
-      fs.get(0, 2),    // fc
-      fs.get(0, 3),    // fd
-      fs.get(0, 4),    // fe
-      fs.get(1, 0),    // ff
-      fs.get(1, 1),    // fg
-      fs.get(1, 2),    // fh
-      fs.get(1, 3),    // fi
-      fs.get(1, 4),    // fj
-      fs.get(2, 0),    // fk
-      fs.get(2, 1),    // fl
-      fs.get(2, 2),    // fm
-      fs.get(2, 3),    // fn
-      fs.get(2, 4),    // fo
-      fs.get(3, 0),    // fp
-      fs.get(3, 1),    // fq
-      fs.get(3, 2),    // fr
-      fs.get(3, 3),    // fs
-      fs.get(3, 4),    // ft
-      fs.get(4, 0),    // fu
-      fs.get(4, 1),    // fv
-      fs.get(4, 2),    // fw
-      fs.get(4, 3),    // fx
-      fs.get(4, 4)     // fy
+      ts, // x
+      fs.get(0, 0), // fa
+      fs.get(0, 1), // fb
+      fs.get(0, 2), // fc
+      fs.get(0, 3), // fd
+      fs.get(0, 4), // fe
+      fs.get(1, 0), // ff
+      fs.get(1, 1), // fg
+      fs.get(1, 2), // fh
+      fs.get(1, 3), // fi
+      fs.get(1, 4), // fj
+      fs.get(2, 0), // fk
+      fs.get(2, 1), // fl
+      fs.get(2, 2), // fm
+      fs.get(2, 3), // fn
+      fs.get(2, 4), // fo
+      fs.get(3, 0), // fp
+      fs.get(3, 1), // fq
+      fs.get(3, 2), // fr
+      fs.get(3, 3), // fs
+      fs.get(3, 4), // ft
+      fs.get(4, 0), // fu
+      fs.get(4, 1), // fv
+      fs.get(4, 2), // fw
+      fs.get(4, 3), // fx
+      fs.get(4, 4) // fy
     );
     return out5x5.lo(2, 2).hi(outShape[0], outShape[1]);
   } else if (ndim === 3 && fShape[2] === 1 && tShape[2] === 1 && fShape[0] === 5 && fShape[1] === 5) {
     var out5x5x1 = new NdArray(new Float32Array(_.shapeSize(tShape)), tShape);
     doConvolve5x5(
       out5x5x1.selection, // c
-      ts,               // x
-      fs.get(0, 0, 0),    // fa
-      fs.get(0, 1, 0),    // fb
-      fs.get(0, 2, 0),    // fc
-      fs.get(0, 3, 0),    // fd
-      fs.get(0, 4, 0),    // fe
-      fs.get(1, 0, 0),    // ff
-      fs.get(1, 1, 0),    // fg
-      fs.get(1, 2, 0),    // fh
-      fs.get(1, 3, 0),    // fi
-      fs.get(1, 4, 0),    // fj
-      fs.get(2, 0, 0),    // fk
-      fs.get(2, 1, 0),    // fl
-      fs.get(2, 2, 0),    // fm
-      fs.get(2, 3, 0),    // fn
-      fs.get(2, 4, 0),    // fo
-      fs.get(3, 0, 0),    // fp
-      fs.get(3, 1, 0),    // fq
-      fs.get(3, 2, 0),    // fr
-      fs.get(3, 3, 0),    // fs
-      fs.get(3, 4, 0),    // ft
-      fs.get(4, 0, 0),    // fu
-      fs.get(4, 1, 0),    // fv
-      fs.get(4, 2, 0),    // fw
-      fs.get(4, 3, 0),    // fx
-      fs.get(4, 4, 0)    // fy
+      ts, // x
+      fs.get(0, 0, 0), // fa
+      fs.get(0, 1, 0), // fb
+      fs.get(0, 2, 0), // fc
+      fs.get(0, 3, 0), // fd
+      fs.get(0, 4, 0), // fe
+      fs.get(1, 0, 0), // ff
+      fs.get(1, 1, 0), // fg
+      fs.get(1, 2, 0), // fh
+      fs.get(1, 3, 0), // fi
+      fs.get(1, 4, 0), // fj
+      fs.get(2, 0, 0), // fk
+      fs.get(2, 1, 0), // fl
+      fs.get(2, 2, 0), // fm
+      fs.get(2, 3, 0), // fn
+      fs.get(2, 4, 0), // fo
+      fs.get(3, 0, 0), // fp
+      fs.get(3, 1, 0), // fq
+      fs.get(3, 2, 0), // fr
+      fs.get(3, 3, 0), // fs
+      fs.get(3, 4, 0), // ft
+      fs.get(4, 0, 0), // fu
+      fs.get(4, 1, 0), // fv
+      fs.get(4, 2, 0), // fw
+      fs.get(4, 3, 0), // fx
+      fs.get(4, 4, 0) // fy
     );
     return out5x5x1.lo(2, 2).hi(outShape[0], outShape[1]);
   } else {

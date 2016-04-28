@@ -19,15 +19,6 @@ module.exports = function (grunt) {
         ]
       }
     },
-    jshint: {
-      options: {
-        jshintrc: '.jshintrc'
-      },
-      files: [
-        'test/**/*.js',
-        'src/**/*.js'
-      ]
-    },
     browserify: {
       dist: {
         files: {
@@ -85,6 +76,11 @@ module.exports = function (grunt) {
         }
       }
     },
+    exec: {
+      'test-semistandard': {
+        cmd: 'semistandard \'{src,test}/**/*.js\' --format --verbose | snazzy'
+      }
+    },
     jsdoc: {
       dist: {
         src: ['src/**/*.js', 'README.md'],
@@ -103,7 +99,7 @@ module.exports = function (grunt) {
     }
   });
   grunt.registerTask('mocha', ['simplemocha:full']);
-  grunt.registerTask('test', ['jshint', 'simplemocha:full', 'browserify', 'karma:dist', 'uglify', 'karma:min']);
-  grunt.registerTask('travis', ['jshint', 'simplemocha:full', 'karma:dist', 'karma:min']);
+  grunt.registerTask('test', ['exec:test-semistandard', 'simplemocha:full', 'browserify', 'karma:dist', 'uglify', 'karma:min']);
+  grunt.registerTask('travis', ['exec:test-semistandard', 'simplemocha:full', 'karma:dist', 'karma:min']);
   grunt.registerTask('doc', ['jsdoc', 'gh-pages']);
 };

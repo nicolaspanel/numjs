@@ -9,16 +9,16 @@
  */
 
 module.exports = {
-    data: require('./data'),
-    read: require('./read'),
-    save: require('./save'),
-    resize: require('./resize'),
-    sat: require('./sat'),
-    ssat: require('./ssat'),
-    sobel: require('./sobel'),
-    scharr: require('./scharr'),
-    areaSum: require('./area-sum'),
-    areaValue: require('./area-value'),
-    rgb2gray: require('./rgb2gray'),
-    flip: require('./flip')
+  data: require('./data'),
+  read: require('./read'),
+  save: require('./save'),
+  resize: require('./resize'),
+  sat: require('./sat'),
+  ssat: require('./ssat'),
+  sobel: require('./sobel'),
+  scharr: require('./scharr'),
+  areaSum: require('./area-sum'),
+  areaValue: require('./area-value'),
+  rgb2gray: require('./rgb2gray'),
+  flip: require('./flip')
 };

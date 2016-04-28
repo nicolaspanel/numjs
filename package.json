@@ -22,8 +22,8 @@
     "expect.js": "^0.3.1",
     "grunt": "^1.0.1",
     "grunt-browserify": "^5.0.0",
-    "grunt-contrib-jshint": "^1.0.0",
     "grunt-contrib-uglify": "latest",
+    "grunt-exec": "^0.4.6",
     "grunt-gh-pages": "^1.0.0",
     "grunt-jsdoc": "^1.1.0",
     "grunt-karma": "^0.12.2",
@@ -87,6 +87,22 @@
     "transform": [
       "cwise",
       "browserify-shim"
+    ]
+  },
+  "semistandard": {
+    "globals": [
+      "HTMLImageElement",
+      "HTMLCanvasElement",
+      "nj",
+      "Image"
+    ]
+  },
+  "standard": {
+    "globals": [
+      "HTMLImageElement",
+      "HTMLCanvasElement",
+      "nj",
+      "Image"
     ]
   }
 }
