@@ -13,7 +13,7 @@ node_js:
   - 5
 
 before_script:
-  - npm install -g bower grunt-cli
+  - npm install -g bower grunt-cli snazzy
   - bower install
 script:
   - grunt travis
