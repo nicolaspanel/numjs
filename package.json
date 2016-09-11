@@ -1,6 +1,6 @@
 {
   "name": "numjs",
-  "version": "0.11.4",
+  "version": "0.11.5",
   "description": "Like NumPy, in JavaScript",
   "main": "src/index.js",
   "directories": {
@@ -45,7 +45,12 @@
     "semistandard": "^7.0.5"
   },
   "semistandard": {
-    "ignore": ["dist/numjs.js"]
+    "globals": [
+      "HTMLImageElement",
+      "HTMLCanvasElement",
+      "nj",
+      "Image"
+    ]
   },
   "scripts": {
     "test": "grunt test"
@@ -89,14 +94,6 @@
     "transform": [
       "cwise",
       "browserify-shim"
-    ]
-  },
-  "semistandard": {
-    "globals": [
-      "HTMLImageElement",
-      "HTMLCanvasElement",
-      "nj",
-      "Image"
     ]
   },
   "standard": {
