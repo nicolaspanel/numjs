@@ -13,7 +13,7 @@
     "ndarray-fft": "^1.0.0",
     "ndarray-gemm": "^1.0.0",
     "ndarray-ops": "^1.2.2",
-    "sharp": "~0.14.1",
+    "sharp": "~0.15.1",
     "typedarray-pool": "^1.1.0"
   },
   "devDependencies": {
@@ -23,7 +23,6 @@
     "grunt": "^1.0.1",
     "grunt-browserify": "^5.0.0",
     "grunt-contrib-uglify": "latest",
-    "grunt-exec": "^0.4.6",
     "grunt-gh-pages": "^1.0.0",
     "grunt-jsdoc": "^1.1.0",
     "grunt-karma": "^0.12.2",
@@ -44,6 +43,9 @@
     "mocha": "^2.3.4",
     "phantomjs-prebuilt": "^2.1.7",
     "semistandard": "^7.0.5"
+  },
+  "semistandard": {
+    "ignore": ["dist/numjs.js"]
   },
   "scripts": {
     "test": "grunt test"
