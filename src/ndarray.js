@@ -1029,6 +1029,37 @@ NdArray.prototype.fftconvolve = function (filter) {
   return out;
 };
 
+/**
+* Extract a series of "rows" from a 2d NdArray object
+* @param  NdArray of indices
+*
+* @return NdArray of rows
+*/
+NdArray.prototype.getRow = function (index) {
+  if (_.isUndefined(index)) {
+    throw error.ValueError("instance method `getRow` requires parameter `index`");
+  }
+  var width = this.shape[this.shape.length - 1];
+  if ((index * width) + width > this.size) {
+    throw new errors.ValueError("improper index size "+" "+ index +" "+  width +" "+ this.size);
+  }
+
+  var resultRow = [];
+  for (var i = 0; i < width; i++) {
+    resultRow.push(this.get(index, i));
+  }
+
+  return resultRow;
+};
+
+NdArray.prototype.getRows = function (indices) {
+  var resultingRows = [];
+  for (var i = 0; i < indices.size; i++) {
+    resultingRows.push(this.getRow(indices.get(i)));
+  }
+  return createArray(resultingRows, this.dtype);
+};
+
 function createArray (arr, dtype) {
   if (arr instanceof NdArray) { return arr; }
   var T = _.getType(dtype);

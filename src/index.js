@@ -635,6 +635,31 @@ function ifft (x) {
   return x;
 }
 
+/**
+* Extract a series of "rows" from a 2d ndarray object
+*
+* @throws RangeError if indices to extract are out of range
+* @param: {NdArray|Array} a
+* @param: {NdArray} indices
+* @returns: {NdArray}
+*/
+function getRows(a, indices) {
+  return NdArray.new(a).getRows(indices);
+}
+
+/**
+* Extract a "row" from a 2d ndarray object
+*
+* @note: Assumes input array is ndarray
+* @throws RangeError if index to extract is out of range
+* @param: {NdArray|Array} a
+* @param: number index
+* @returns: {NdArray}
+*/
+function getRow(a, index) {
+  return a.getRow(index);
+}
+
 module.exports = {
   config: CONF,
   dtypes: DTYPES,
@@ -684,6 +709,8 @@ module.exports = {
   fftconvolve: fftconvolve,
   fft: fft,
   ifft: ifft,
+  getRows: getRows,
+  getRow: getRow,
   int8: function (array) { return NdArray.new(array, 'int8'); },
   uint8: function (array) { return NdArray.new(array, 'uint8'); },
   int16: function (array) { return NdArray.new(array, 'int16'); },

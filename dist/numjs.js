@@ -6267,6 +6267,8 @@ module.exports = {
   fftconvolve: fftconvolve,
   fft: fft,
   ifft: ifft,
+  getRows: getRows,
+  getRow: getRow,
   int8: function (array) { return NdArray.new(array, 'int8'); },
   uint8: function (array) { return NdArray.new(array, 'uint8'); },
   int16: function (array) { return NdArray.new(array, 'int16'); },
@@ -7212,6 +7214,37 @@ NdArray.prototype.fftconvolve = function (filter) {
   return out;
 };
 
+/**
+* Extract a series of "rows" from a 2d NdArray object
+* @param  NdArray of indices
+*
+* @return NdArray of rows
+*/
+NdArray.prototype.getRow = function (index) {
+  if (_.isUndefined(index)) {
+    throw error.ValueError("instance method `getRow` requires parameter `index`");
+  }
+  var width = this.shape[this.shape.length - 1];
+  if ((index * width) + width > this.size) {
+    throw new errors.ValueError("improper index size "+" "+ index +" "+  width +" "+ this.size);
+  }
+
+  var resultRow = [];
+  for (var i = 0; i < width; i++) {
+    resultRow.push(this.get(index, i));
+  }
+
+  return resultRow;
+};
+
+NdArray.prototype.getRows = function (indices) {
+  var resultingRows = [];
+  for (var i = 0; i < indices.size; i++) {
+    resultingRows.push(this.getRow(indices.get(i)));
+  }
+  return createArray(resultingRows, this.dtype);
+};
+
 function createArray (arr, dtype) {
   if (arr instanceof NdArray) { return arr; }
   var T = _.getType(dtype);
@@ -7266,9 +7299,10 @@ function formatNumber (v) {
   return String(Number((v || 0).toFixed(CONF.nFloatingValues)));
 }
 
-},{"./config":23,"./errors":25,"./utils":43,"cwise/lib/wrapper":8,"ndarray":18,"ndarray-fft":13,"ndarray-gemm":15,"ndarray-ops":17,"typedarray-pool":21}],43:[function(require,module,exports){
+},{"./config":24,"./errors":26,"./utils":44,"cwise/lib/wrapper":8,"ndarray":19,"ndarray-fft":14,"ndarray-gemm":16,"ndarray-ops":18,"typedarray-pool":22}],44:[function(require,module,exports){
 'use strict';
 var DTYPES = require('./dtypes');
+var _ = require('lodash');
 
 function isNumber (value) {
   return typeof value === 'number';
@@ -7351,6 +7385,7 @@ module.exports = {
   isNumber: isNumber,
   isString: isString,
   isFunction: isFunction,
+  isUndefined: _.isUndefined,
   flatten: baseFlatten,
   shapeSize: shapeSize,
   getType: getType,
