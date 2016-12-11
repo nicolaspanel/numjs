@@ -88,4 +88,25 @@ describe('reshape', function () {
       [5, 6, 7, 8, 9],
       [10, 11, 12, 13, 14]]);
   });
+  it('should flatten the array if shape is -1', () => {
+    var arr = nj.arange(8)
+    .reshape([2, 2, 2])
+    .reshape(-1);
+    expect(arr.tolist())
+      .to.eql(nj.arange(8).tolist());
+    expect(arr.shape).to.eql([8]);
+  });
+  it('should throw an error if more than 1 dimension is set to -1', () => {
+    expect(() => nj.arange(8).reshape([-1, -1]))
+    .to.throwException((e) => {
+      expect(e.toString()).to.equal('ValueError: can only specify one unknown dimension');
+    });
+  });
+  it('should replace unknown dimension with the right value', () => {
+    expect(nj.arange(8).reshape([4, -1]).tolist())
+    .to.eql([[0, 1],
+             [2, 3],
+             [4, 5],
+             [6, 7]]);
+  });
 });

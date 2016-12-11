@@ -5388,7 +5388,7 @@ var NdArray = require('../ndarray');
 var __ = require('../utils');
 var rgb2gray = require('./rgb2gray');
 
-var doScharr = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_73_q=3*_inline_73_arg2_+10*_inline_73_arg3_+3*_inline_73_arg4_-3*_inline_73_arg7_-10*_inline_73_arg8_-3*_inline_73_arg9_,_inline_73_s=3*_inline_73_arg2_-3*_inline_73_arg4_+10*_inline_73_arg5_-10*_inline_73_arg6_+3*_inline_73_arg7_-3*_inline_73_arg9_;_inline_73_arg0_=Math.sqrt(_inline_73_s*_inline_73_s+_inline_73_q*_inline_73_q)}","args":[{"name":"_inline_73_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_73_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_73_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_73_q","_inline_73_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
+var doScharr = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_76_q=3*_inline_76_arg2_+10*_inline_76_arg3_+3*_inline_76_arg4_-3*_inline_76_arg7_-10*_inline_76_arg8_-3*_inline_76_arg9_,_inline_76_s=3*_inline_76_arg2_-3*_inline_76_arg4_+10*_inline_76_arg5_-10*_inline_76_arg6_+3*_inline_76_arg7_-3*_inline_76_arg9_;_inline_76_arg0_=Math.sqrt(_inline_76_s*_inline_76_s+_inline_76_q*_inline_76_q)}","args":[{"name":"_inline_76_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_76_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_76_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_76_q","_inline_76_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
 
 /**
  * Find the edge magnitude using the Scharr transform.
@@ -5427,7 +5427,7 @@ var NdArray = require('../ndarray');
 var __ = require('../utils');
 var rgb2gray = require('./rgb2gray');
 
-var doSobel = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_76_q=_inline_76_arg2_+2*_inline_76_arg3_+_inline_76_arg4_-_inline_76_arg7_-2*_inline_76_arg8_-_inline_76_arg9_,_inline_76_s=_inline_76_arg2_-_inline_76_arg4_+2*_inline_76_arg5_-2*_inline_76_arg6_+_inline_76_arg7_-_inline_76_arg9_;_inline_76_arg0_=Math.sqrt(_inline_76_s*_inline_76_s+_inline_76_q*_inline_76_q)}","args":[{"name":"_inline_76_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_76_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_76_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_76_q","_inline_76_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
+var doSobel = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_73_q=_inline_73_arg2_+2*_inline_73_arg3_+_inline_73_arg4_-_inline_73_arg7_-2*_inline_73_arg8_-_inline_73_arg9_,_inline_73_s=_inline_73_arg2_-_inline_73_arg4_+2*_inline_73_arg5_-2*_inline_73_arg6_+_inline_73_arg7_-_inline_73_arg9_;_inline_73_arg0_=Math.sqrt(_inline_73_s*_inline_73_s+_inline_73_q*_inline_73_q)}","args":[{"name":"_inline_73_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_73_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_73_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_73_q","_inline_73_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
 
 /**
  * Find the edge magnitude using the Sobel transform.
@@ -6539,12 +6539,15 @@ NdArray.prototype.flatten = function () {
 
 /**
 * Gives a new shape to the array without changing its data.
-* @param {Array} shape
-* @returns {NdArray}
+* @param {Array|number} The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
+* @returns {NdArray} a new view object if possible, a copy otherwise,
 */
 NdArray.prototype.reshape = function (shape) {
   if (arguments.length === 0) {
     throw new errors.ValueError('function takes at least one argument (0 given)');
+  }
+  if (arguments.length === 1 && _.isNumber(shape) && shape === -1) {
+    shape = [_.shapeSize(this.shape)];
   }
   if (arguments.length === 1 && _.isNumber(shape)) {
     shape = [shape];
@@ -6552,6 +6555,11 @@ NdArray.prototype.reshape = function (shape) {
   if (arguments.length > 1) {
     shape = [].slice.call(arguments);
   }
+  if (shape.filter(function (s) { return s === -1; }).length > 1) {
+    throw new errors.ValueError('can only specify one unknown dimension');
+  }
+  var currentShapeSize = _.shapeSize(shape);
+  shape = shape.map(function (s) { return s === -1 ? -1 * this.size / currentShapeSize : s; }.bind(this));
   if (this.size !== _.shapeSize(shape)) {
     throw new errors.ValueError('total size of new array must be unchanged');
   }

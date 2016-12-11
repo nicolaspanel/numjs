@@ -229,12 +229,15 @@ NdArray.prototype.flatten = function () {
 
 /**
 * Gives a new shape to the array without changing its data.
-* @param {Array} shape
-* @returns {NdArray}
+* @param {Array|number} The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length. One shape dimension can be -1. In this case, the value is inferred from the length of the array and remaining dimensions.
+* @returns {NdArray} a new view object if possible, a copy otherwise,
 */
 NdArray.prototype.reshape = function (shape) {
   if (arguments.length === 0) {
     throw new errors.ValueError('function takes at least one argument (0 given)');
+  }
+  if (arguments.length === 1 && _.isNumber(shape) && shape === -1) {
+    shape = [_.shapeSize(this.shape)];
   }
   if (arguments.length === 1 && _.isNumber(shape)) {
     shape = [shape];
@@ -242,6 +245,11 @@ NdArray.prototype.reshape = function (shape) {
   if (arguments.length > 1) {
     shape = [].slice.call(arguments);
   }
+  if (shape.filter(function (s) { return s === -1; }).length > 1) {
+    throw new errors.ValueError('can only specify one unknown dimension');
+  }
+  var currentShapeSize = _.shapeSize(shape);
+  shape = shape.map(function (s) { return s === -1 ? -1 * this.size / currentShapeSize : s; }.bind(this));
   if (this.size !== _.shapeSize(shape)) {
     throw new errors.ValueError('total size of new array must be unchanged');
   }
