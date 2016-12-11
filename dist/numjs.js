@@ -6233,6 +6233,18 @@ function diag (x) {
   return NdArray.new(x).diag();
 }
 
+/**
+ * The identity array is a square array with ones on the main diagonal.
+ * @param {number} Number of rows (and columns) in n x n output.
+ * @param {(String|Object)}  [dtype=Array]  The type of the output array.
+ * @return {Array} n x n array with its main diagonal set to one, and all other elements 0
+ */
+function identity (n, dtype) {
+  var arr = zeros([n, n], dtype);
+  for (var i = 0; i < n; i++) arr.set(i, i, 1);
+  return arr;
+}
+
 module.exports = {
   config: CONF,
   dtypes: DTYPES,
@@ -6283,6 +6295,7 @@ module.exports = {
   fft: fft,
   ifft: ifft,
   diag: diag,
+  identity: identity,
   int8: function (array) { return NdArray.new(array, 'int8'); },
   uint8: function (array) { return NdArray.new(array, 'uint8'); },
   int16: function (array) { return NdArray.new(array, 'int16'); },

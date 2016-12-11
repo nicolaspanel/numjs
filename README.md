@@ -458,6 +458,15 @@ array([  0,  5, 10])
 >
 ```
 
+### Identity matrix
+The identity array is a square array with ones on the main diagonal:
+
+```js
+> nj.identity(3)
+array([[ 1, 0, 0],
+       [ 0, 1, 0],
+       [ 0, 0, 1]])
+```
 
 ### Concatenate different arrays
 
