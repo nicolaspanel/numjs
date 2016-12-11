@@ -306,7 +306,6 @@ array([[ 1, 1, 1, 1],
        [ 1, 1, 1, 1],
        [ 1, 1, 1, 1]])
 >
-
 ```
 
 To modify an existing array rather than create a new one you can set the `copy` parameter to `false`:
@@ -432,6 +431,7 @@ array([[  0,  1,  2,  3],
 > a.shape
 [ 3, 4 ]
 ```
+
 The shape of an array can be changed with various commands:
 ```js
 > a.flatten();
@@ -448,7 +448,16 @@ array([[  0,  1,  2],
        [  3,  4,  5],
        [  6,  7,  8],
        [  9, 10, 11]])
+>
 ```
+
+Since `a` is matrix we may want its diagonal:
+```js
+> nj.diag(a)
+array([  0,  5, 10])
+>
+```
+
 
 ### Concatenate different arrays
 
@@ -662,4 +671,3 @@ See [documentation](http://nicolaspanel.github.io/numjs/global.html).
 
 ## Credits
 __NumJs__ is built on top of [ndarray](http://scijs.net/packages/#scijs/ndarray) and uses many [scijs packages](http://scijs.net/packages/)
-

@@ -10,10 +10,10 @@ addons:
     - g++-4.8
 
 node_js:
-  - 5
+  - 6
 
 before_script:
-  - npm install -g bower grunt-cli snazzy
+  - npm install -g bower grunt-cli
   - bower install
 script:
   - grunt travis

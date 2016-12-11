@@ -635,6 +635,16 @@ function ifft (x) {
   return x;
 }
 
+/**
+ * Extract a diagonal or construct a diagonal array.
+ *
+ * @param {Array|NdArray} x
+ * @returns {NdArray} a view a of the original array when possible, a new array otherwise
+ */
+function diag (x) {
+  return NdArray.new(x).diag();
+}
+
 module.exports = {
   config: CONF,
   dtypes: DTYPES,
@@ -684,6 +694,7 @@ module.exports = {
   fftconvolve: fftconvolve,
   fft: fft,
   ifft: ifft,
+  diag: diag,
   int8: function (array) { return NdArray.new(array, 'int8'); },
   uint8: function (array) { return NdArray.new(array, 'uint8'); },
   int16: function (array) { return NdArray.new(array, 'int16'); },

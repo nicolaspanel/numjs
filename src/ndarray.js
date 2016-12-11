@@ -695,6 +695,30 @@ NdArray.prototype.negative = function () {
   return c;
 };
 
+NdArray.prototype.diag = function () {
+  var d = this.ndim;
+  if (d === 1) {
+    // input is a vector => return a diagonal matrix
+    var T = _.getType(this.dtype);
+    var shape = [this.shape[0], this.shape[0]];
+    var arr = new NdArray(new T(_.shapeSize(shape)), shape);
+    if (arr.dtype === 'array') {
+      ops.assigns(arr.selection, 0);
+    }
+    for (var i = 0; i < this.shape[0]; i++) arr.set(i, i, this.get(i));
+    return arr;
+  }
+  var mshape = this.shape;
+  var mstride = this.selection.stride;
+  var nshape = (1 << 30);
+  var nstride = 0;
+  for (var i = 0; i < d; ++i) {
+    nshape = Math.min(nshape, mshape[i]) | 0;
+    nstride += mstride[i];
+  }
+  return new NdArray(this.selection.data, [nshape], [nstride], this.selection.offset);
+};
+
 NdArray.prototype.iteraxis = function (axis, cb) {
   var shape = this.shape;
   if (axis === -1) {
