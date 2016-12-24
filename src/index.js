@@ -162,8 +162,11 @@ function mean (x) {
 * @param {(Array|NdArray|number)} x
 * @returns {number}
 */
-function std (x) {
-  return NdArray.new(x).std();
+function std (x, sample) {
+  if (arguments.length === 1) {
+    sample = true;
+  }
+  return NdArray.new(x).std(sample);
 }
 
 /**
