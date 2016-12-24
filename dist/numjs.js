@@ -5770,8 +5770,11 @@ function mean (x) {
 * @param {(Array|NdArray|number)} x
 * @returns {number}
 */
-function std (x) {
-  return NdArray.new(x).std();
+function std (x, sample) {
+  if (arguments.length === 1) {
+    sample = true;
+  }
+  return NdArray.new(x).std(sample);
 }
 
 /**
@@ -6858,14 +6861,25 @@ NdArray.prototype.sum = function () {
 /**
 * Returns the standard deviation, a measure of the spread of a distribution, of the array elements.
 *
+* @param {boolean} [sample=true]
 * @returns {number}
 */
-NdArray.prototype.std = function () {
+NdArray.prototype.std = function (sample) {
+  if (arguments.length === 0) {
+    sample = true;
+  }
   var squares = this.clone();
   ops.powseq(squares.selection, 2);
   var mean = this.mean();
-  var variance = Math.abs(ops.sum(squares.selection) / _.shapeSize(this.shape) - mean * mean);
-  return variance > 0 ? Math.sqrt(variance) : 0;
+  var shapeSize = _.shapeSize(this.shape);
+  var variance;
+  if (sample) {
+    variance = ops.sum(squares.selection) / shapeSize - mean * mean;
+  } else {
+    variance = ops.sum(squares.selection) / (shapeSize - 1) - mean * mean * shapeSize / (shapeSize - 1);
+  }
+  
+  return variance > 0 ? Math.sqrt(Math.abs(variance)) : 0;
 };
 
 /**
