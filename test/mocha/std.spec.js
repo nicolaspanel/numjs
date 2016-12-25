@@ -25,8 +25,9 @@ describe('std', function () {
       })
       it('should accomodate using the population variance', function() {
         var expectation = 0.7609818867801011;
-        expect(nj.array(this.array).std(false)).to.equal(expectation);
-        expect(nj.std(this.array, false)).to.equal(expectation);
+        var options = { ddof: 1 };
+        expect(nj.array(this.array).std(options)).to.equal(expectation);
+        expect(nj.std(this.array, options)).to.equal(expectation);
       })
   })
 });

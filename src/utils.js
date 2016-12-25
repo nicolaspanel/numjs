@@ -1,5 +1,6 @@
 'use strict';
 var DTYPES = require('./dtypes');
+var _ = require('lodash');
 
 function isNumber (value) {
   return typeof value === 'number';
@@ -85,5 +86,6 @@ module.exports = {
   flatten: baseFlatten,
   shapeSize: shapeSize,
   getType: getType,
-  getShape: getShape
+  getShape: getShape,
+  defaults: _.defaults
 };
