@@ -54,7 +54,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "preversion": "grunt test"
+    "preversion": "grunt test && git ci dist 'bump version'"
   },
   "repository": {
     "type": "git",
