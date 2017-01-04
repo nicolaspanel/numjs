@@ -94,7 +94,8 @@ module.exports = function (grunt) {
     }
   });
   grunt.registerTask('mocha', ['simplemocha:full']);
-  grunt.registerTask('test', ['simplemocha:full', 'browserify', 'karma:dist', 'uglify', 'karma:min']);
+  grunt.registerTask('build', ['browserify', 'uglify']);
+  grunt.registerTask('test', ['simplemocha:full', 'build', 'karma:dist', 'karma:min']);
   grunt.registerTask('travis', ['simplemocha:full', 'karma:dist', 'karma:min']);
   grunt.registerTask('doc', ['jsdoc', 'gh-pages']);
 };
