@@ -1,6 +1,6 @@
 {
   "name": "numjs",
-  "version": "0.12.2",
+  "version": "0.12.3",
   "description": "Like NumPy, in JavaScript",
   "main": "src/index.js",
   "directories": {
@@ -13,9 +13,10 @@
     "ndarray-fft": "^1.0.0",
     "ndarray-gemm": "^1.0.0",
     "ndarray-ops": "^1.2.2",
-    "sharp": "~0.15.1",
     "typedarray-pool": "^1.1.0",
-    "lodash": "^4.11.1"
+    "lodash": "^4.11.1",
+    "sharp": "~0.16.0",
+    "typedarray-pool": "^1.1.0"
   },
   "devDependencies": {
     "browserify-shim": "^3.8.12",
@@ -53,7 +54,8 @@
     ]
   },
   "scripts": {
-    "test": "grunt test"
+    "test": "grunt test",
+    "preversion": "grunt test && git ci dist -m 'bump version'"
   },
   "repository": {
     "type": "git",

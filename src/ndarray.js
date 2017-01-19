@@ -548,14 +548,18 @@ NdArray.prototype.sum = function () {
 /**
 * Returns the standard deviation, a measure of the spread of a distribution, of the array elements.
 *
+* @param {object} {ddof:0}
 * @returns {number}
 */
-NdArray.prototype.std = function () {
+NdArray.prototype.std = function (options) {
+  options = _.defaults(options, { 'ddof': 0 });
   var squares = this.clone();
   ops.powseq(squares.selection, 2);
   var mean = this.mean();
-  var variance = Math.abs(ops.sum(squares.selection) / _.shapeSize(this.shape) - mean * mean);
-  return variance > 0 ? Math.sqrt(variance) : 0;
+  var shapeSize = _.shapeSize(this.shape);
+  var variance = ops.sum(squares.selection) / (shapeSize - options.ddof) - mean * mean * shapeSize / (shapeSize - options.ddof);
+  
+  return variance > 0 ? Math.sqrt(Math.abs(variance)) : 0;
 };
 
 /**

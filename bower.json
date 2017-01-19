@@ -2,7 +2,7 @@
   "name": "numjs",
   "version": "0.12.1",
   "description": "Like NumPy, in JavaScript",
-  "main": "dist/numjs.min.js",
+  "main": "dist/numjs.js",
   "author": "Nicolas Panel",
   "license": "MIT",
   "keywords": [
