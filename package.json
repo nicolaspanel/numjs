@@ -14,7 +14,8 @@
     "ndarray-gemm": "^1.0.0",
     "ndarray-ops": "^1.2.2",
     "sharp": "~0.15.1",
-    "typedarray-pool": "^1.1.0"
+    "typedarray-pool": "^1.1.0",
+    "lodash": "^4.11.1"
   },
   "devDependencies": {
     "browserify-shim": "^3.8.12",
@@ -39,7 +40,6 @@
     "karma-mocha": "^0.2.2",
     "karma-mocha-reporter": "latest",
     "karma-phantomjs-launcher": "^1.0.0",
-    "lodash": "^4.11.1",
     "mocha": "^2.3.4",
     "phantomjs-prebuilt": "^2.1.7",
     "semistandard": "^7.0.5"
