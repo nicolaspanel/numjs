@@ -1,6 +1,6 @@
 {
   "name": "numjs",
-  "version": "0.12.3",
+  "version": "0.12.4",
   "description": "Like NumPy, in JavaScript",
   "main": "src/index.js",
   "directories": {
@@ -15,8 +15,7 @@
     "ndarray-ops": "^1.2.2",
     "typedarray-pool": "^1.1.0",
     "lodash": "^4.11.1",
-    "sharp": "~0.16.0",
-    "typedarray-pool": "^1.1.0"
+    "sharp": "~0.16.0"
   },
   "devDependencies": {
     "browserify-shim": "^3.8.12",
