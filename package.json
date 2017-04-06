@@ -54,7 +54,8 @@
   },
   "scripts": {
     "test": "grunt test",
-    "preversion": "grunt test && git ci dist -m 'bump version' --allow-empty "
+    "preversion": "grunt test && git ci dist -m 'bump version' --allow-empty ",
+    "postversion": "npm publish"
   },
   "repository": {
     "type": "git",
