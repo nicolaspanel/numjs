@@ -486,6 +486,7 @@ array([[  0,  1,  2,  3,  0],
        [  4,  5,  6,  7,  1],
        [  8,  9, 10, 11,  2]])
 ```
+
 __Notes__:
  - the arrays must have the same shape, except in the last dimension
  - arrays are concatenated along the last axis
@@ -508,6 +509,25 @@ array([[  0,  1,  2,  3],
        [  0,  1,  2,  3]])
 ```
 
+
+### Stack multiple arrays
+
+```js
+> a = nj.array([1, 2, 3])
+> b = nj.array([2, 3, 4])
+
+> np.stack([a, b])
+array([[1, 2, 3],
+       [2, 3, 4]])
+> np.stack([a, b], -1)
+array([[1, 2],
+       [2, 3],
+       [3, 4]])
+```
+
+__Notes__:
+ - the arrays must have the same shape
+ - take an optional axis argument which can be negative
 
 ### Deep Copy
 The `clone` method makes a complete copy of the array and its data.

@@ -22380,7 +22380,7 @@ var NdArray = require('../ndarray');
 var __ = require('../utils');
 
 // takes ~157ms on a 5000x5000 image
-var doRgb2gray = require('cwise/lib/wrapper')({"args":["array","array","array","array"],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_76_arg0_=4899*_inline_76_arg1_+9617*_inline_76_arg2_+1868*_inline_76_arg3_+8192>>14}","args":[{"name":"_inline_76_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_76_arg1_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg2_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg3_","lvalue":false,"rvalue":true,"count":1}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"rgb2grayCwise","blockSize":64});
+var doRgb2gray = require('cwise/lib/wrapper')({"args":["array","array","array","array"],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_79_arg0_=4899*_inline_79_arg1_+9617*_inline_79_arg2_+1868*_inline_79_arg3_+8192>>14}","args":[{"name":"_inline_79_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_79_arg1_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg2_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg3_","lvalue":false,"rvalue":true,"count":1}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"rgb2grayCwise","blockSize":64});
 
 /**
  * Compute Grayscale version of an RGB image.
@@ -22476,7 +22476,7 @@ var NdArray = require('../ndarray');
 var __ = require('../utils');
 var rgb2gray = require('./rgb2gray');
 
-var doScharr = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_79_q=3*_inline_79_arg2_+10*_inline_79_arg3_+3*_inline_79_arg4_-3*_inline_79_arg7_-10*_inline_79_arg8_-3*_inline_79_arg9_,_inline_79_s=3*_inline_79_arg2_-3*_inline_79_arg4_+10*_inline_79_arg5_-10*_inline_79_arg6_+3*_inline_79_arg7_-3*_inline_79_arg9_;_inline_79_arg0_=Math.sqrt(_inline_79_s*_inline_79_s+_inline_79_q*_inline_79_q)}","args":[{"name":"_inline_79_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_79_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_79_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_79_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_79_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_79_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_79_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_79_q","_inline_79_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
+var doScharr = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_76_q=3*_inline_76_arg2_+10*_inline_76_arg3_+3*_inline_76_arg4_-3*_inline_76_arg7_-10*_inline_76_arg8_-3*_inline_76_arg9_,_inline_76_s=3*_inline_76_arg2_-3*_inline_76_arg4_+10*_inline_76_arg5_-10*_inline_76_arg6_+3*_inline_76_arg7_-3*_inline_76_arg9_;_inline_76_arg0_=Math.sqrt(_inline_76_s*_inline_76_s+_inline_76_q*_inline_76_q)}","args":[{"name":"_inline_76_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_76_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_76_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_76_q","_inline_76_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
 
 /**
  * Find the edge magnitude using the Scharr transform.
@@ -23333,6 +23333,54 @@ function identity (n, dtype) {
   return arr;
 }
 
+/**
+ * Join a sequence of arrays along a new axis.
+ * The axis parameter specifies the index of the new axis in the dimensions of the result.
+ * For example, if axis=0 it will be the first dimension and if axis=-1 it will be the last dimension.
+ * @param {Array} sequence of array_like
+ * @param {number} [axis=0] The axis in the result array along which the input arrays are stacked.
+ * @return {Array} The stacked array has one more dimension than the input arrays.
+ */
+function stack (arrays, axis) {
+    axis = axis || 0;
+    if (!arrays || arrays.length === 0) {
+        throw new errors.ValueError('need at least one array to stack');
+    }
+    arrays = arrays.map(function (a) { return _.isNumber(a) ? a : NdArray.new(a); });
+    var expectedShape = arrays[0].shape || []; // for numbers
+
+    for (var i=1; i<arrays.length; i++){
+      var shape = arrays[i].shape || []; // for numbers
+      var len = Math.max(expectedShape.length, shape.length);
+      for (var j = 0; j < len; j++){
+        if (expectedShape[j] !== shape[j]) throw new errors.ValueError('all input arrays must have the same shape');
+      }
+    }
+    var stacked;
+    if (expectedShape.length === 0) { // stacking numbers
+      stacked = concatenate(arrays);
+    } else {
+      stacked = zeros([arrays.length].concat(expectedShape));
+      for (var i=0; i<arrays.length; i++) {
+        stacked.pick(i).assign(arrays[i], false);
+      }
+    }
+
+    if (axis) {
+      // recompute neg axis
+      if (axis < 0) axis = stacked.ndim + axis;
+
+      var d = stacked.ndim;
+      var axes = new Array(d);
+      for (var i = 0; i < d; i++){
+        axes[i] = i < axis ? i + 1 : i === axis ? 0 : i;
+      }
+
+      return stacked.transpose(axes);
+    }
+    return stacked;
+}
+
 module.exports = {
   config: CONF,
   dtypes: DTYPES,
@@ -23384,6 +23432,7 @@ module.exports = {
   ifft: ifft,
   diag: diag,
   identity: identity,
+  stack: stack,
   int8: function (array) { return NdArray.new(array, 'int8'); },
   uint8: function (array) { return NdArray.new(array, 'uint8'); },
   int16: function (array) { return NdArray.new(array, 'int16'); },

@@ -4,7 +4,8 @@
   "description": "Like NumPy, in JavaScript",
   "main": "src/index.js",
   "directories": {
-    "test": "test"
+    "test": "test",
+    "preversion": "test"
   },
   "dependencies": {
     "cwise": "^1.0.8",
