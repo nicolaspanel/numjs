@@ -4,8 +4,7 @@
   "description": "Like NumPy, in JavaScript",
   "main": "src/index.js",
   "directories": {
-    "test": "test",
-    "preversion": "test"
+    "test": "test"
   },
   "dependencies": {
     "cwise": "^1.0.8",
@@ -55,7 +54,7 @@
   },
   "scripts": {
     "test": "grunt test",
-    "preversion": "grunt test && git ci dist -m 'bump version'"
+    "preversion": "grunt test && git ci dist -m 'bump version' --allow-empty "
   },
   "repository": {
     "type": "git",
