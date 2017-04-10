@@ -9,7 +9,6 @@ module.exports = function readImageNode (input, type) {
   var done = false;
   var hxw;
   sharp(input)
-    .toFormat(type || 'input')
     .raw()
     .toBuffer(function (err, data, info) {
       if (err) { throw err; }
