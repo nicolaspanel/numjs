@@ -312,7 +312,7 @@ NdArray.prototype.reshape = function (shape) {
 * Permute the dimensions of the array.
 *
 * @param {...number} [axes]
-* @returns {NfdArray}
+* @returns {NdArray}
 */
 NdArray.prototype.transpose = function (axes) {
   if (arguments.length === 0) {
@@ -321,7 +321,7 @@ NdArray.prototype.transpose = function (axes) {
     for (var i = 0; i < d; i++) {
       axes[i] = d - i - 1;
     }
-  } else if (arguments.length > 1) {
+  } else {
     axes = arguments;
   }
   return new NdArray(this.selection.transpose.apply(this.selection, axes));
@@ -558,7 +558,7 @@ NdArray.prototype.std = function (options) {
   var mean = this.mean();
   var shapeSize = _.shapeSize(this.shape);
   var variance = ops.sum(squares.selection) / (shapeSize - options.ddof) - mean * mean * shapeSize / (shapeSize - options.ddof);
-  
+
   return variance > 0 ? Math.sqrt(Math.abs(variance)) : 0;
 };
 
