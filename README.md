@@ -406,6 +406,9 @@ array([ 0.26894,     0.5, 0.73106])
 > nj.exp(a)
 array([ 0.36788,       1, 2.71828])
 >
+> nj.log(nj.exp(a))
+array([-1, 0, 1])
+>
 > nj.sqrt(nj.abs(a))
 array([ 1, 0, 1])
 >
