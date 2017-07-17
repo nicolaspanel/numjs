@@ -34,22 +34,22 @@ function placeHoldersCount (b64) {
 
 function byteLength (b64) {
   // base64 is 4/3 + up to two characters of the original data
-  return b64.length * 3 / 4 - placeHoldersCount(b64)
+  return (b64.length * 3 / 4) - placeHoldersCount(b64)
 }
 
 function toByteArray (b64) {
-  var i, j, l, tmp, placeHolders, arr
+  var i, l, tmp, placeHolders, arr
   var len = b64.length
   placeHolders = placeHoldersCount(b64)
 
-  arr = new Arr(len * 3 / 4 - placeHolders)
+  arr = new Arr((len * 3 / 4) - placeHolders)
 
   // if there are placeholders, only get up to the last complete 4 chars
   l = placeHolders > 0 ? len - 4 : len
 
   var L = 0
 
-  for (i = 0, j = 0; i < l; i += 4, j += 3) {
+  for (i = 0; i < l; i += 4) {
     tmp = (revLookup[b64.charCodeAt(i)] << 18) | (revLookup[b64.charCodeAt(i + 1)] << 12) | (revLookup[b64.charCodeAt(i + 2)] << 6) | revLookup[b64.charCodeAt(i + 3)]
     arr[L++] = (tmp >> 16) & 0xFF
     arr[L++] = (tmp >> 8) & 0xFF
@@ -2113,14 +2113,7 @@ function isnan (val) {
 }
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{"base64-js":1,"ieee754":10,"isarray":4}],4:[function(require,module,exports){
-var toString = {}.toString;
-
-module.exports = Array.isArray || function (arr) {
-  return toString.call(arr) == '[object Array]';
-};
-
-},{}],5:[function(require,module,exports){
+},{"base64-js":1,"ieee754":9,"isarray":12}],4:[function(require,module,exports){
 "use strict"
 
 var createThunk = require("./lib/thunk.js")
@@ -2231,7 +2224,7 @@ function compileCwise(user_args) {
 
 module.exports = compileCwise
 
-},{"./lib/thunk.js":7}],6:[function(require,module,exports){
+},{"./lib/thunk.js":6}],5:[function(require,module,exports){
 "use strict"
 
 var uniq = require("uniq")
@@ -2260,7 +2253,9 @@ function innerFill(order, proc, body) {
       }
     }
   }
-  code.push("var " + vars.join(","))
+  if (vars.length > 0) {
+    code.push("var " + vars.join(","))
+  }  
   //Scan loop
   for(i=dimension-1; i>=0; --i) { // Start at largest stride and work your way inwards
     idx = order[i]
@@ -2553,7 +2548,9 @@ function generateCWiseOp(proc, typesig) {
                       .concat(proc.body.thisVars)
                       .concat(proc.post.thisVars))
   vars = vars.concat(thisVars)
-  code.push("var " + vars.join(","))
+  if (vars.length > 0) {
+    code.push("var " + vars.join(","))
+  }
   for(var i=0; i<proc.arrayArgs.length; ++i) {
     code.push("p"+i+"|=0")
   }
@@ -2587,7 +2584,7 @@ function generateCWiseOp(proc, typesig) {
 }
 module.exports = generateCWiseOp
 
-},{"uniq":23}],7:[function(require,module,exports){
+},{"uniq":23}],6:[function(require,module,exports){
 "use strict"
 
 // The function below is called when constructing a cwise function object, and does the following:
@@ -2675,9 +2672,9 @@ function createThunk(proc) {
 
 module.exports = createThunk
 
-},{"./compile.js":6}],8:[function(require,module,exports){
+},{"./compile.js":5}],7:[function(require,module,exports){
 module.exports = require("cwise-compiler")
-},{"cwise-compiler":5}],9:[function(require,module,exports){
+},{"cwise-compiler":4}],8:[function(require,module,exports){
 "use strict"
 
 function dupe_array(count, value, i) {
@@ -2727,7 +2724,7 @@ function dupe(count, value) {
 }
 
 module.exports = dupe
-},{}],10:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 exports.read = function (buffer, offset, isLE, mLen, nBytes) {
   var e, m
   var eLen = nBytes * 8 - mLen - 1
@@ -2813,7 +2810,7 @@ exports.write = function (buffer, value, offset, isLE, mLen, nBytes) {
   buffer[offset + i - d] |= s * 128
 }
 
-},{}],11:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 "use strict"
 
 function iota(n) {
@@ -2825,7 +2822,7 @@ function iota(n) {
 }
 
 module.exports = iota
-},{}],12:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 /*!
  * Determine if an object is a Buffer
  *
@@ -2847,6 +2844,13 @@ function isBuffer (obj) {
 function isSlowBuffer (obj) {
   return typeof obj.readFloatLE === 'function' && typeof obj.slice === 'function' && isBuffer(obj.slice(0, 0))
 }
+
+},{}],12:[function(require,module,exports){
+var toString = {}.toString;
+
+module.exports = Array.isArray || function (arr) {
+  return toString.call(arr) == '[object Array]';
+};
 
 },{}],13:[function(require,module,exports){
 (function (global){
@@ -21044,7 +21048,7 @@ exports.equals = compile({
 
 
 
-},{"cwise-compiler":5}],19:[function(require,module,exports){
+},{"cwise-compiler":4}],19:[function(require,module,exports){
 var iota = require("iota-array")
 var isBuffer = require("is-buffer")
 
@@ -21389,7 +21393,7 @@ function wrappedNDArrayCtor(data, shape, stride, offset) {
 
 module.exports = wrappedNDArrayCtor
 
-},{"iota-array":11,"is-buffer":12}],20:[function(require,module,exports){
+},{"iota-array":10,"is-buffer":11}],20:[function(require,module,exports){
 (function (process){
 // Copyright Joyent, Inc. and other Node contributors.
 //
@@ -21788,6 +21792,10 @@ process.off = noop;
 process.removeListener = noop;
 process.removeAllListeners = noop;
 process.emit = noop;
+process.prependListener = noop;
+process.prependOnceListener = noop;
+
+process.listeners = function (name) { return [] }
 
 process.binding = function (name) {
     throw new Error('process.binding is not supported');
@@ -22016,7 +22024,7 @@ exports.clearCache = function clearCache() {
   }
 }
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {},require("buffer").Buffer)
-},{"bit-twiddle":2,"buffer":3,"dup":9}],23:[function(require,module,exports){
+},{"bit-twiddle":2,"buffer":3,"dup":8}],23:[function(require,module,exports){
 "use strict"
 
 function unique_pred(list, compare) {
@@ -22273,7 +22281,7 @@ module.exports = function isGrayscaleImage (arr) {
   return false;
 };
 
-},{"../ndarray":43,"cwise/lib/wrapper":8}],33:[function(require,module,exports){
+},{"../ndarray":43,"cwise/lib/wrapper":7}],33:[function(require,module,exports){
 'use strict';
 
 /* global HTMLCanvasElement */
@@ -22408,14 +22416,14 @@ module.exports = function rgb2gray (img) {
   return out;
 };
 
-},{"../ndarray":43,"../utils":44,"cwise/lib/wrapper":8}],36:[function(require,module,exports){
+},{"../ndarray":43,"../utils":44,"cwise/lib/wrapper":7}],36:[function(require,module,exports){
 'use strict';
 
 
 var NdArray = require('../ndarray');
 var rgb2gray = require('./rgb2gray');
 
-var doIntegrate = require('cwise/lib/wrapper')({"args":["array","array","index",{"offset":[-1,-1],"array":0},{"offset":[-1,0],"array":0},{"offset":[0,-1],"array":0}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_67_arg0_=0!==_inline_67_arg2_[0]&&0!==_inline_67_arg2_[1]?_inline_67_arg1_+_inline_67_arg4_+_inline_67_arg5_-_inline_67_arg3_:0===_inline_67_arg2_[0]&&0===_inline_67_arg2_[1]?_inline_67_arg1_:0===_inline_67_arg2_[0]?_inline_67_arg1_+_inline_67_arg5_:_inline_67_arg1_+_inline_67_arg4_}","args":[{"name":"_inline_67_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_67_arg1_","lvalue":false,"rvalue":true,"count":4},{"name":"_inline_67_arg2_","lvalue":false,"rvalue":true,"count":5},{"name":"_inline_67_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_67_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_67_arg5_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doIntegrateBody","blockSize":64});
+var doIntegrate = require('cwise/lib/wrapper')({"args":["array","array","index",{"offset":[-1,-1],"array":0},{"offset":[-1,0],"array":0},{"offset":[0,-1],"array":0}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_70_arg0_=0!==_inline_70_arg2_[0]&&0!==_inline_70_arg2_[1]?_inline_70_arg1_+_inline_70_arg4_+_inline_70_arg5_-_inline_70_arg3_:0===_inline_70_arg2_[0]&&0===_inline_70_arg2_[1]?_inline_70_arg1_:0===_inline_70_arg2_[0]?_inline_70_arg1_+_inline_70_arg5_:_inline_70_arg1_+_inline_70_arg4_}","args":[{"name":"_inline_70_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_70_arg1_","lvalue":false,"rvalue":true,"count":4},{"name":"_inline_70_arg2_","lvalue":false,"rvalue":true,"count":5},{"name":"_inline_70_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_70_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_70_arg5_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doIntegrateBody","blockSize":64});
 
 /**
  * Compute Sum Area Table, also known as the integral of the image
@@ -22434,7 +22442,7 @@ module.exports = function computeSumAreaTable (img) {
   return out;
 };
 
-},{"../ndarray":43,"./rgb2gray":35,"cwise/lib/wrapper":8}],37:[function(require,module,exports){
+},{"../ndarray":43,"./rgb2gray":35,"cwise/lib/wrapper":7}],37:[function(require,module,exports){
 'use strict';
 
 var _ = require('./utils');
@@ -22506,7 +22514,7 @@ module.exports = function computeScharr (img) {
   return out.divide(16 * Math.sqrt(2), false);
 };
 
-},{"../ndarray":43,"../utils":44,"./rgb2gray":35,"cwise/lib/wrapper":8,"ndarray-ops":18}],39:[function(require,module,exports){
+},{"../ndarray":43,"../utils":44,"./rgb2gray":35,"cwise/lib/wrapper":7,"ndarray-ops":18}],39:[function(require,module,exports){
 'use strict';
 
 
@@ -22547,14 +22555,14 @@ module.exports = function computeSobel (img) {
   return out.divide(4 * Math.sqrt(2), false);
 };
 
-},{"../ndarray":43,"../utils":44,"./rgb2gray":35,"cwise/lib/wrapper":8,"ndarray-ops":18}],40:[function(require,module,exports){
+},{"../ndarray":43,"../utils":44,"./rgb2gray":35,"cwise/lib/wrapper":7,"ndarray-ops":18}],40:[function(require,module,exports){
 'use strict';
 
 
 var NdArray = require('../ndarray');
 var rgb2gray = require('./rgb2gray');
 
-var doIntegrate = require('cwise/lib/wrapper')({"args":["array","array","index",{"offset":[-1,-1],"array":0},{"offset":[-1,0],"array":0},{"offset":[0,-1],"array":0}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_70_arg0_=0!==_inline_70_arg2_[0]&&0!==_inline_70_arg2_[1]?_inline_70_arg1_*_inline_70_arg1_+_inline_70_arg4_+_inline_70_arg5_-_inline_70_arg3_:0===_inline_70_arg2_[0]&&0===_inline_70_arg2_[1]?_inline_70_arg1_*_inline_70_arg1_:0===_inline_70_arg2_[0]?_inline_70_arg1_*_inline_70_arg1_+_inline_70_arg5_:_inline_70_arg1_*_inline_70_arg1_+_inline_70_arg4_}","args":[{"name":"_inline_70_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_70_arg1_","lvalue":false,"rvalue":true,"count":8},{"name":"_inline_70_arg2_","lvalue":false,"rvalue":true,"count":5},{"name":"_inline_70_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_70_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_70_arg5_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doIntegrateBody","blockSize":64});
+var doIntegrate = require('cwise/lib/wrapper')({"args":["array","array","index",{"offset":[-1,-1],"array":0},{"offset":[-1,0],"array":0},{"offset":[0,-1],"array":0}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_67_arg0_=0!==_inline_67_arg2_[0]&&0!==_inline_67_arg2_[1]?_inline_67_arg1_*_inline_67_arg1_+_inline_67_arg4_+_inline_67_arg5_-_inline_67_arg3_:0===_inline_67_arg2_[0]&&0===_inline_67_arg2_[1]?_inline_67_arg1_*_inline_67_arg1_:0===_inline_67_arg2_[0]?_inline_67_arg1_*_inline_67_arg1_+_inline_67_arg5_:_inline_67_arg1_*_inline_67_arg1_+_inline_67_arg4_}","args":[{"name":"_inline_67_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_67_arg1_","lvalue":false,"rvalue":true,"count":8},{"name":"_inline_67_arg2_","lvalue":false,"rvalue":true,"count":5},{"name":"_inline_67_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_67_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_67_arg5_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doIntegrateBody","blockSize":64});
 
 /**
  * Compute Squared Sum Area Table, also known as the integral of the squared image
@@ -22574,7 +22582,7 @@ module.exports = function computeSquaredSumAreaTable (img) {
   return out;
 };
 
-},{"../ndarray":43,"./rgb2gray":35,"cwise/lib/wrapper":8}],41:[function(require,module,exports){
+},{"../ndarray":43,"./rgb2gray":35,"cwise/lib/wrapper":7}],41:[function(require,module,exports){
 'use strict';
 
 var NdArray = require('../ndarray');
@@ -22810,6 +22818,15 @@ function reshape (array, shape) {
 */
 function exp (x) {
   return NdArray.new(x).exp();
+}
+
+/**
+* Calculate the natural logarithm of all elements in the input array, element-wise.
+* @param {(Array|NdArray|number)} x
+* @returns {NdArray}
+*/
+function log (x) {
+  return NdArray.new(x).log();
 }
 
 /**
@@ -23407,6 +23424,7 @@ module.exports = {
   tanh: tanh,
   clip: clip,
   exp: exp,
+  log: log,
   sqrt: sqrt,
   power: power,
   sum: sum,
@@ -23444,7 +23462,7 @@ module.exports = {
   images: require('./images')
 };
 
-},{"./config":24,"./dtypes":25,"./errors":26,"./images":31,"./ndarray":43,"./utils":44,"cwise/lib/wrapper":8,"ndarray":19,"ndarray-fft":14,"ndarray-ops":18}],43:[function(require,module,exports){
+},{"./config":24,"./dtypes":25,"./errors":26,"./images":31,"./ndarray":43,"./utils":44,"cwise/lib/wrapper":7,"ndarray":19,"ndarray-fft":14,"ndarray-ops":18}],43:[function(require,module,exports){
 'use strict';
 
 var ndarray = require('ndarray');
@@ -23947,6 +23965,19 @@ NdArray.prototype.exp = function (copy) {
 };
 
 /**
+* Calculate the natural logarithm of all elements in the array, element-wise.
+*
+* @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
+* @returns {NdArray}
+*/
+NdArray.prototype.log = function (copy) {
+  if (arguments.length === 0) { copy = true; }
+  var arr = copy ? this.clone() : this;
+  ops.logeq(arr.selection);
+  return arr;
+};
+
+/**
 * Calculate the positive square-root of all elements in the array, element-wise.
 *
 * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
@@ -24005,7 +24036,7 @@ NdArray.prototype.std = function (options) {
   var mean = this.mean();
   var shapeSize = _.shapeSize(this.shape);
   var variance = ops.sum(squares.selection) / (shapeSize - options.ddof) - mean * mean * shapeSize / (shapeSize - options.ddof);
-  
+
   return variance > 0 ? Math.sqrt(Math.abs(variance)) : 0;
 };
 
@@ -24468,7 +24499,7 @@ function formatNumber (v) {
   return String(Number((v || 0).toFixed(CONF.nFloatingValues)));
 }
 
-},{"./config":24,"./errors":26,"./utils":44,"cwise/lib/wrapper":8,"ndarray":19,"ndarray-fft":14,"ndarray-gemm":16,"ndarray-ops":18,"typedarray-pool":22}],44:[function(require,module,exports){
+},{"./config":24,"./errors":26,"./utils":44,"cwise/lib/wrapper":7,"ndarray":19,"ndarray-fft":14,"ndarray-gemm":16,"ndarray-ops":18,"typedarray-pool":22}],44:[function(require,module,exports){
 'use strict';
 var DTYPES = require('./dtypes');
 var _ = require('lodash');

@@ -117,6 +117,15 @@ function exp (x) {
 }
 
 /**
+* Calculate the natural logarithm of all elements in the input array, element-wise.
+* @param {(Array|NdArray|number)} x
+* @returns {NdArray}
+*/
+function log (x) {
+  return NdArray.new(x).log();
+}
+
+/**
 * Calculate the positive square-root of all elements in the input array, element-wise.
 * @param {(Array|NdArray|number)} x
 * @returns {NdArray}
@@ -731,6 +740,7 @@ module.exports = {
   tanh: tanh,
   clip: clip,
   exp: exp,
+  log: log,
   sqrt: sqrt,
   power: power,
   sum: sum,

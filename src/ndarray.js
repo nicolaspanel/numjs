@@ -500,6 +500,19 @@ NdArray.prototype.exp = function (copy) {
 };
 
 /**
+* Calculate the natural logarithm of all elements in the array, element-wise.
+*
+* @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
+* @returns {NdArray}
+*/
+NdArray.prototype.log = function (copy) {
+  if (arguments.length === 0) { copy = true; }
+  var arr = copy ? this.clone() : this;
+  ops.logeq(arr.selection);
+  return arr;
+};
+
+/**
 * Calculate the positive square-root of all elements in the array, element-wise.
 *
 * @param {boolean} [copy=true] - set to false to modify the array rather than create a new one
@@ -558,7 +571,7 @@ NdArray.prototype.std = function (options) {
   var mean = this.mean();
   var shapeSize = _.shapeSize(this.shape);
   var variance = ops.sum(squares.selection) / (shapeSize - options.ddof) - mean * mean * shapeSize / (shapeSize - options.ddof);
-  
+
   return variance > 0 ? Math.sqrt(Math.abs(variance)) : 0;
 };
 
