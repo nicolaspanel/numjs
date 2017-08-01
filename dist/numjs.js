@@ -23586,7 +23586,7 @@ NdArray.prototype.slice = function () {
       hi[i] = null;
       step[i] = 1;
     } else if (arg.length === 4 && arg[1] === null && arg[2] === null) {
-      // pattern: start::step
+      // pattern: a[start::step]
       var s = (arg[0] < 0) ? arg[0] + tShape[i] : arg[0];
       lo[i] = s;
       hi[i] = null;
