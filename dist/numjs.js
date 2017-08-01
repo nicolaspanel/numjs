@@ -22523,7 +22523,7 @@ var NdArray = require('../ndarray');
 var __ = require('../utils');
 var rgb2gray = require('./rgb2gray');
 
-var doSobel = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_70_q=_inline_70_arg2_+2*_inline_70_arg3_+_inline_70_arg4_-_inline_70_arg7_-2*_inline_70_arg8_-_inline_70_arg9_,_inline_70_s=_inline_70_arg2_-_inline_70_arg4_+2*_inline_70_arg5_-2*_inline_70_arg6_+_inline_70_arg7_-_inline_70_arg9_;_inline_70_arg0_=Math.sqrt(_inline_70_s*_inline_70_s+_inline_70_q*_inline_70_q)}","args":[{"name":"_inline_70_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_70_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_70_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_70_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_70_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_70_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_70_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_70_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_70_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_70_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_70_q","_inline_70_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
+var doSobel = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_73_q=_inline_73_arg2_+2*_inline_73_arg3_+_inline_73_arg4_-_inline_73_arg7_-2*_inline_73_arg8_-_inline_73_arg9_,_inline_73_s=_inline_73_arg2_-_inline_73_arg4_+2*_inline_73_arg5_-2*_inline_73_arg6_+_inline_73_arg7_-_inline_73_arg9_;_inline_73_arg0_=Math.sqrt(_inline_73_s*_inline_73_s+_inline_73_q*_inline_73_q)}","args":[{"name":"_inline_73_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_73_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_73_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_73_q","_inline_73_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
 
 /**
  * Find the edge magnitude using the Sobel transform.
@@ -22562,7 +22562,7 @@ module.exports = function computeSobel (img) {
 var NdArray = require('../ndarray');
 var rgb2gray = require('./rgb2gray');
 
-var doIntegrate = require('cwise/lib/wrapper')({"args":["array","array","index",{"offset":[-1,-1],"array":0},{"offset":[-1,0],"array":0},{"offset":[0,-1],"array":0}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_73_arg0_=0!==_inline_73_arg2_[0]&&0!==_inline_73_arg2_[1]?_inline_73_arg1_*_inline_73_arg1_+_inline_73_arg4_+_inline_73_arg5_-_inline_73_arg3_:0===_inline_73_arg2_[0]&&0===_inline_73_arg2_[1]?_inline_73_arg1_*_inline_73_arg1_:0===_inline_73_arg2_[0]?_inline_73_arg1_*_inline_73_arg1_+_inline_73_arg5_:_inline_73_arg1_*_inline_73_arg1_+_inline_73_arg4_}","args":[{"name":"_inline_73_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_73_arg1_","lvalue":false,"rvalue":true,"count":8},{"name":"_inline_73_arg2_","lvalue":false,"rvalue":true,"count":5},{"name":"_inline_73_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg5_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doIntegrateBody","blockSize":64});
+var doIntegrate = require('cwise/lib/wrapper')({"args":["array","array","index",{"offset":[-1,-1],"array":0},{"offset":[-1,0],"array":0},{"offset":[0,-1],"array":0}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_70_arg0_=0!==_inline_70_arg2_[0]&&0!==_inline_70_arg2_[1]?_inline_70_arg1_*_inline_70_arg1_+_inline_70_arg4_+_inline_70_arg5_-_inline_70_arg3_:0===_inline_70_arg2_[0]&&0===_inline_70_arg2_[1]?_inline_70_arg1_*_inline_70_arg1_:0===_inline_70_arg2_[0]?_inline_70_arg1_*_inline_70_arg1_+_inline_70_arg5_:_inline_70_arg1_*_inline_70_arg1_+_inline_70_arg4_}","args":[{"name":"_inline_70_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_70_arg1_","lvalue":false,"rvalue":true,"count":8},{"name":"_inline_70_arg2_","lvalue":false,"rvalue":true,"count":5},{"name":"_inline_70_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_70_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_70_arg5_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doIntegrateBody","blockSize":64});
 
 /**
  * Compute Squared Sum Area Table, also known as the integral of the squared image
@@ -23585,8 +23585,14 @@ NdArray.prototype.slice = function () {
       lo[i] = (arg < 0) ? arg + tShape[i] : arg;
       hi[i] = null;
       step[i] = 1;
+    } else if (arg.length === 4 && arg[1] === null && arg[2] === null) {
+      // pattern: start::step
+      var s = (arg[0] < 0) ? arg[0] + tShape[i] : arg[0];
+      lo[i] = s;
+      hi[i] = null;
+      step[i] = arg[3] || 1;
     } else {
-      // assume it is an array
+      // pattern start:end:step
       var start = (arg[0] < 0) ? arg[0] + tShape[i] : arg[0];
       var end = (arg[1] < 0) ? arg[1] + tShape[i] : arg[1];
       lo[i] = end ? start : 0;

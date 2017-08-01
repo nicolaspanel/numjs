@@ -120,8 +120,14 @@ NdArray.prototype.slice = function () {
       lo[i] = (arg < 0) ? arg + tShape[i] : arg;
       hi[i] = null;
       step[i] = 1;
+    } else if (arg.length === 4 && arg[1] === null && arg[2] === null) {
+      // pattern: a[start::step]
+      var s = (arg[0] < 0) ? arg[0] + tShape[i] : arg[0];
+      lo[i] = s;
+      hi[i] = null;
+      step[i] = arg[3] || 1;
     } else {
-      // assume it is an array
+      // pattern start:end:step
       var start = (arg[0] < 0) ? arg[0] + tShape[i] : arg[0];
       var end = (arg[1] < 0) ? arg[1] + tShape[i] : arg[1];
       lo[i] = end ? start : 0;
