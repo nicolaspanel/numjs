@@ -69,7 +69,7 @@ module.exports = function (grunt) {
     uglify: {
       dist: {
         options: {
-          banner: '/*! <%= pkg.name %>#<%= pkg.version %> */\n'
+          banner: '/*! <%= pkg.name %> */\n'
         },
         files: {
           'dist/numjs.min.js': 'dist/numjs.js'
