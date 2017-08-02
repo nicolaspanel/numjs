@@ -29,7 +29,6 @@
             <pre class="prettyprint source linenums"><code>'use strict';
 
 var _ = require('./utils');
-var NdArray = require('../ndarray');
 var errors = require('../errors');
 
 /**
@@ -38,26 +37,27 @@ var errors = require('../errors');
  * @param {NdArray} img
  * @param {HTMLCanvasElement} dest
  */
-module.exports = function saveImageDom(img, dest) {
-    var iShape = img.shape,
-        iH = iShape[0], iW = iShape[1];
-    if (dest instanceof HTMLCanvasElement){
-        var $tmp = document.createElement('canvas');
-        $tmp.height = iH; $tmp.width = iW;
-        var tmpCtx=$tmp.getContext('2d');
-        var originalImg = tmpCtx.createImageData(iW ,iH);
-        var err = _.setRawData(img.selection, originalImg.data);
+module.exports = function saveImageDom (img, dest) {
+  var iShape = img.shape;
+  var iH = iShape[0];
+  var iW = iShape[1];
+  if (dest instanceof HTMLCanvasElement) {
+    var $tmp = document.createElement('canvas');
+    $tmp.height = iH; $tmp.width = iW;
+    var tmpCtx = $tmp.getContext('2d');
+    var originalImg = tmpCtx.createImageData(iW, iH);
+    var err = _.setRawData(img.selection, originalImg.data);
 
-        if (err){ throw err; }
+    if (err) { throw err; }
 
-        tmpCtx.putImageData(originalImg, 0, 0);
-        tmpCtx.drawImage($tmp, iW, iH);
-        dest.getContext('2d').drawImage($tmp, 0, 0, iW, iH, 0, 0, dest.width, dest.height);
-    }
-    else {
-        throw new errors.ValueError('expect input to be either an HTML Canvas or a (loaded) Image');
-    }
-};</code></pre>
+    tmpCtx.putImageData(originalImg, 0, 0);
+    tmpCtx.drawImage($tmp, iW, iH);
+    dest.getContext('2d').drawImage($tmp, 0, 0, iW, iH, 0, 0, dest.width, dest.height);
+  } else {
+    throw new errors.ValueError('expect input to be either an HTML Canvas or a (loaded) Image');
+  }
+};
+</code></pre>
         </article>
     </section>
 
@@ -67,13 +67,13 @@ module.exports = function saveImageDom(img, dest) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#convolve">convolve</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#empty">empty</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#fftconvolve">fftconvolve</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#getRawData">getRawData</a></li><li><a href="global.html#max">max</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#min">min</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#power">power</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#round">round</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#convolve">convolve</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#diag">diag</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#empty">empty</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#fftconvolve">fftconvolve</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#getRawData">getRawData</a></li><li><a href="global.html#identity">identity</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#max">max</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#min">min</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#power">power</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#round">round</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#stack">stack</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Feb 19 2016 15:48:03 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Aug 02 2017 08:32:27 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>

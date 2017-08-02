@@ -35,111 +35,113 @@ var NdArray = require('../ndarray');
  * @param {NdArray} array
  * @returns {*}
  */
-module.exports.getRawData = function getRawData(array) {
-    if (array instanceof NdArray){
-        array = array.selection; // faster
-    }
+module.exports.getRawData = function getRawData (array) {
+  if (array instanceof NdArray) {
+    array = array.selection; // faster
+  }
 
-    var h, w, ptr = 0,
-        aShape = array.shape, H = aShape[0], W = aShape[1], K = (aShape[2] || 1),
-        data = new Uint8Array(H * W * K);
+  var h;
+  var w;
+  var ptr = 0;
+  var aShape = array.shape;
+  var H = aShape[0];
+  var W = aShape[1];
+  var K = (aShape[2] || 1);
+  var data = new Uint8Array(H * W * K);
 
-    //console.log('H: ',H, ' W: ', W, ' K: ', K, ' channels: ', channels);
-    if(array.shape.length === 3) {
-        if(K === 3) {
-            for(h=0; h&lt;H; ++h) {
-                for(w=0; w&lt;W; ++w) {
-                    data[ptr++] = array.get(h,w,0);
-                    data[ptr++] = array.get(h,w,1);
-                    data[ptr++] = array.get(h,w,2);
-                }
-            }
+  if (array.shape.length === 3) {
+    if (K === 3) {
+      for (h = 0; h &lt; H; ++h) {
+        for (w = 0; w &lt; W; ++w) {
+          data[ptr++] = array.get(h, w, 0);
+          data[ptr++] = array.get(h, w, 1);
+          data[ptr++] = array.get(h, w, 2);
         }
-        else if(K === 4) {
-            for(h=0; h&lt;H; ++h) {
-                for(w=0; w&lt;W; ++w) {
-                    data[ptr++] = array.get(h,w,0);
-                    data[ptr++] = array.get(h,w,1);
-                    data[ptr++] = array.get(h,w,2);
-                    data[ptr++] = array.get(h,w,3);
-                }
-            }
-        } else if(K === 1) {
-            for(h=0; h&lt;H; ++h) {
-                for(w=0; w&lt;W; ++w) {
-                    data[ptr++] = array.get(h,w,0);
-                }
-            }
-        } else {
-            return new Error('Incompatible array shape');
+      }
+    } else if (K === 4) {
+      for (h = 0; h &lt; H; ++h) {
+        for (w = 0; w &lt; W; ++w) {
+          data[ptr++] = array.get(h, w, 0);
+          data[ptr++] = array.get(h, w, 1);
+          data[ptr++] = array.get(h, w, 2);
+          data[ptr++] = array.get(h, w, 3);
         }
-    }
-    else if(array.shape.length === 2) {
-        for(h=0; h&lt;H; ++h) {
-            for(w=0; w&lt;W; ++w) {
-                data[ptr++] = array.get(h,w);
-            }
+      }
+    } else if (K === 1) {
+      for (h = 0; h &lt; H; ++h) {
+        for (w = 0; w &lt; W; ++w) {
+          data[ptr++] = array.get(h, w, 0);
         }
+      }
+    } else {
+      return new Error('Incompatible array shape');
     }
-    else {
-        return new Error('Invalid image');
+  } else if (array.shape.length === 2) {
+    for (h = 0; h &lt; H; ++h) {
+      for (w = 0; w &lt; W; ++w) {
+        data[ptr++] = array.get(h, w);
+      }
     }
-    return data;
+  } else {
+    return new Error('Invalid image');
+  }
+  return data;
 };
 
-module.exports.setRawData = function setRawData(array, data) {
-    var h, w, ptr = 0, c,
-        H = array.shape[0], W = array.shape[1], K = array.shape[2] || 1;
+module.exports.setRawData = function setRawData (array, data) {
+  var h;
+  var w;
+  var ptr = 0;
+  var c;
+  var H = array.shape[0];
+  var W = array.shape[1];
+  var K = array.shape[2] || 1;
 
-    //console.log('H: ',H, ' W: ', W, ' K: ', K, ' channels: ', channels);
-    if(array.shape.length === 3) {
-        if(K === 3) {
-            for(h=0; h&lt;H; ++h) {
-                for(w=0; w&lt;W; ++w) {
-                    data[ptr++] = array.get(h,w,0);
-                    data[ptr++] = array.get(h,w,1);
-                    data[ptr++] = array.get(h,w,2);
-                    data[ptr++] = 255;
-                }
-            }
+  if (array.shape.length === 3) {
+    if (K === 3) {
+      for (h = 0; h &lt; H; ++h) {
+        for (w = 0; w &lt; W; ++w) {
+          data[ptr++] = array.get(h, w, 0);
+          data[ptr++] = array.get(h, w, 1);
+          data[ptr++] = array.get(h, w, 2);
+          data[ptr++] = 255;
         }
-        else if(K === 4) {
-            for(h=0; h&lt;H; ++h) {
-                for(w=0; w&lt;W; ++w) {
-                    data[ptr++] = array.get(h,w,0);
-                    data[ptr++] = array.get(h,w,1);
-                    data[ptr++] = array.get(h,w,2);
-                    data[ptr++] = array.get(h,w,3);
-                }
-            }
-        } else if(K === 1) {
-            for(h=0; h&lt;H; ++h) {
-                for(w=0; w&lt;W; ++w) {
-                    c = array.get(h,w,0);
-                    data[ptr++] = c;
-                    data[ptr++] = c;
-                    data[ptr++] = c;
-                    data[ptr++] = 255;
-                }
-            }
-        } else {
-            return new Error('Incompatible array shape');
+      }
+    } else if (K === 4) {
+      for (h = 0; h &lt; H; ++h) {
+        for (w = 0; w &lt; W; ++w) {
+          data[ptr++] = array.get(h, w, 0);
+          data[ptr++] = array.get(h, w, 1);
+          data[ptr++] = array.get(h, w, 2);
+          data[ptr++] = array.get(h, w, 3);
         }
-    }
-    else if(array.shape.length === 2) {
-        for(h=0; h&lt;H; ++h) {
-            for(w=0; w&lt;W; ++w) {
-                c = array.get(h,w);
-                data[ptr++] = c;
-                data[ptr++] = c;
-                data[ptr++] = c;
-                data[ptr++] = 255;
-            }
+      }
+    } else if (K === 1) {
+      for (h = 0; h &lt; H; ++h) {
+        for (w = 0; w &lt; W; ++w) {
+          c = array.get(h, w, 0);
+          data[ptr++] = c;
+          data[ptr++] = c;
+          data[ptr++] = c;
+          data[ptr++] = 255;
         }
+      }
+    } else {
+      return new Error('Incompatible array shape');
     }
-    else {
-        return new Error('Invalid image');
+  } else if (array.shape.length === 2) {
+    for (h = 0; h &lt; H; ++h) {
+      for (w = 0; w &lt; W; ++w) {
+        c = array.get(h, w);
+        data[ptr++] = c;
+        data[ptr++] = c;
+        data[ptr++] = c;
+        data[ptr++] = 255;
+      }
     }
+  } else {
+    return new Error('Invalid image');
+  }
 };
 </code></pre>
         </article>
@@ -151,13 +153,13 @@ module.exports.setRawData = function setRawData(array, data) {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#convolve">convolve</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#empty">empty</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#fftconvolve">fftconvolve</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#getRawData">getRawData</a></li><li><a href="global.html#max">max</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#min">min</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#power">power</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#round">round</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#convolve">convolve</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#diag">diag</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#empty">empty</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#fftconvolve">fftconvolve</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#getRawData">getRawData</a></li><li><a href="global.html#identity">identity</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#max">max</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#min">min</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#power">power</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#round">round</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#stack">stack</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Fri Feb 19 2016 15:48:03 GMT+0100 (CET)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Aug 02 2017 08:32:27 GMT+0200 (CEST)
 </footer>
 
 <script> prettyPrint(); </script>
