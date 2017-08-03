@@ -25,6 +25,14 @@ describe('slice', function () {
       expect(a.slice([0, 5, 2]).tolist()).to.eql([0, 2, 4]); // same as a[0:5:2]
       expect(a.slice([1, -1, 2]).tolist()).to.eql([1, 3]); // same as a[1:-1:2]
     });
+    it('can slice using start and end and step', function () {
+      expect(a.slice([1, 5, 2]).tolist()).to.eql([1, 3]); // same as a[1:5:2]
+    });
+    it('can slice using start and step', function () {
+      expect(a.slice([-1, null, -1]).tolist()).to.eql([4, 3, 2, 1, 0]); // same as a[-1::-1]
+      expect(a.slice([1, null, -1]).tolist()).to.eql([1, 0]); // same as a[1::-1]
+      expect(a.slice([1, null, 2]).tolist()).to.eql([1, 3]); // same as a[1::2]
+    });
     it('can just provide the step', function () {
       expect(a.slice([null, null, -1]).tolist()).to.eql([4, 3, 2, 1, 0]); // same as a[::-1]
       expect(a.slice([null, null, 2]).tolist()).to.eql([0, 2, 4]); // same as a[::2]
