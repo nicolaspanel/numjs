@@ -714,6 +714,46 @@ function stack (arrays, axis) {
     return stacked;
 }
 
+/**
+ * Immutably rotates a matrix for 90 degrees.
+ * @param  {Array|NdArray} target matrix
+ * @param  {number} iterations [description]
+ * @return {Array}            [description]
+ */
+function rot90 (input, iterations) {
+  if (!Array.isArray(input)) {
+    throw new errors.ValueError('Value is not an array');
+  }
+
+  iterations = Math.abs(Number.isInteger(iterations) ? iterations : 1);
+  var rotate = function(matrix) {
+    var height = matrix.length - 1;
+    var width = matrix[0].length - 1;
+    if (height !== width) {
+      throw new errors.ValueError('Matrix is not symmetric');
+    }
+
+    var res = [];
+    for (var i = 0; i <= width; i++) {
+      res.push(new Array(width).fill(null));
+    };
+
+    matrix.forEach(function(row, originalRowIndex) {
+      row.forEach(function(value, originalColIndex) {
+        return res[(width - originalColIndex)][originalRowIndex] = value;
+      });
+    });
+
+    return res;
+  }
+
+  var res = input.slice(0, input.length);
+  for (var j = 0; j < iterations; j++) {
+    res = rotate(res);
+  }
+  return res;
+};
+
 module.exports = {
   config: CONF,
   dtypes: DTYPES,
@@ -767,6 +807,7 @@ module.exports = {
   diag: diag,
   identity: identity,
   stack: stack,
+  rot90: rot90,
   int8: function (array) { return NdArray.new(array, 'int8'); },
   uint8: function (array) { return NdArray.new(array, 'uint8'); },
   int16: function (array) { return NdArray.new(array, 'int16'); },
