@@ -717,8 +717,8 @@ function stack (arrays, axis) {
 /**
  * Immutably rotates a matrix for 90 degrees.
  * @param  {Array|NdArray} target matrix
- * @param  {number} iterations [description]
- * @return {Array}            [description]
+ * @param  {number} iterations
+ * @return {Array}
  */
 function rot90 (input, iterations) {
   if (!Array.isArray(input)) {
