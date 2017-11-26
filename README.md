@@ -630,6 +630,28 @@ array([[ 40, 40, 40],
 __Note__: `convolve` uses Fast Fourier Transform (FFT) to speed up computation on large arrays.
 
 
+### Other utils
+`rot90`
+```js
+> m = nj.array([[1,2],[3,4]], 'int')
+> m
+array([[1, 2],
+       [3, 4]])
+> nj.rot90(m)
+array([[2, 4],
+       [1, 3]])
+> nj.rot90(m, 2)
+array([[4, 3],
+       [2, 1]])
+> m = nj.arange(8).reshape([2,2,2])
+> nj.rot90(m, 1, [1,2])
+array([[[1, 3],
+        [0, 2]],
+      [[5, 7],
+       [4, 6]]])
+```
+
+
 ## Images manipulation
 __NumJs__’s comes with powerful functions for image processing. Theses function are located in `nj.images` module.
 

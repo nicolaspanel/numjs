@@ -714,6 +714,71 @@ function stack (arrays, axis) {
     return stacked;
 }
 
+
+/**
+ * Reverse the order of elements in an array along the given axis.
+ * The shape of the array is preserved, but the elements are reordered.
+ * New in version 0.15.0.
+ * @param {Array|NdArray} m Input array.
+ * @param {number} axis Axis in array, which entries are reversed.
+ * @return {NdArray} A view of `m` with the entries of axis reversed.  Since a view is returned, this operation is done in constant time.
+ */
+function flip(m, axis) {
+  m = NdArray.new(m);
+  var indexer = ones(m.ndim).tolist();
+  var cleanaxis = axis;
+  while (cleanaxis < 0) {
+    cleanaxis += m.ndim;
+  }
+  if (indexer[cleanaxis] === undefined) {
+    throw new errors.ValueError('axis=' + axis + 'invalid for the ' + m.ndim + '-dimensional input array');
+  }
+  indexer[cleanaxis] = -1;
+  return m.step.apply(m, indexer);
+}
+
+/**
+ * Rotate an array by 90 degrees in the plane specified by axes.
+ * Rotation direction is from the first towards the second axis.
+ * New in version 0.15.0.
+ * @param {Array|NdArray} m array_like
+ * @param {number} [k=1] Number of times the array is rotated by 90 degrees.
+ * @param {Array|NdArray} [axes=(0,1)] The array is rotated in the plane defined by the axes. Axes must be different.
+ * @return {NdArray} A rotated view of m.
+ */
+function rot90 (m, k, axes) {
+  k = k || 1;
+  while (k < 0) {
+    k += 4;
+  }
+  k = k % 4;
+  m = NdArray.new(m);
+  axes = NdArray.new(axes || [0, 1]);
+  if (axes.shape.length !== 1 || axes.shape[0] !== 2) {
+    throw new errors.ValueError('len(axes) must be 2');
+  }
+  axes = axes.tolist();
+  if (axes[0] === axes[1] || abs(axes[0] - axes[1]) === m.ndim) {
+    throw new errors.ValueError("Axes must be different.")
+  }
+
+  if (k === 0) {
+    return m;
+  }
+  if (k === 2) {
+    return flip(flip(m, axes[0]), axes[1]);
+  }
+  var axesList = arange(m.ndim).tolist();
+  var keep = axesList[axes[0]];
+  axesList[axes[0]] = axesList[axes[1]];
+  axesList[axes[1]] = keep;
+  if (k === 1) {
+    return transpose(flip(m, axes[1]), axesList);
+  } else {
+     return flip(transpose(m, axesList), axes[1]);
+  }
+}
+
 module.exports = {
   config: CONF,
   dtypes: DTYPES,
@@ -726,6 +791,7 @@ module.exports = {
   ones: ones,
   empty: empty,
   flatten: flatten,
+  flip: flip,
   random: random,
   softmax: softmax,
   sigmoid: sigmoid,
@@ -767,6 +833,7 @@ module.exports = {
   diag: diag,
   identity: identity,
   stack: stack,
+  rot90: rot90,
   int8: function (array) { return NdArray.new(array, 'int8'); },
   uint8: function (array) { return NdArray.new(array, 'uint8'); },
   int16: function (array) { return NdArray.new(array, 'int16'); },
