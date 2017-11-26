@@ -742,6 +742,71 @@ function stack (arrays, axis) {
     return stacked;
 }
 
+
+/**
+ * Reverse the order of elements in an array along the given axis.
+ * The shape of the array is preserved, but the elements are reordered.
+ * New in version 0.15.0.
+ * @param {Array|NdArray} m Input array.
+ * @param {number} axis Axis in array, which entries are reversed.
+ * @return {NdArray} A view of `m` with the entries of axis reversed.  Since a view is returned, this operation is done in constant time.
+ */
+function flip(m, axis) {
+  m = NdArray.new(m);
+  var indexer = ones(m.ndim).tolist();
+  var cleanaxis = axis;
+  while (cleanaxis &lt; 0) {
+    cleanaxis += m.ndim;
+  }
+  if (indexer[cleanaxis] === undefined) {
+    throw new errors.ValueError('axis=' + axis + 'invalid for the ' + m.ndim + '-dimensional input array');
+  }
+  indexer[cleanaxis] = -1;
+  return m.step.apply(m, indexer);
+}
+
+/**
+ * Rotate an array by 90 degrees in the plane specified by axes.
+ * Rotation direction is from the first towards the second axis.
+ * New in version 0.15.0.
+ * @param {Array|NdArray} m array_like
+ * @param {number} [k=1] Number of times the array is rotated by 90 degrees.
+ * @param {Array|NdArray} [axes=(0,1)] The array is rotated in the plane defined by the axes. Axes must be different.
+ * @return {NdArray} A rotated view of m.
+ */
+function rot90 (m, k, axes) {
+  k = k || 1;
+  while (k &lt; 0) {
+    k += 4;
+  }
+  k = k % 4;
+  m = NdArray.new(m);
+  axes = NdArray.new(axes || [0, 1]);
+  if (axes.shape.length !== 1 || axes.shape[0] !== 2) {
+    throw new errors.ValueError('len(axes) must be 2');
+  }
+  axes = axes.tolist();
+  if (axes[0] === axes[1] || abs(axes[0] - axes[1]) === m.ndim) {
+    throw new errors.ValueError("Axes must be different.")
+  }
+
+  if (k === 0) {
+    return m;
+  }
+  if (k === 2) {
+    return flip(flip(m, axes[0]), axes[1]);
+  }
+  var axesList = arange(m.ndim).tolist();
+  var keep = axesList[axes[0]];
+  axesList[axes[0]] = axesList[axes[1]];
+  axesList[axes[1]] = keep;
+  if (k === 1) {
+    return transpose(flip(m, axes[1]), axesList);
+  } else {
+     return flip(transpose(m, axesList), axes[1]);
+  }
+}
+
 module.exports = {
   config: CONF,
   dtypes: DTYPES,
@@ -754,6 +819,7 @@ module.exports = {
   ones: ones,
   empty: empty,
   flatten: flatten,
+  flip: flip,
   random: random,
   softmax: softmax,
   sigmoid: sigmoid,
@@ -795,6 +861,7 @@ module.exports = {
   diag: diag,
   identity: identity,
   stack: stack,
+  rot90: rot90,
   int8: function (array) { return NdArray.new(array, 'int8'); },
   uint8: function (array) { return NdArray.new(array, 'uint8'); },
   int16: function (array) { return NdArray.new(array, 'int16'); },
@@ -815,13 +882,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#convolve">convolve</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#diag">diag</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#empty">empty</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#fftconvolve">fftconvolve</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#getRawData">getRawData</a></li><li><a href="global.html#identity">identity</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#max">max</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#min">min</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#power">power</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#round">round</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#stack">stack</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#convolve">convolve</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#diag">diag</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#empty">empty</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#fftconvolve">fftconvolve</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#flip">flip</a></li><li><a href="global.html#getRawData">getRawData</a></li><li><a href="global.html#identity">identity</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#max">max</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#min">min</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#power">power</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#rot90">rot90</a></li><li><a href="global.html#round">round</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#stack">stack</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Aug 02 2017 08:32:27 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Nov 26 2017 22:42:09 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>

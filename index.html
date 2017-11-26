@@ -495,7 +495,23 @@ array([[ 40, 40, 40],
 array([[ 40, 40, 40],
        [ 40, 40, 40],
        [ 40, 40, 40]])</code></pre><p><strong>Note</strong>: <code>convolve</code> uses Fast Fourier Transform (FFT) to speed up computation on large arrays.</p>
-<h2>Images manipulation</h2><p><strong>NumJs</strong>’s comes with powerful functions for image processing. Theses function are located in <code>nj.images</code> module.</p>
+<h3>Other utils</h3><p><code>rot90</code></p>
+<pre class="prettyprint source lang-js"><code>> m = nj.array([[1,2],[3,4]], 'int')
+> m
+array([[1, 2],
+       [3, 4]])
+> nj.rot90(m)
+array([[2, 4],
+       [1, 3]])
+> nj.rot90(m, 2)
+array([[4, 3],
+       [2, 1]])
+> m = nj.arange(8).reshape([2,2,2])
+> nj.rot90(m, 1, [1,2])
+array([[[1, 3],
+        [0, 2]],
+      [[5, 7],
+       [4, 6]]])</code></pre><h2>Images manipulation</h2><p><strong>NumJs</strong>’s comes with powerful functions for image processing. Theses function are located in <code>nj.images</code> module.</p>
 <p>The different color bands/channels are stored using the <code>NdArray</code> object such that a grey-image is <code>[H,W]</code>, an RGB-image is <code>[H,W,3]</code> and an RGBA-image is <code>[H,W,4]</code>.</p>
 <p>Use <code>nj.images.read</code>, <code>nj.images.write</code> and <code>nj.images.resize</code> functions to (respectively) read, write or resize images.</p>
 <p>Example:</p>
@@ -564,13 +580,13 @@ array([[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#convolve">convolve</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#diag">diag</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#empty">empty</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#fftconvolve">fftconvolve</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#getRawData">getRawData</a></li><li><a href="global.html#identity">identity</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#max">max</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#min">min</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#power">power</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#round">round</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#stack">stack</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Classes</h3><ul><li><a href="NdArray.html">NdArray</a></li></ul><h3>Global</h3><ul><li><a href="global.html#abs">abs</a></li><li><a href="global.html#add">add</a></li><li><a href="global.html#arange">arange</a></li><li><a href="global.html#arccos">arccos</a></li><li><a href="global.html#arcsin">arcsin</a></li><li><a href="global.html#arctan">arctan</a></li><li><a href="global.html#clip">clip</a></li><li><a href="global.html#concatenate">concatenate</a></li><li><a href="global.html#convolve">convolve</a></li><li><a href="global.html#cos">cos</a></li><li><a href="global.html#diag">diag</a></li><li><a href="global.html#divide">divide</a></li><li><a href="global.html#dot">dot</a></li><li><a href="global.html#empty">empty</a></li><li><a href="global.html#equal">equal</a></li><li><a href="global.html#exp">exp</a></li><li><a href="global.html#fftconvolve">fftconvolve</a></li><li><a href="global.html#flatten">flatten</a></li><li><a href="global.html#flip">flip</a></li><li><a href="global.html#getRawData">getRawData</a></li><li><a href="global.html#identity">identity</a></li><li><a href="global.html#log">log</a></li><li><a href="global.html#max">max</a></li><li><a href="global.html#mean">mean</a></li><li><a href="global.html#min">min</a></li><li><a href="global.html#multiply">multiply</a></li><li><a href="global.html#negative">negative</a></li><li><a href="global.html#ones">ones</a></li><li><a href="global.html#power">power</a></li><li><a href="global.html#random">random</a></li><li><a href="global.html#reshape">reshape</a></li><li><a href="global.html#rot90">rot90</a></li><li><a href="global.html#round">round</a></li><li><a href="global.html#sigmoid">sigmoid</a></li><li><a href="global.html#sin">sin</a></li><li><a href="global.html#softmax">softmax</a></li><li><a href="global.html#sqrt">sqrt</a></li><li><a href="global.html#stack">stack</a></li><li><a href="global.html#std">std</a></li><li><a href="global.html#subtract">subtract</a></li><li><a href="global.html#sum">sum</a></li><li><a href="global.html#tan">tan</a></li><li><a href="global.html#tanh">tanh</a></li><li><a href="global.html#transpose">transpose</a></li><li><a href="global.html#zeros">zeros</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.3</a> on Wed Aug 02 2017 08:32:27 GMT+0200 (CEST)
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.5.5</a> on Sun Nov 26 2017 22:42:09 GMT+0100 (CET)
 </footer>
 
 <script> prettyPrint(); </script>
