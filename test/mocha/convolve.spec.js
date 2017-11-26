@@ -75,7 +75,7 @@ describe('convolve', function () {
   });
 
   it('should be fast with 3x3 filter even if X is large', function () {
-    this.timeout(500);
+    this.timeout(1000);
     var N = 1000;
     var x = nj.arange(N * N).reshape(N, N);
     var filter = nj.arange(9).reshape(3, 3);
@@ -83,7 +83,7 @@ describe('convolve', function () {
   });
 
   it('should be fast with 3x3x1 filter even if X is large', function () {
-    this.timeout(500);
+    this.timeout(1000);
     var N = 1000;
     var x = nj.arange(N * N).reshape(N, N, 1);
     var filter = nj.arange(9).reshape(3, 3, 1);
@@ -91,7 +91,7 @@ describe('convolve', function () {
   });
 
   it('should be fast with 5x5 filter even if X is large', function () {
-    this.timeout(500);
+    this.timeout(1000);
     var N = 1000;
     var x = nj.arange(N * N).reshape(N, N);
     var filter = nj.arange(25).reshape(5, 5);
@@ -99,7 +99,7 @@ describe('convolve', function () {
   });
 
   it('should be fast with 5x5x1 filter even if X is large', function () {
-    this.timeout(500);
+    this.timeout(1000);
     var N = 1000;
     var x = nj.arange(N * N).reshape(N, N, 1);
     var filter = nj.arange(25).reshape(5, 5, 1);
