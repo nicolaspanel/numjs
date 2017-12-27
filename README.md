@@ -720,7 +720,9 @@ See also [this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/) for more d
 
 
 ## More ?
-See [documentation](http://nicolaspanel.github.io/numjs/global.html).
+See documentation on [numjs globals](http://nicolaspanel.github.io/numjs/global.html) and
+[NdArray methods](http://nicolaspanel.github.io/numjs/NdArray.html).
+
 
 
 ## Credits
