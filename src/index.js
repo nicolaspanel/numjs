@@ -67,6 +67,17 @@ function divide (a, b) {
 }
 
 /**
+* Mod `a` by `b`, element-wise.
+*
+* @param {(Array|NdArray)} a
+* @param {(Array|NdArray|number)} b
+* @returns {NdArray}
+*/
+function mod (a, b) {
+  return NdArray.new(a).mod(b);
+}
+
+/**
 * Subtract second argument from the first, element-wise.
 *
 * @param {(NdArray|Array|number)} a
