@@ -473,6 +473,29 @@ NdArray.prototype.divide = function (x, copy) {
 };
 
 /**
+* Mod array by `x`, element-wise.
+*
+* @param {(NdArray|Array|number)} x
+* @param {boolean} [copy=true]
+* @returns {NdArray}
+*/
+NdArray.prototype.mod = function (x, copy) {
+  if (arguments.length === 1) {
+    copy = true;
+  }
+  var arr = copy ? this.clone() : this;
+  if (_.isNumber(x)) {
+    ops.modseq(arr.selection, x);
+    return arr;
+  }
+
+  x = createArray(x, this.dtype);
+  ops.modeq(arr.selection, x.selection);
+
+  return arr;
+};
+
+/**
 * Raise array elements to powers from given array, element-wise.
 *
 * @param {(NdArray|Array|number)} x
