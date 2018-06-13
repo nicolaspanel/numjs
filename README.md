@@ -652,6 +652,13 @@ array([[[1, 3],
        [4, 6]]])
 ```
 
+`mod` (since v0.16.0)
+```js
+> nj.mod(nj.arange(7), 5)
+> m
+array([0, 1, 2, 3, 4, 0, 1])
+```
+
 
 ## Images manipulation
 __NumJs__’s comes with powerful functions for image processing. Theses function are located in `nj.images` module.

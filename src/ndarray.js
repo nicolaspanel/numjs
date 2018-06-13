@@ -591,6 +591,29 @@ NdArray.prototype.mean = function () {
 };
 
 /**
+* Return element-wise remainder of division.
+*
+* @param {(NdArray|Array|number)} x
+* @param {boolean} [copy=true]
+* @returns {NdArray}
+*/
+NdArray.prototype.mod = function (x, copy) {
+  if (arguments.length === 1) {
+    copy = true;
+  }
+  var arr = copy ? this.clone() : this;
+  if (_.isNumber(x)) {
+    ops.modseq(arr.selection, x);
+    return arr;
+  }
+
+  x = createArray(x, this.dtype);
+  ops.modeq(arr.selection, x.selection);
+
+  return arr;
+};
+
+/**
 * Converts {NdArray} to a native JavaScript {Array}
 *
 * @returns {Array}

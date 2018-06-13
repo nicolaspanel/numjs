@@ -22480,7 +22480,7 @@ var NdArray = require('../ndarray');
 var __ = require('../utils');
 var rgb2gray = require('./rgb2gray');
 
-var doScharr = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_70_q=3*_inline_70_arg2_+10*_inline_70_arg3_+3*_inline_70_arg4_-3*_inline_70_arg7_-10*_inline_70_arg8_-3*_inline_70_arg9_,_inline_70_s=3*_inline_70_arg2_-3*_inline_70_arg4_+10*_inline_70_arg5_-10*_inline_70_arg6_+3*_inline_70_arg7_-3*_inline_70_arg9_;_inline_70_arg0_=Math.sqrt(_inline_70_s*_inline_70_s+_inline_70_q*_inline_70_q)}","args":[{"name":"_inline_70_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_70_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_70_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_70_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_70_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_70_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_70_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_70_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_70_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_70_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_70_q","_inline_70_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
+var doScharr = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_76_q=3*_inline_76_arg2_+10*_inline_76_arg3_+3*_inline_76_arg4_-3*_inline_76_arg7_-10*_inline_76_arg8_-3*_inline_76_arg9_,_inline_76_s=3*_inline_76_arg2_-3*_inline_76_arg4_+10*_inline_76_arg5_-10*_inline_76_arg6_+3*_inline_76_arg7_-3*_inline_76_arg9_;_inline_76_arg0_=Math.sqrt(_inline_76_s*_inline_76_s+_inline_76_q*_inline_76_q)}","args":[{"name":"_inline_76_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_76_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_76_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_76_q","_inline_76_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
 
 /**
  * Find the edge magnitude using the Scharr transform.
@@ -22519,7 +22519,7 @@ var NdArray = require('../ndarray');
 var __ = require('../utils');
 var rgb2gray = require('./rgb2gray');
 
-var doSobel = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_76_q=_inline_76_arg2_+2*_inline_76_arg3_+_inline_76_arg4_-_inline_76_arg7_-2*_inline_76_arg8_-_inline_76_arg9_,_inline_76_s=_inline_76_arg2_-_inline_76_arg4_+2*_inline_76_arg5_-2*_inline_76_arg6_+_inline_76_arg7_-_inline_76_arg9_;_inline_76_arg0_=Math.sqrt(_inline_76_s*_inline_76_s+_inline_76_q*_inline_76_q)}","args":[{"name":"_inline_76_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_76_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_76_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_76_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_76_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_76_q","_inline_76_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
+var doSobel = require('cwise/lib/wrapper')({"args":["array","array",{"offset":[-1,-1],"array":1},{"offset":[-1,0],"array":1},{"offset":[-1,1],"array":1},{"offset":[0,-1],"array":1},{"offset":[0,1],"array":1},{"offset":[1,-1],"array":1},{"offset":[1,0],"array":1},{"offset":[1,1],"array":1}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{var _inline_73_q=_inline_73_arg2_+2*_inline_73_arg3_+_inline_73_arg4_-_inline_73_arg7_-2*_inline_73_arg8_-_inline_73_arg9_,_inline_73_s=_inline_73_arg2_-_inline_73_arg4_+2*_inline_73_arg5_-2*_inline_73_arg6_+_inline_73_arg7_-_inline_73_arg9_;_inline_73_arg0_=Math.sqrt(_inline_73_s*_inline_73_s+_inline_73_q*_inline_73_q)}","args":[{"name":"_inline_73_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_73_arg1_","lvalue":false,"rvalue":false,"count":0},{"name":"_inline_73_arg2_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg5_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg6_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg7_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg8_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg9_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":["_inline_73_q","_inline_73_s"]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doSobelBody","blockSize":64});
 
 /**
  * Find the edge magnitude using the Sobel transform.
@@ -22558,7 +22558,7 @@ module.exports = function computeSobel (img) {
 var NdArray = require('../ndarray');
 var rgb2gray = require('./rgb2gray');
 
-var doIntegrate = require('cwise/lib/wrapper')({"args":["array","array","index",{"offset":[-1,-1],"array":0},{"offset":[-1,0],"array":0},{"offset":[0,-1],"array":0}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_73_arg0_=0!==_inline_73_arg2_[0]&&0!==_inline_73_arg2_[1]?_inline_73_arg1_*_inline_73_arg1_+_inline_73_arg4_+_inline_73_arg5_-_inline_73_arg3_:0===_inline_73_arg2_[0]&&0===_inline_73_arg2_[1]?_inline_73_arg1_*_inline_73_arg1_:0===_inline_73_arg2_[0]?_inline_73_arg1_*_inline_73_arg1_+_inline_73_arg5_:_inline_73_arg1_*_inline_73_arg1_+_inline_73_arg4_}","args":[{"name":"_inline_73_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_73_arg1_","lvalue":false,"rvalue":true,"count":8},{"name":"_inline_73_arg2_","lvalue":false,"rvalue":true,"count":5},{"name":"_inline_73_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_73_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_73_arg5_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doIntegrateBody","blockSize":64});
+var doIntegrate = require('cwise/lib/wrapper')({"args":["array","array","index",{"offset":[-1,-1],"array":0},{"offset":[-1,0],"array":0},{"offset":[0,-1],"array":0}],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_70_arg0_=0!==_inline_70_arg2_[0]&&0!==_inline_70_arg2_[1]?_inline_70_arg1_*_inline_70_arg1_+_inline_70_arg4_+_inline_70_arg5_-_inline_70_arg3_:0===_inline_70_arg2_[0]&&0===_inline_70_arg2_[1]?_inline_70_arg1_*_inline_70_arg1_:0===_inline_70_arg2_[0]?_inline_70_arg1_*_inline_70_arg1_+_inline_70_arg5_:_inline_70_arg1_*_inline_70_arg1_+_inline_70_arg4_}","args":[{"name":"_inline_70_arg0_","lvalue":true,"rvalue":false,"count":1},{"name":"_inline_70_arg1_","lvalue":false,"rvalue":true,"count":8},{"name":"_inline_70_arg2_","lvalue":false,"rvalue":true,"count":5},{"name":"_inline_70_arg3_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_70_arg4_","lvalue":false,"rvalue":true,"count":2},{"name":"_inline_70_arg5_","lvalue":false,"rvalue":true,"count":2}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"doIntegrateBody","blockSize":64});
 
 /**
  * Compute Squared Sum Area Table, also known as the integral of the squared image
@@ -22734,216 +22734,229 @@ function broadcast (shape1, shape2) {
 }
 
 /**
-* Add arguments, element-wise.
-*
-* @param {(NdArray|Array|number)} a
-* @param {(NdArray|Array|number)} b
-* @returns {NdArray}
-*/
+ * Add arguments, element-wise.
+ *
+ * @param {(NdArray|Array|number)} a
+ * @param {(NdArray|Array|number)} b
+ * @returns {NdArray}
+ */
 function add (a, b) {
   return NdArray.new(a).add(b);
 }
 
 /**
-* Multiply arguments, element-wise.
-*
-* @param {(Array|NdArray)} a
-* @param {(Array|NdArray|number)} b
-* @returns {NdArray}
-*/
+ * Multiply arguments, element-wise.
+ *
+ * @param {(Array|NdArray)} a
+ * @param {(Array|NdArray|number)} b
+ * @returns {NdArray}
+ */
 function multiply (a, b) {
   return NdArray.new(a).multiply(b);
 }
 
 /**
-* Divide `a` by `b`, element-wise.
-*
-* @param {(Array|NdArray)} a
-* @param {(Array|NdArray|number)} b
-* @returns {NdArray}
-*/
+ * Divide `a` by `b`, element-wise.
+ *
+ * @param {(Array|NdArray)} a
+ * @param {(Array|NdArray|number)} b
+ * @returns {NdArray}
+ */
 function divide (a, b) {
   return NdArray.new(a).divide(b);
 }
 
 /**
-* Subtract second argument from the first, element-wise.
-*
-* @param {(NdArray|Array|number)} a
-* @param {(NdArray|Array|number)} b
-* @returns {NdArray}
-*/
+ * Subtract second argument from the first, element-wise.
+ *
+ * @param {(NdArray|Array|number)} a
+ * @param {(NdArray|Array|number)} b
+ * @returns {NdArray}
+ */
 function subtract (a, b) {
   return NdArray.new(a).subtract(b);
 }
 
 /**
-* Return true if two arrays have the same shape and elements, false otherwise.
-* @param {(Array|NdArray)} array1
-* @param {(Array|NdArray)} array2
-* @returns {boolean}
-*/
+ * Return true if two arrays have the same shape and elements, false otherwise.
+ * @param {(Array|NdArray)} array1
+ * @param {(Array|NdArray)} array2
+ * @returns {boolean}
+ */
 function equal (array1, array2) {
   return NdArray.new(array1).equal(array2);
 }
 
 /**
-* Return a copy of the array collapsed into one dimension using row-major order (C-style)
+ * Return a copy of the array collapsed into one dimension using row-major order (C-style)
 
-* @param {(Array|NdArray)} array
-* @returns {NdArray}
-*/
+ * @param {(Array|NdArray)} array
+ * @returns {NdArray}
+ */
 function flatten (array) {
   return NdArray.new(array).flatten();
 }
 
 /**
-* Gives a new shape to an array without changing its data.
-* @param {(Array|NdArray)} array
-* @param {Array} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length
-* @returns {NdArray}
-*/
+ * Gives a new shape to an array without changing its data.
+ * @param {(Array|NdArray)} array
+ * @param {Array} shape - The new shape should be compatible with the original shape. If an integer, then the result will be a 1-D array of that length
+ * @returns {NdArray}
+ */
 function reshape (array, shape) {
   return NdArray.new(array).reshape(shape);
 }
 
 /**
-* Calculate the exponential of all elements in the input array, element-wise.
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Calculate the exponential of all elements in the input array, element-wise.
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function exp (x) {
   return NdArray.new(x).exp();
 }
 
 /**
-* Calculate the natural logarithm of all elements in the input array, element-wise.
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Calculate the natural logarithm of all elements in the input array, element-wise.
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function log (x) {
   return NdArray.new(x).log();
 }
 
 /**
-* Calculate the positive square-root of all elements in the input array, element-wise.
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Calculate the positive square-root of all elements in the input array, element-wise.
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function sqrt (x) {
   return NdArray.new(x).sqrt();
 }
 
 /**
-* Raise first array elements to powers from second array, element-wise.
-*
-* @param {(Array|NdArray|number)} x1
-* @param {(Array|NdArray|number)} x2
-* @returns {NdArray}
-*/
+ * Raise first array elements to powers from second array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x1
+ * @param {(Array|NdArray|number)} x2
+ * @returns {NdArray}
+ */
 function power (x1, x2) {
   return NdArray.new(x1).pow(x2);
 }
 
 /**
-* Return the sum of input array elements.
-*
-* @param {(Array|NdArray|number)} x
-* @returns {number}
-*/
+ * Return the sum of input array elements.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {number}
+ */
 function sum (x) {
   return NdArray.new(x).sum();
 }
 
 /**
-* Return the arithmetic mean of input array elements.
-*
-* @param {(Array|NdArray|number)} x
-* @returns {number}
-*/
+ * Return the arithmetic mean of input array elements.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {number}
+ */
 function mean (x) {
   return NdArray.new(x).mean();
 }
 
 /**
-* Returns the standard deviation, a measure of the spread of a distribution, of the input array elements.
-*
-* @param {(Array|NdArray|number)} x
-* @returns {number}
-*/
+ * Returns the standard deviation, a measure of the spread of a distribution, of the input array elements.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {number}
+ */
 function std (x, options) {
   return NdArray.new(x).std(options);
 }
 
 /**
-* Return the minimum value of the array
-*
-* @param {(Array|NdArray|number)} x
-* @returns {Number}
-*/
+ * Return the minimum value of the array
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {Number}
+ */
 function min (x) {
   return NdArray.new(x).min();
 }
 
 /**
-* Return the maximum value of the array
-*
-* @param {(Array|NdArray|number)} x
-* @returns {Number}
-*/
+ * Return the maximum value of the array
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {Number}
+ */
 function max (x) {
   return NdArray.new(x).max();
 }
 
 /**
-* Permute the dimensions of the input array according to the given axes.
-*
-* @param {(Array|NdArray|number)} x
-* @param {(number|...number)} [axes]
-* @returns {NdArray}
-* @example
-*
-arr = nj.arange(6).reshape(1,2,3)
-// array([[[ 0, 1, 2],
-//         [ 3, 4, 5]]])
-arr.T
-// array([[[ 0],
-//         [ 3]],
-//        [[ 1],
-//         [ 4]],
-//        [[ 2],
-//         [ 5]]])
+ * Return element-wise remainder of division.
+ * Computes the remainder complementary to the `floor` function. It is equivalent to the Javascript modulus operator``x1 % x2`` and has the same sign as the divisor x2.
+ *
+ * @param {(NdArray|Array|number)} x1
+ * @param {(NdArray|Array|number)} x2
+ * @returns {NdArray}
+ */
+function mod (x1, x2) {
+  return NdArray.new(x1).mod(x2);
+}
 
-arr.transpose(1,0,2)
-// array([[[ 0, 1, 2]],
-//        [[ 3, 4, 5]]])
 
-*/
+/**
+ * Permute the dimensions of the input array according to the given axes.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @param {(number|...number)} [axes]
+ * @returns {NdArray}
+ * @example
+ *
+ arr = nj.arange(6).reshape(1,2,3)
+ // array([[[ 0, 1, 2],
+ //         [ 3, 4, 5]]])
+ arr.T
+ // array([[[ 0],
+ //         [ 3]],
+ //        [[ 1],
+ //         [ 4]],
+ //        [[ 2],
+ //         [ 5]]])
+
+ arr.transpose(1,0,2)
+ // array([[[ 0, 1, 2]],
+ //        [[ 3, 4, 5]]])
+
+ */
 
 function transpose (x, axes) {
   return NdArray.new(x).transpose(axes);
 }
 
 /**
-* Return the inverse of the input array, element-wise.
-*
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Return the inverse of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function negative (x) {
   return NdArray.new(x).negative();
 }
 
 /**
-* Return evenly spaced values within a given interval.
-*
-* @param {int} [start=0] - Start of interval. The interval includes this value.
-* @param {int} stop - End of interval. The interval does not include this value.
-* @param {int} [step=1] - Spacing between values. The default step size is 1. If step is specified, start must also be given.
-* @param {(String|Object)} [dtype=Array] The type of the output array.
-*
-* @return {NdArray} Array of evenly spaced values.
-*/
+ * Return evenly spaced values within a given interval.
+ *
+ * @param {int} [start=0] - Start of interval. The interval includes this value.
+ * @param {int} stop - End of interval. The interval does not include this value.
+ * @param {int} [step=1] - Spacing between values. The default step size is 1. If step is specified, start must also be given.
+ * @param {(String|Object)} [dtype=Array] The type of the output array.
+ *
+ * @return {NdArray} Array of evenly spaced values.
+ */
 function arange (start, stop, step, dtype) {
   if (arguments.length === 1) {
     return arange(0, start, 1, undefined);
@@ -22964,13 +22977,13 @@ function arange (start, stop, step, dtype) {
 }
 
 /**
-* Return a new array of given shape and type, filled with zeros.
-*
-* @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
-* @param {(String|Object)}  [dtype=Array]  The type of the output array.
-*
-* @return {NdArray} Array of zeros with the given shape and dtype
-*/
+ * Return a new array of given shape and type, filled with zeros.
+ *
+ * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
+ * @param {(String|Object)}  [dtype=Array]  The type of the output array.
+ *
+ * @return {NdArray} Array of zeros with the given shape and dtype
+ */
 function zeros (shape, dtype) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape];
@@ -22985,13 +22998,13 @@ function zeros (shape, dtype) {
 }
 
 /**
-* Return a new array of given shape and type, filled with ones.
-*
-* @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
-* @param {(String|Object)}  [dtype=Array] - The type of the output array.
-*
-* @return {NdArray} Array of ones with the given shape and dtype
-*/
+ * Return a new array of given shape and type, filled with ones.
+ *
+ * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
+ * @param {(String|Object)}  [dtype=Array] - The type of the output array.
+ *
+ * @return {NdArray} Array of ones with the given shape and dtype
+ */
 function ones (shape, dtype) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape];
@@ -23004,13 +23017,13 @@ function ones (shape, dtype) {
 }
 
 /**
-* Return a new array of given shape and type, filled with `undefined` values.
-*
-* @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
-* @param {(String|Object)}  [dtype=Array] - The type of the output array.
-*
-* @return {NdArray} Array of `undefined` values with the given shape and dtype
-*/
+ * Return a new array of given shape and type, filled with `undefined` values.
+ *
+ * @param {(Array|int)} shape - Shape of the new array, e.g., [2, 3] or 2.
+ * @param {(String|Object)}  [dtype=Array] - The type of the output array.
+ *
+ * @return {NdArray} Array of `undefined` values with the given shape and dtype
+ */
 function empty (shape, dtype) {
   if (_.isNumber(shape) && shape >= 0) {
     shape = [shape];
@@ -23021,10 +23034,10 @@ function empty (shape, dtype) {
 }
 
 /**
-* Create an array of the given shape and propagate it with random samples from a uniform distribution over [0, 1].
-* @param {number|Array|...number} shape - The dimensions of the returned array, should all be positive integers
-* @returns {NdArray}
-*/
+ * Create an array of the given shape and propagate it with random samples from a uniform distribution over [0, 1].
+ * @param {number|Array|...number} shape - The dimensions of the returned array, should all be positive integers
+ * @returns {NdArray}
+ */
 function random (shape) {
   if (arguments.length === 0) {
     return NdArray.new(Math.random());
@@ -23040,10 +23053,10 @@ function random (shape) {
 }
 
 /**
-* Return the softmax, or normalized exponential, of the input array, element-wise.
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Return the softmax, or normalized exponential, of the input array, element-wise.
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function softmax (x) {
   var e = NdArray.new(x).exp();
   var se = e.sum(); // scalar
@@ -23054,11 +23067,11 @@ function softmax (x) {
 var doSigmoid = require('cwise/lib/wrapper')({"args":["array","scalar"],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_43_arg0_=_inline_43_arg0_<-30?0:_inline_43_arg0_>30?1:1/(1+Math.exp(-1*_inline_43_arg1_*_inline_43_arg0_))}","args":[{"name":"_inline_43_arg0_","lvalue":true,"rvalue":true,"count":4},{"name":"_inline_43_arg1_","lvalue":false,"rvalue":true,"count":1}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"sigmoidCwise","blockSize":64});
 
 /**
-* Return the sigmoid of the input array, element-wise.
-* @param {(Array|NdArray|number)} x
-* @param {number} [t=1] - stifness parameter
-* @returns {NdArray}
-*/
+ * Return the sigmoid of the input array, element-wise.
+ * @param {(Array|NdArray|number)} x
+ * @param {number} [t=1] - stifness parameter
+ * @returns {NdArray}
+ */
 function sigmoid (x, t) {
   x = NdArray.new(x).clone();
   t = t || 1;
@@ -23069,13 +23082,13 @@ function sigmoid (x, t) {
 var doClip = require('cwise/lib/wrapper')({"args":["array","scalar","scalar"],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_46_arg0_=Math.min(Math.max(_inline_46_arg1_,_inline_46_arg0_),_inline_46_arg2_)}","args":[{"name":"_inline_46_arg0_","lvalue":true,"rvalue":true,"count":2},{"name":"_inline_46_arg1_","lvalue":false,"rvalue":true,"count":1},{"name":"_inline_46_arg2_","lvalue":false,"rvalue":true,"count":1}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"clipCwise","blockSize":64});
 
 /**
-* Clip (limit) the values in an array between min and max, element-wise.
-*
-* @param {(Array|NdArray|number)} x
-* @param {number} [min=0]
-* @param {number} [max=1]
-* @returns {NdArray}
-*/
+ * Clip (limit) the values in an array between min and max, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @param {number} [min=0]
+ * @param {number} [max=1]
+ * @returns {NdArray}
+ */
 function clip (x, min, max) {
   if (arguments.length === 1) {
     min = 0;
@@ -23100,11 +23113,11 @@ function leakyRelu (x, alpha) {
 var doTanh = require('cwise/lib/wrapper')({"args":["array"],"pre":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"body":{"body":"{_inline_52_arg0_=(Math.exp(2*_inline_52_arg0_)-1)/(Math.exp(2*_inline_52_arg0_)+1)}","args":[{"name":"_inline_52_arg0_","lvalue":true,"rvalue":true,"count":3}],"thisVars":[],"localVars":[]},"post":{"body":"{}","args":[],"thisVars":[],"localVars":[]},"debug":false,"funcName":"tanhCwise","blockSize":64});
 
 /**
-* Return hyperbolic tangent of the input array, element-wise.
-*
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Return hyperbolic tangent of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function tanh (x) {
   var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
   doTanh(s.selection);
@@ -23112,11 +23125,11 @@ function tanh (x) {
 }
 
 /**
-* Return absolute value of the input array, element-wise.
-*
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Return absolute value of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function abs (x) {
   var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
   ops.abseq(s.selection);
@@ -23124,11 +23137,11 @@ function abs (x) {
 }
 
 /**
-* Return trigonometric cosine of the input array, element-wise.
-*
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Return trigonometric cosine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function cos (x) {
   var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
   ops.coseq(s.selection);
@@ -23136,11 +23149,11 @@ function cos (x) {
 }
 
 /**
-* Return trigonometric inverse cosine of the input array, element-wise.
-*
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Return trigonometric inverse cosine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function arccos (x) {
   var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
   ops.acoseq(s.selection);
@@ -23148,11 +23161,11 @@ function arccos (x) {
 }
 
 /**
-* Return trigonometric sine of the input array, element-wise.
-*
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Return trigonometric sine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function sin (x) {
   var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
   ops.sineq(s.selection);
@@ -23160,11 +23173,11 @@ function sin (x) {
 }
 
 /**
-* Return trigonometric inverse sine of the input array, element-wise.
-*
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Return trigonometric inverse sine of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function arcsin (x) {
   var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
   ops.asineq(s.selection);
@@ -23172,11 +23185,11 @@ function arcsin (x) {
 }
 
 /**
-* Return trigonometric tangent of the input array, element-wise.
-*
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Return trigonometric tangent of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function tan (x) {
   var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
   ops.taneq(s.selection);
@@ -23184,11 +23197,11 @@ function tan (x) {
 }
 
 /**
-* Return trigonometric inverse tangent of the input array, element-wise.
-*
-* @param {(Array|NdArray|number)} x
-* @returns {NdArray}
-*/
+ * Return trigonometric inverse tangent of the input array, element-wise.
+ *
+ * @param {(Array|NdArray|number)} x
+ * @returns {NdArray}
+ */
 function arctan (x) {
   var s = (x instanceof NdArray) ? x.clone() : NdArray.new(x);
   ops.ataneq(s.selection);
@@ -23196,27 +23209,27 @@ function arctan (x) {
 }
 
 /**
-* Dot product of two arrays.
-*
-* WARNING: supported products are:
-*  - matrix dot matrix
-*  - vector dot vector
-*  - matrix dot vector
-*  - vector dot matrix
-* @param {(Array|NdArray)} a
-* @param {(Array|NdArray)} b
-* @returns {NdArray}
-*/
+ * Dot product of two arrays.
+ *
+ * WARNING: supported products are:
+ *  - matrix dot matrix
+ *  - vector dot vector
+ *  - matrix dot vector
+ *  - vector dot matrix
+ * @param {(Array|NdArray)} a
+ * @param {(Array|NdArray)} b
+ * @returns {NdArray}
+ */
 function dot (a, b) {
   return NdArray.new(a).dot(b);
 }
 
 /**
-* Join given arrays along the last axis.
-*
-* @param {...(Array|NdArray)} arrays
-* @returns {NdArray}
-*/
+ * Join given arrays along the last axis.
+ *
+ * @param {...(Array|NdArray)} arrays
+ * @returns {NdArray}
+ */
 function concatenate (arrays) {
   if (arguments.length > 1) {
     arrays = [].slice.call(arguments);
@@ -23259,37 +23272,37 @@ function concatenate (arrays) {
 }
 
 /**
-* Round an array to the to the nearest integer.
-*
-* @param {(Array|NdArray)} x
-* @returns {NdArray}
-*/
+ * Round an array to the to the nearest integer.
+ *
+ * @param {(Array|NdArray)} x
+ * @returns {NdArray}
+ */
 function round (x) {
   return NdArray.new(x).round();
 }
 
 /**
-* Convolve 2 N-dimensionnal arrays
-*
-* @note: Arrays must have the same dimensions and a must be greater than b.
-* @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
-*
-* @param {Array|NdArray} a
-* @param {Array|NdArray} b
-*/
+ * Convolve 2 N-dimensionnal arrays
+ *
+ * @note: Arrays must have the same dimensions and a must be greater than b.
+ * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
+ *
+ * @param {Array|NdArray} a
+ * @param {Array|NdArray} b
+ */
 function convolve (a, b) {
   return NdArray.new(a).convolve(b);
 }
 
 /**
-* Convolve 2 N-dimensionnal arrays using Fast Fourier Transform (FFT)
-*
-* @note: Arrays must have the same dimensions and a must be greater than b.
-* @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
-*
-* @param {Array|NdArray} a
-* @param {Array|NdArray} b
-*/
+ * Convolve 2 N-dimensionnal arrays using Fast Fourier Transform (FFT)
+ *
+ * @note: Arrays must have the same dimensions and a must be greater than b.
+ * @note: The convolution product is only given for points where the signals overlap completely. Values outside the signal boundary have no effect. This behaviour is known as the 'valid' mode.
+ *
+ * @param {Array|NdArray} a
+ * @param {Array|NdArray} b
+ */
 function fftconvolve (a, b) {
   return NdArray.new(a).fftconvolve(b);
 }
@@ -23355,43 +23368,43 @@ function identity (n, dtype) {
  * @return {Array} The stacked array has one more dimension than the input arrays.
  */
 function stack (arrays, axis) {
-    axis = axis || 0;
-    if (!arrays || arrays.length === 0) {
-        throw new errors.ValueError('need at least one array to stack');
-    }
-    arrays = arrays.map(function (a) { return _.isNumber(a) ? a : NdArray.new(a); });
-    var expectedShape = arrays[0].shape || []; // for numbers
+  axis = axis || 0;
+  if (!arrays || arrays.length === 0) {
+    throw new errors.ValueError('need at least one array to stack');
+  }
+  arrays = arrays.map(function (a) { return _.isNumber(a) ? a : NdArray.new(a); });
+  var expectedShape = arrays[0].shape || []; // for numbers
 
-    for (var i=1; i<arrays.length; i++){
-      var shape = arrays[i].shape || []; // for numbers
-      var len = Math.max(expectedShape.length, shape.length);
-      for (var j = 0; j < len; j++){
-        if (expectedShape[j] !== shape[j]) throw new errors.ValueError('all input arrays must have the same shape');
-      }
+  for (var i=1; i<arrays.length; i++){
+    var shape = arrays[i].shape || []; // for numbers
+    var len = Math.max(expectedShape.length, shape.length);
+    for (var j = 0; j < len; j++){
+      if (expectedShape[j] !== shape[j]) throw new errors.ValueError('all input arrays must have the same shape');
     }
-    var stacked;
-    if (expectedShape.length === 0) { // stacking numbers
-      stacked = concatenate(arrays);
-    } else {
-      stacked = zeros([arrays.length].concat(expectedShape));
-      for (var i=0; i<arrays.length; i++) {
-        stacked.pick(i).assign(arrays[i], false);
-      }
+  }
+  var stacked;
+  if (expectedShape.length === 0) { // stacking numbers
+    stacked = concatenate(arrays);
+  } else {
+    stacked = zeros([arrays.length].concat(expectedShape));
+    for (var i=0; i<arrays.length; i++) {
+      stacked.pick(i).assign(arrays[i], false);
+    }
+  }
+
+  if (axis) {
+    // recompute neg axis
+    if (axis < 0) axis = stacked.ndim + axis;
+
+    var d = stacked.ndim;
+    var axes = new Array(d);
+    for (var i = 0; i < d; i++){
+      axes[i] = i < axis ? i + 1 : i === axis ? 0 : i;
     }
 
-    if (axis) {
-      // recompute neg axis
-      if (axis < 0) axis = stacked.ndim + axis;
-
-      var d = stacked.ndim;
-      var axes = new Array(d);
-      for (var i = 0; i < d; i++){
-        axes[i] = i < axis ? i + 1 : i === axis ? 0 : i;
-      }
-
-      return stacked.transpose(axes);
-    }
-    return stacked;
+    return stacked.transpose(axes);
+  }
+  return stacked;
 }
 
 
@@ -23455,7 +23468,7 @@ function rot90 (m, k, axes) {
   if (k === 1) {
     return transpose(flip(m, axes[1]), axesList);
   } else {
-     return flip(transpose(m, axesList), axes[1]);
+    return flip(transpose(m, axesList), axes[1]);
   }
 }
 
@@ -23501,6 +23514,8 @@ module.exports = {
   equal: equal,
   max: max,
   min: min,
+  mod: mod,
+  remainder: mod,
   concatenate: concatenate,
   transpose: transpose,
   errors: errors,
@@ -24116,6 +24131,29 @@ NdArray.prototype.std = function (options) {
 */
 NdArray.prototype.mean = function () {
   return ops.sum(this.selection) / _.shapeSize(this.shape);
+};
+
+/**
+* Return element-wise remainder of division.
+*
+* @param {(NdArray|Array|number)} x
+* @param {boolean} [copy=true]
+* @returns {NdArray}
+*/
+NdArray.prototype.mod = function (x, copy) {
+  if (arguments.length === 1) {
+    copy = true;
+  }
+  var arr = copy ? this.clone() : this;
+  if (_.isNumber(x)) {
+    ops.modseq(arr.selection, x);
+    return arr;
+  }
+
+  x = createArray(x, this.dtype);
+  ops.modeq(arr.selection, x.selection);
+
+  return arr;
 };
 
 /**
