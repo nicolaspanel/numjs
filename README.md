@@ -34,8 +34,9 @@ bower install numjs
 
 ```html
 <script src="bower_packages/numjs/dist/numjs.min.js"></script>
+<!-- or include it directly from a CDN -->
+<script src="https://cdn.jsdelivr.net/gh/nicolaspanel/numjs@0.15.1/dist/numjs.min.js"></script>
 ```
-
 
 ## Basics
 
@@ -720,7 +721,9 @@ See also [this jsfiddle](https://jsfiddle.net/nicolaspanel/047gwg0q/) for more d
 
 
 ## More ?
-See [documentation](http://nicolaspanel.github.io/numjs/global.html).
+See documentation on [numjs globals](http://nicolaspanel.github.io/numjs/global.html) and
+[NdArray methods](http://nicolaspanel.github.io/numjs/NdArray.html).
+
 
 
 ## Credits
