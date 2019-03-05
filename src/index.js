@@ -793,10 +793,12 @@ function rot90 (m, k, axes) {
 }
 
 /**
- * Calculates the arithmetic mean over a specific axis
+ * Calculates the arithmetic mean over a specific axis.
  * axis := 0 means x-axis (columns)
  * axis := 1 means y-axis (rows)
  * @param {NdArray} arr 
+ *  Must be a square matrices or a simple vector.
+ *  If arr is a vector it uses the function mean(...)
  * @param {Integer} axis (0 or 1)
  */
 function meanaxis(arr, axis) {
