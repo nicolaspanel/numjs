@@ -799,7 +799,7 @@ function rot90 (m, k, axes) {
  * @param {NdArray} arr 
  * @param {Integer} axis (0 or 1)
  */
-function meanAxis(arr, axis = 0) {
+function meanaxis(arr, axis = 0) {
 
   // precondition
   if (axis < 0 || axis >= 2) {
@@ -883,7 +883,7 @@ module.exports = {
   identity: identity,
   stack: stack,
   rot90: rot90,
-  meanAxis: meanAxis,
+  meanaxis: meanaxis,
   int8: function (array) { return NdArray.new(array, 'int8'); },
   uint8: function (array) { return NdArray.new(array, 'uint8'); },
   int16: function (array) { return NdArray.new(array, 'int16'); },
