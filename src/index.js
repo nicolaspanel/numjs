@@ -823,7 +823,7 @@ function meanaxis(arr, axis = 0) {
     }
   }
 
-  return new NdArray(results);
+  return NdArray.new(results);
 }
 
 module.exports = {
