@@ -883,6 +883,7 @@ module.exports = {
   identity: identity,
   stack: stack,
   rot90: rot90,
+  meanAxis: meanAxis,
   int8: function (array) { return NdArray.new(array, 'int8'); },
   uint8: function (array) { return NdArray.new(array, 'uint8'); },
   int16: function (array) { return NdArray.new(array, 'int16'); },
