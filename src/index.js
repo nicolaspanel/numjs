@@ -799,27 +799,31 @@ function rot90 (m, k, axes) {
  * @param {NdArray} arr 
  * @param {Integer} axis (0 or 1)
  */
-function meanaxis(arr, axis = 0) {
+function meanaxis(arr, axis) {
 
   // precondition
   if (axis < 0 || axis >= 2) {
     throw new errors.ValueError("Axis must be 0 or 1");
   }
 
-  if (arr.shape[0] != arr.shape[1]) {
+  if (arr.shape[0] != arr.shape[1] && arr.shape.length >= 2) {
     throw new errors.ValueError("The array must be a square array.");
   }
 
   const shape = arr.shape;
   let results = [];
 
-  if (axis == 0) {
-    for (let i = 0; i < shape[0]; i++) {
-      results.push(mean(arr.pick(null, i)));
-    }
-  } else {
-    for (let i = 0; i < shape.length; i++) {
-      results.push(mean(arr.pick(i)));
+  if (arr.shape.length == 1) { // for simple vectors
+    return mean(arr);
+  } else { // for matrices
+    if (axis == 0) {
+      for (let i = 0; i < shape[0]; i++) {
+        results.push(mean(arr.pick(null, i)));
+      }
+    } else {
+      for (let i = 0; i < shape.length; i++) {
+        results.push(mean(arr.pick(i)));
+      }
     }
   }
 
