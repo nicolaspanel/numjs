@@ -426,6 +426,37 @@ NdArray.prototype.subtract = function (x, copy) {
   return arr;
 };
 
+var addScalarMult = cwise({
+  args: ["array", "array", "scalar"],
+  body: function(a, b, s) {
+    a += (s*b);
+  }
+})
+
+/**
+* Add `a` * `x` to the array, element-wise.
+*
+* @param {(NdArray|Array)} x
+* @param {number} a
+* @param {boolean} [copy=true]
+* @returns {NdArray}
+*/
+NdArray.prototype.addScalarMultiple = function (x, a, copy) {
+  if (arguments.length === 1) {
+    copy = true;
+  }
+
+  if (_.isNumber(x)) {
+    throw new errors.ValueError('cannot add scalar multiple of a scalar value, use add instead.');
+  }
+
+  var arr = copy ? this.clone() : this;
+
+  x = createArray(x, this.dtype);
+  addScalarMult(arr.selection, x.selection, a);
+  return arr;
+};
+
 /**
 * Multiply array by `x`, element-wise.
 *
