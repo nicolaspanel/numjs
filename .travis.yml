@@ -16,7 +16,6 @@ node_js:
   - 14
 
 before_script:
-  - npm install -g bower grunt-cli
-  - bower install
+  - npm ci -g bower grunt-cli
 script:
   - grunt travis
