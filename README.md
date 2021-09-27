@@ -520,10 +520,10 @@ array([[  0,  1,  2,  3],
 > a = nj.array([1, 2, 3])
 > b = nj.array([2, 3, 4])
 
-> np.stack([a, b])
+> nj.stack([a, b])
 array([[1, 2, 3],
        [2, 3, 4]])
-> np.stack([a, b], -1)
+> nj.stack([a, b], -1)
 array([[1, 2],
        [2, 3],
        [3, 4]])
