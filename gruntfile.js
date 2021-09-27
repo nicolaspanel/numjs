@@ -31,41 +31,41 @@ module.exports = function (grunt) {
         }
       }
     },
-    karma: {
-      options: {
-        frameworks: ['mocha', 'chai'],
-        reporters: ['dots'],
-        // web server port
-        port: 9876,
-        colors: true,
-        logLevel: 'WARN',
-        autoWatch: false,
-        browsers: ['PhantomJS'],
-        singleRun: true
-      },
-      min: {
-        options: {
-          files: [
-            'test/karma/phantom.js',
-            // tested files
-            'dist/numjs.min.js',
-            // tests files
-            'test/karma/*.spec.js',
-            {pattern: 'data/**/*.png', watched: false, included: false, served: true}
-          ]
-        }
-      },
-      dist: {
-        options: {
-          files: [
-            'test/karma/phantom.js',
-            'dist/numjs.js',
-            'test/karma/*.spec.js',
-            {pattern: 'data/**/*.png', watched: false, included: false, served: true}
-          ]
-        }
-      }
-    },
+    // karma: {
+    //   options: {
+    //     frameworks: ['mocha', 'chai'],
+    //     reporters: ['dots'],
+    //     // web server port
+    //     port: 9876,
+    //     colors: true,
+    //     logLevel: 'WARN',
+    //     autoWatch: false,
+    //     browsers: ['PhantomJS'],
+    //     singleRun: true
+    //   },
+    //   min: {
+    //     options: {
+    //       files: [
+    //         'test/karma/phantom.js',
+    //         // tested files
+    //         'dist/numjs.min.js',
+    //         // tests files
+    //         'test/karma/*.spec.js',
+    //         {pattern: 'data/**/*.png', watched: false, included: false, served: true}
+    //       ]
+    //     }
+    //   },
+    //   dist: {
+    //     options: {
+    //       files: [
+    //         'test/karma/phantom.js',
+    //         'dist/numjs.js',
+    //         'test/karma/*.spec.js',
+    //         {pattern: 'data/**/*.png', watched: false, included: false, served: true}
+    //       ]
+    //     }
+    //   }
+    // },
     uglify: {
       dist: {
         options: {
@@ -95,7 +95,7 @@ module.exports = function (grunt) {
   });
   grunt.registerTask('mocha', ['simplemocha:full']);
   grunt.registerTask('build', ['browserify', 'uglify']);
-  grunt.registerTask('test', ['simplemocha:full', 'build', 'karma:dist', 'karma:min']);
+  grunt.registerTask('test', ['simplemocha:full', 'build']); //, 'karma:dist', 'karma:min']);
   grunt.registerTask('travis', ['simplemocha:full', 'karma:dist', 'karma:min']);
   grunt.registerTask('doc', ['jsdoc', 'gh-pages']);
 };

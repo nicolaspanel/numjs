@@ -28,4 +28,5 @@ if (!Function.prototype.bind) {
 }
 /* jshint ignore:start */
 var Float64Array = Array; // eslint-disable-line
+var Uint8Array = Array; // eslint-disable-line
 /* jshint ignore:end */
