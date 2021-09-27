@@ -720,7 +720,7 @@ NdArray.prototype.equal = function (array) {
     }
   }
 
-  return ops.all(ops.eqeq(this.selection, array.selection));
+  return ops.equals(this.selection, array.selection);
 };
 
 /**
