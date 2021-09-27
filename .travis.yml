@@ -10,8 +10,9 @@ addons:
     - g++-4.8
 
 node_js:
-  - 8
   - 10
+  - 12
+  - 14
 
 before_script:
   - npm install -g bower grunt-cli
