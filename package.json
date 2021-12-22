@@ -14,7 +14,7 @@
     "ndarray-fft": "^1.0.0",
     "ndarray-gemm": "^1.0.0",
     "ndarray-ops": "^1.2.2",
-    "sharp": "^0.27.2",
+    "sharp": "^0.29.3",
     "typedarray-pool": "^1.1.0"
   },
   "devDependencies": {
