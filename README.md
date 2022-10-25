@@ -665,13 +665,13 @@ __NumJs__’s comes with powerful functions for image processing. Theses functio
 
 The different color bands/channels are stored using the `NdArray` object such that a grey-image is `[H,W]`, an RGB-image is `[H,W,3]` and an RGBA-image is `[H,W,4]`.
 
-Use `nj.images.read`, `nj.images.write` and `nj.images.resize` functions to (respectively) read, write or resize images.
+Use `nj.images.read`, `nj.images.save` and `nj.images.resize` functions to (respectively) read, save or resize images.
 
 Example:
 ```js
 > nj.config.printThreshold = 28;
 >
-> var img = nj.images.data.digit;  // WARN: this is a property, not a function. See also `nj.images.data.moon`, `nj.images.data.lenna` and `nj.images.data.node`
+> var img = await nj.images.data.digit;  // WARN: this is a property, not a function. See also `nj.images.data.moon`, `nj.images.data.lenna` and `nj.images.data.node`
 >
 > img
 array([[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
@@ -702,7 +702,7 @@ array([[   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,  
        [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
        [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0],
        [   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0,   0]], dtype=uint8)
-> var resized = nj.images.resize(img, 14, 12)
+> var resized = await nj.images.resize(img, 14, 12)
 >
 > resized.shape
 [ 14, 12 ]
