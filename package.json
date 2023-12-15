@@ -16,12 +16,14 @@
     "ndarray-fft": "^1.0.3",
     "ndarray-gemm": "^1.0.0",
     "ndarray-ops": "^1.2.2",
-    "sharp": "^0.32.5",
     "typedarray-pool": "^1.2.0"
+  },
+  "peerDependencies": {
+    "sharp": "*"
   },
   "devDependencies": {
     "browserify-shim": "^3.8.16",
-    "chai": "^4.3.8",
+    "chai": "^4.3.10",
     "expect.js": "^0.3.1",
     "grunt": "^1.6.1",
     "grunt-browserify": "^6.0.0",
@@ -42,7 +44,8 @@
     "karma-mocha": "^2.0.1",
     "karma-mocha-reporter": "latest",
     "mocha": "^10.2.0",
-    "semistandard": "^17.0.0"
+    "semistandard": "^17.0.0",
+    "sharp": "^0.32.5"
   },
   "semistandard": {
     "globals": [
