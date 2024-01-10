@@ -7,8 +7,8 @@ var nj = require('../../src');
 
 describe('images', function () {
   var img;
-  beforeEach(function () {
-    img = nj.images.data.node;
+  beforeEach(async function () {
+    img = await nj.images.data.node;
   });
   it('can convert RGBA to grayscale', function () {
     var rgb = nj.images.rgb2gray(img);

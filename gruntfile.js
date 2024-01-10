@@ -3,7 +3,7 @@
 module.exports = function (grunt) {
   require('jit-grunt')(grunt, {
     simplemocha: 'grunt-simple-mocha',
-    browserify: 'grunt-browserify'
+    browserify: 'grunt-browserify',
   });
   // Project Configuration
   grunt.initConfig({
@@ -11,25 +11,23 @@ module.exports = function (grunt) {
     simplemocha: {
       options: {
         reporter: 'spec',
-        timeout: '5000'
+        timeout: '5000',
       },
       full: {
-        src: [
-          'test/mocha/**/*.spec.js'
-        ]
-      }
+        src: ['test/mocha/**/*.spec.js'],
+      },
     },
     browserify: {
       dist: {
         files: {
-          'dist/numjs.js': 'src/index.js'
-        }
+          'dist/numjs.js': 'src/index.js',
+        },
       },
       options: {
         browserifyOptions: {
-          standalone: 'nj'
-        }
-      }
+          standalone: 'nj',
+        },
+      },
     },
     // karma: {
     //   options: {
@@ -69,29 +67,29 @@ module.exports = function (grunt) {
     uglify: {
       dist: {
         options: {
-          banner: '/*! <%= pkg.name %> */\n'
+          banner: '/*! <%= pkg.name %> */\n',
         },
         files: {
-          'dist/numjs.min.js': 'dist/numjs.js'
-        }
-      }
+          'dist/numjs.min.js': 'dist/numjs.js',
+        },
+      },
     },
     jsdoc: {
       dist: {
         src: ['src/**/*.js', 'README.md'],
         options: {
-          destination: 'doc'
+          destination: 'doc',
           // template : "node_modules/ink-docstrap/template",
           // configure : "node_modules/ink-docstrap/template/jsdoc.conf.json"
-        }
-      }
+        },
+      },
     },
     'gh-pages': {
       options: {
-        base: 'doc'
+        base: 'doc',
       },
-      src: ['**']
-    }
+      src: ['**'],
+    },
   });
   grunt.registerTask('mocha', ['simplemocha:full']);
   grunt.registerTask('build', ['browserify', 'uglify']);
